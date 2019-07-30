@@ -7,12 +7,12 @@ export default class NotFound extends Component {
       <div className={styles.about}>
         <img alt="" className={styles.img} src={doudou} />
         <br />
-        一个菜鸡前端：兜兜
+        一个菜鸡前端：MY1112
         <br />
         我的git地址:
         <br />
-        <a href="https://github.com/treasureDouDou">
-          https://github.com/treasureDouDou
+        <a href="https://github.com/MY1112">
+          https://github.com/MY1112
         </a>
       </div>
     )

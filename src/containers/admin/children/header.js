@@ -28,7 +28,7 @@ class Header extends Component {
             <SubMenu
               title={
                 <span>
-                  <Icon type="user" />兜兜
+                  <Icon type="user" />Circle
                 </span>
               }
             >

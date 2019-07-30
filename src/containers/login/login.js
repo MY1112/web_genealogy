@@ -9,8 +9,8 @@ class NormalLoginForm extends Component {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        if (values.userName !== 'doudou' || values.passWrod !== 'doudou') {
-          message.error('密码不正确');
+        if (values.userName !== 'circle' || values.passWrod !== 'circle') {
+          message.error('用户名或密码不正确');
           return false
         }
         this.props.dispatch(loading(true))
@@ -77,9 +77,9 @@ class NormalLoginForm extends Component {
                 登录
               </Button>
               <div className={styles.user}>
-                Username: doudou
+                Username: circle
                 <span>
-                  Password: doudou
+                  Password: circle
                 </span>
               </div>
             </FormItem>

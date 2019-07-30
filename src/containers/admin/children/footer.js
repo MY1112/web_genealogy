@@ -4,7 +4,7 @@ class Footer extends Component {
     render() {
         return (
             <div className={styles.footer}>
-            Ant Design Admin © 2017 doudou
+            Ant Design Admin © 2019 CircleMeng
             </div>
         )
     }
