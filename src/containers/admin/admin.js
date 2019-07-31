@@ -265,7 +265,7 @@ class Admin extends Component {
           className={styles['left-menu']}
           style={{ width: this.state.collapsed ? '80px' : '200px' }}
         >
-          <a className={styles.github} href="https://github.com/treasureDouDou">
+          <a className={styles.github} href="">
             <svg
               aria-hidden="true"
               height="32"
@@ -278,13 +278,7 @@ class Admin extends Component {
             {this.state.collapsed ? '' : <span>Base Home </span>}
           </a>
           <Menu
-            /**
-             * 这里openKeys如果inlineCollapsed是收缩的时候，会出现bug,最新版本尚未解决，所以收缩的时候暂时做如下简单处理,
-             * https://github.com/ant-design/ant-design/issues/8587
-             *
-             * 收缩时，清空openKeys，菜单树isOpen重置， 根据onOpenChange回调判断当前显示
-             * 注：不需要同时打开一个，删掉openKeys={this.state.openKeys}这句话
-             */
+            // 收缩暂时存在bug
             openKeys={this.state.openKeys}
             selectedKeys={this.state.selectedKeys}
             mode="inline"
