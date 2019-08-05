@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Card, Row, Col, Icon, Timeline, Table } from 'antd'
-import styles from './home.less'
+import './home.less'
 import { loading } from '../../actions/rootActions'
 const { Column } = Table;
 const labelStyle = {
@@ -55,13 +55,13 @@ class Home extends Component {
       }
     ]
     return (
-      <div className={styles.home}>
+      <div className="home">
         <Row gutter={16}>
           <Col className="gutter-row" span={6}>
             <Card title="收入" extra={<Label color="#1c84c6">月</Label>}>
-              <div className={styles.box}>
-                <h1 className={styles.number}>40 886,200</h1>
-                <div className={styles.percentage} style={{ color: `#1c84c6` }}>
+              <div className="box">
+                <h1 className="number">40 886,200</h1>
+                <div className="percentage" style={{ color: `#1c84c6` }}>
                   98%{' '}
                   <Icon
                     type="star"
@@ -74,9 +74,9 @@ class Home extends Component {
           </Col>
           <Col className="gutter-row" span={6}>
             <Card title="订单" extra={<Label color="#23c6c8">全年</Label>}>
-              <div className={styles.box}>
-                <h1 className={styles.number}>275,800</h1>
-                <div className={styles.percentage} style={{ color: `#23c6c8` }}>
+              <div className="box">
+                <h1 className="number">275,800</h1>
+                <div className="percentage" style={{ color: `#23c6c8` }}>
                   35%{' '}
                   <Icon
                     type="arrow-up"
@@ -89,9 +89,9 @@ class Home extends Component {
           </Col>
           <Col className="gutter-row" span={6}>
             <Card title="访客" extra={<Label color="#1ab394">今天</Label>}>
-              <div className={styles.box}>
-                <h1 className={styles.number}>106,120</h1>
-                <div className={styles.percentage} style={{ color: `#1ab394` }}>
+              <div className="box">
+                <h1 className="number">106,120</h1>
+                <div className="percentage" style={{ color: `#1ab394` }}>
                   18%{' '}
                   <Icon
                     type="arrow-up"
@@ -107,9 +107,9 @@ class Home extends Component {
               title="活跃用户"
               extra={<Label color="#ed5565">最近一个月</Label>}
             >
-              <div className={styles.box}>
-                <h1 className={styles.number}>80,600</h1>
-                <div className={styles.percentage} style={{ color: `#ed5565` }}>
+              <div className="box">
+                <h1 className="number">80,600</h1>
+                <div className="percentage" style={{ color: `#ed5565` }}>
                   38%{' '}
                   <Icon
                     type="arrow-down"

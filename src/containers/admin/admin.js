@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Menu, Icon } from 'antd'
-import styles from './admin.less'
+import './admin.less'
 import Header from './children/header'
 import Content from './children/content'
 import Footer from './children/footer'
@@ -260,12 +260,12 @@ class Admin extends Component {
     }
     // 只能同时打开一个
     return (
-      <div className={styles.admin}>
+      <div className="admin">
         <div
-          className={styles['left-menu']}
+          className="left-menu"
           style={{ width: this.state.collapsed ? '80px' : '200px' }}
         >
-          <a className={styles.github} href="">
+          <a className="github" href="">
             <svg
               aria-hidden="true"
               height="32"
@@ -302,7 +302,7 @@ class Admin extends Component {
           </Menu>
         </div>
         <div
-          className={styles['right-content']}
+          className="right-content"
           style={{ marginLeft: this.state.collapsed ? '80px' : '200px' }}
         >
           <Header

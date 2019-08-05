@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Icon, Input, Button, Checkbox, message } from 'antd'
 import { verifyLogin, loading } from '../../actions/rootActions'
-import styles from './login.less'
+import './login.less'
 import { connect } from 'react-redux'
 const FormItem = Form.Item
 class NormalLoginForm extends Component {
@@ -29,9 +29,9 @@ class NormalLoginForm extends Component {
   render() {
     const { getFieldDecorator } = this.props.form
     return (
-      <div className={styles.login}>
-        <div className={styles['login-warp']}>
-          <Form onSubmit={this.handleSubmit} className={styles['login-form']}>
+      <div className="login">
+        <div className="login-warp">
+          <Form onSubmit={this.handleSubmit} className="login-form">
             <FormItem 
             hasFeedback
             >
@@ -66,17 +66,17 @@ class NormalLoginForm extends Component {
                 valuePropName: 'checked',
                 initialValue: true
               })(<Checkbox>记住密码</Checkbox>)}
-              <a className={styles['login-form-forgot']} href="">
+              <a className="login-form-forgot" href="">
                 忘记密码
               </a>
               <Button
                 type="primary"
                 htmlType="submit"
-                className={styles['login-form-button']}
+                className="login-form-button"
               >
                 登录
               </Button>
-              <div className={styles.user}>
+              <div className="user">
                 Username: circle
                 <span>
                   Password: circle

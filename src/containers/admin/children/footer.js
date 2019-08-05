@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import styles from './admin.less'
+import './admin.less'
 class Footer extends Component {
     render() {
         return (
-            <div className={styles.footer}>
+            <div className="footer">
             Ant Design Admin © 2019 CircleMeng
             </div>
         )

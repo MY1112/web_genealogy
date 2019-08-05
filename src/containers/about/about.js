@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import styles from './about.less'
+import './about.less'
 import doudou from '../../assets/imgs/doudou.jpg'
 export default class NotFound extends Component {
   render() {
     return (
-      <div className={styles.about}>
-        <img alt="" className={styles.img} src={doudou} />
+      <div className="about">
+        <img alt="" className="img" src={doudou} />
         <br />
         一个菜鸡前端：MY1112
         <br />

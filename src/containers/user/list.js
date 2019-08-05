@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Input, Row, Col, Button, Table } from 'antd'
-import styles from './list.less'
+import './list.less'
 import Dialog from './DialogAdd'
 const Search = Input.Search
 
@@ -89,7 +89,7 @@ class Home extends Component {
             </Button>
           </Col>
         </Row>
-        <div className={styles.table}>
+        <div className="table">
           <Table
             dataSource={this.state.filterList}
             pagination={{ pageSize: 6 }}

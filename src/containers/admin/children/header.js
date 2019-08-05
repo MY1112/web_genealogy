@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import styles from './admin.less'
+import './admin.less'
 import { Button, Icon, Menu } from 'antd'
 import { verifyLogin } from '../../../actions/rootActions'
 const SubMenu = Menu.SubMenu
@@ -12,7 +12,7 @@ class Header extends Component {
   }
   render() {
     return (
-      <div className={styles.header}>
+      <div className="header">
         <Button
           onClick={this.props.toggleCollapsed}
           style={{ border: 0, padding: '5px 10px', marginLeft: '15px' }}
@@ -20,7 +20,7 @@ class Header extends Component {
           <Icon type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'} />
         </Button>
 
-        <div className={styles.exit}>
+        <div className="exit">
           <Menu
             onClick={this.handleClick}
             mode="horizontal"

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import styles from './admin.less'
+import './admin.less'
 import { Breadcrumb } from 'antd'
 class App extends Component {
   render() {
@@ -7,11 +7,11 @@ class App extends Component {
       return <Breadcrumb.Item key={el}>{el}</Breadcrumb.Item>
     })
     return (
-      <div className={styles.content}>
-        <div className={styles.breadcrumb}>
+      <div className="content">
+        <div className="breadcrumb">
           <Breadcrumb>{extraBreadcrumbItems}</Breadcrumb>
         </div>
-        <div className={styles['show-view']}>
+        <div className="show-view">
         {this.props.children}
         </div>
       </div>
