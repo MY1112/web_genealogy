@@ -12,7 +12,7 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
-const theme = require('../antd-theme.js');
+// const theme = require('theme.js');
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
@@ -104,7 +104,8 @@ module.exports = {
             use: [
               MiniCssExtractPlugin.loader,
               "css-loader",
-              "less-loader?{modifyVars:" + JSON.stringify(theme) + "}"
+              // "less-loader?{modifyVars:" + JSON.stringify(theme) + "}"
+              "less-loader"
             ],
           },
           {
