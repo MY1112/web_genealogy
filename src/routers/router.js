@@ -96,13 +96,15 @@ let beforeRouterName = ''
 const Authverify = withRouter(props => {
   const { location } = props
   const { pathname } = location
+  const userToken = localStorage.getItem('user')
   if (beforeRouterName === pathname ) {
     return null 
   }
-  if (!props.isLogin) {
-    if (location.pathname === '/login') {
+  if (!props.isLogin && !userToken) {
+    if (location.pathname === '/login' ) {
       return null
     }
+    console.log(userToken)
     beforeRouterName = '/login'
     return <Redirect to="/login" />
   } else if (pathname !== '/login' && pathname !== '/not-found') {

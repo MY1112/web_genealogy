@@ -29,7 +29,7 @@ class NormalLoginForm extends Component {
         }
         if (current_circle.x) {
             current_circle.drawCircle(ctx);
-            for (var k = 1; k < circles.length; k++) {
+            for (let k = 1; k < circles.length; k++) {
                 current_circle.drawLine(ctx, circles[k])
             }
         }
@@ -69,6 +69,7 @@ class NormalLoginForm extends Component {
             user: values
           })
         )
+        localStorage.setItem('user',true)
         setTimeout(() => {
           this.props.history.push('/admin/home')
         }, 2000)

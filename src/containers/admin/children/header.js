@@ -5,6 +5,7 @@ import { verifyLogin } from '../../../actions/rootActions'
 const SubMenu = Menu.SubMenu
 class Header extends Component {
   handleClick = e => {
+    localStorage.setItem('user',false)
     this.props.dispatch(verifyLogin({
       isLogin: false
     }))
