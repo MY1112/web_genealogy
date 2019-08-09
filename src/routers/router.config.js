@@ -36,6 +36,12 @@ const routers = [
     ]
   },
   {
+    menuName: '测试',
+    menuIco: 'sliders',
+    component: 'canvasTest', // 主页
+    path: '/admin/test' // 主页
+  },
+  {
     menuName: '关于我',
     menuIco: 'smile-o',
     component: 'about/about.js', // 主页

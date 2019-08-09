@@ -36,7 +36,7 @@ module.exports = {
     modules: ['node_modules', paths.appNodeModules].concat(
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
     ),
-    extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx','.less','.scss'],
+    extensions: ['.web.js', '.mjs', '.js', '.ts', '.json', '.web.jsx', '.jsx', '.tsx', '.less','.scss'],
     alias: {
       '@': resolve('src'),
       'public': resolve('src/public'),
@@ -53,7 +53,7 @@ module.exports = {
     strictExportPresence: true,
     rules: [
       {
-        test: /\.(js|jsx|mjs)$/,
+        test: /\.(js|jsx|tsx|mjs)$/,
         enforce: 'pre',
         use: [
           {
@@ -68,6 +68,24 @@ module.exports = {
         include: paths.appSrc,
       },
       {
+        test: /\.[jt]sx?$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true
+            }
+          },
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true
+            }
+          }
+        ]
+      },
+      {
         oneOf: [
           {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
@@ -78,12 +96,13 @@ module.exports = {
             },
           },
           {
-            test: /\.(js|jsx|mjs)$/,
+            test: /\.(js|jsx|tsx|mjs)$/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
-            options: {
-            cacheDirectory: true,
-          }
+              options: {
+              cacheDirectory: true,
+            },
+            exclude: /node_modules/
           },
           {
             test: /\.(css|less)$/,
@@ -152,7 +171,7 @@ module.exports = {
             ],
           },
           {
-            exclude: [/\.(js|jsx|mjs)$/,/\.(css|less)$/, /\.html$/, /\.json$/],
+            exclude: [/\.(js|jsx|tsx|mjs)$/,/\.(css|less)$/, /\.html$/, /\.json$/],
             loader: require.resolve('file-loader'),
             options: {
               name: 'static/media/[name].[hash:8].[ext]',

@@ -45,7 +45,7 @@ module.exports = {
       // It is guaranteed to exist because we tweak it in `env.js`
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
     ),
-    extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx','.less'],
+    extensions: ['.web.js', '.mjs', '.js', '.ts', '.json', '.web.jsx', '.jsx', '.tsx', '.less'],
     alias: {
       '@': resolve('src'),
       'public': resolve('src/public'),
@@ -63,7 +63,7 @@ module.exports = {
     strictExportPresence: true,
     rules: [
       {
-        test: /\.(js|jsx|mjs)$/,
+        test: /\.(js|jsx|tsx|mjs)$/,
         enforce: 'pre',
         use: [
           {
@@ -89,7 +89,7 @@ module.exports = {
           },
           // Process JS with Babel.
           {
-            test: /\.(js|jsx|mjs)$/,
+            test: /\.(js|jsx|tsx|mjs)$/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
@@ -118,7 +118,7 @@ module.exports = {
           },
           {
             loader: require.resolve('file-loader'),
-            exclude: [/\.(js|jsx|mjs)$/,/\.(css|less)$/, /\.html$/, /\.json$/],
+            exclude: [/\.(js|jsx|tsx|mjs)$/,/\.(css|less)$/, /\.html$/, /\.json$/],
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
             },

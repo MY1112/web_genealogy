@@ -96,15 +96,17 @@ let beforeRouterName = ''
 const Authverify = withRouter(props => {
   const { location } = props
   const { pathname } = location
-  const userToken = localStorage.getItem('user')
+  const userToken = JSON.parse(localStorage.getItem('user'))
   if (beforeRouterName === pathname ) {
     return null 
   }
-  if (!props.isLogin && !userToken) {
+  console.log(userToken)
+  console.log(props.isLogin)
+  console.log(pathname)
+  if (!userToken) {
     if (location.pathname === '/login' ) {
       return null
     }
-    console.log(userToken)
     beforeRouterName = '/login'
     return <Redirect to="/login" />
   } else if (pathname !== '/login' && pathname !== '/not-found') {
@@ -118,6 +120,9 @@ const Authverify = withRouter(props => {
         return <Redirect  to="/not-found" />
       }
     }
+  } else {
+    beforeRouterName = '/login'
+    return <Redirect  to="/admin/home" />
   }
   beforeRouterName = pathname
   return <Redirect  to={ pathname } />

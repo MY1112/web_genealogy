@@ -73,6 +73,7 @@
     "react-lazyload": "^2.3.0",
     "react-transition-group": "^2.3.1",
     "sass-loader": "^7.1.0",
+    "ts-loader": "^6.0.4",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.39.1",
     "webpack-cli": "^3.3.6",
@@ -86,24 +87,24 @@
   "homepage": ".",
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx,mjs}"
+      "src/**/*.{js,jsx,tsx,mjs}"
     ],
     "setupFiles": [
       "<rootDir>/config/polyfills.js"
     ],
     "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
-      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,tsx,mjs}",
+      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,tsx,mjs}"
     ],
     "testEnvironment": "node",
     "testURL": "http://localhost",
     "transform": {
-      "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.(js|jsx|tsx|mjs)$": "<rootDir>/node_modules/babel-jest",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+      "^(?!.*\\.(js|jsx|tsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
     "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|tsx|mjs)$"
     ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web"
@@ -112,9 +113,11 @@
       "web.js",
       "mjs",
       "js",
+      "ts",
       "json",
       "web.jsx",
       "jsx",
+      "tsx",
       "node"
     ]
   },
@@ -157,6 +160,7 @@
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "react-hot-loader": "^4.1.1",
+    "ts-loader": "^6.0.4",
     "typescript": "^3.5.3",
     "webpack": "^4.39.1",
     "webpack-cli": "^3.3.6",
