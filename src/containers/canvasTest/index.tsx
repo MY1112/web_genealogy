@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import './index.less'
 import { Button } from 'antd'
-class CanvasTest extends Component {
+
+interface IProps {}
+
+class CanvasTest extends Component<IProps, any> {
   render() {
     return (
       <div className="CanvasTest">
-        <Button>
+        <Button className="primary_btn mt-10">
           canvasTest
         </Button>
+
       </div>
     )
   }

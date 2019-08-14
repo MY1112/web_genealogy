@@ -38,7 +38,7 @@ const routers = [
   {
     menuName: '测试',
     menuIco: 'sliders',
-    component: 'canvasTest', // 主页
+    component: 'canvasTest/index.tsx', // 主页
     path: '/admin/test' // 主页
   },
   {

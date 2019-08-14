@@ -1,0 +1,38 @@
+
+@members: 0, 2, 4, 5, 8, 10, 12, 14, 15, 16, 18, 20, 24, 25, 30, 31, 32,
+35, 40, 42, 45, 50, 55, 58, 60, 65, 70, 75, 80, 85, 100, 200;
+.for(@data, @i: 1) when(@i =< length(@data)) {
+    @item: extract(@data, @i);
+    .mt-@{item} {
+        margin-top: @item*1px;
+    }
+    .mr-@{item} {
+        margin-right: @item*1px;
+    }
+    .mb-@{item} {
+        margin-bottom: @item*1px;
+    }
+    .ml-@{item} {
+        margin-left: @item*1px;
+    }
+    .m-@{item} {
+        margin: @item*1px;
+    }
+    .pt-@{item} {
+        padding-top: @item*1px;
+    }
+    .pr-@{item} {
+        padding-right: @item*1px;
+    }
+    .pb-@{item} {
+        padding-bottom: @item*1px;
+    }
+    .pl-@{item} {
+        padding-left: @item*1px;
+    }
+    .m-@{item} {
+        padding: @item*1px;
+    }
+    .for(@data, (@i + 1));
+}
+.for(@members);

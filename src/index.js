@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 import { AppContainer } from 'react-hot-loader'
+import './style/index.less'
 
 const render = Component => {
     ReactDOM.render(

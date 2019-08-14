@@ -1,0 +1,699 @@
+@import './color.less';
+html {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    border: none;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #dce6f5;
+    border-radius: 4px;
+    border: none !important;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #cad5e5;
+    border-radius: 4px;
+    border: none !important;
+  }
+  ::-webkit-scrollbar-thumb:active {
+    background: #bac7d9;
+  }
+  ::-webkit-scrollbar-track:hover {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-button {
+    background: none;
+  }
+}
+body {
+  font-family: 'Tahoma', 'Helvetica', 'Arial', 'Verdana', 'Microsoft YaHei',
+    'SimSun', '宋体' !important;
+  background: @search-box-bgColor !important;
+}
+p {
+  margin-bottom: 0 !important;
+}
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+textarea,
+p,
+blockquote,
+th,
+td,
+hr,
+button,
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  margin: 0;
+  padding: 0;
+}
+div,
+dl,
+dt,
+dd,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span {
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+a {
+  &:hover,
+  &:link,
+  &:visited,
+  &:active {
+    text-decoration: none;
+  }
+}
+/* float */
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.clearfix:after {
+  content: ' ';
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+/* display */
+.dsp_i {
+  display: inline;
+}
+
+.dsp_n {
+  display: none;
+}
+
+.dsp_ib {
+  display: inline-block;
+}
+
+.dsp_b {
+  display: block;
+}
+
+/* flex */
+.flex {
+  display: flex;
+}
+
+.flex_column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex_wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex_sb {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex_sa {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+/* 垂直居中 */
+.flex_right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.flex_left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.flex_c {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flex_start {
+  align-items: flex-start;
+}
+
+.flex_end {
+  align-items: flex-end;
+}
+.flex_center {
+  align-items: center;
+}
+
+.flex_baseline {
+  align-items: baseline;
+}
+
+.flex_stretch {
+  align-items: stretch;
+}
+
+.flex_n {
+  flex: none;
+}
+
+.flex_1 {
+  flex: 1;
+}
+
+.flex_2 {
+  flex: 2;
+}
+
+.flex_3 {
+  flex: 3;
+}
+
+/* text-align */
+.tl {
+  text-align: left;
+}
+
+.tc {
+  text-align: center;
+}
+
+.tr {
+  text-align: right;
+}
+
+/* 省略 */
+.wes {
+  /* 多出部分用省略号表示 , 用于一行 */
+  overflow: hidden;
+  word-wrap: normal;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+
+.wes_2 {
+  /* 适用于webkit内核和移动端 */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+.wes_3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+.wes_4 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+/* 鼠标样式 */
+
+.csd {
+  cursor: default;
+}
+
+.csp {
+  cursor: pointer;
+}
+
+.csh {
+  cursor: help;
+}
+
+.csm {
+  cursor: move;
+}
+.csn {
+  cursor: not-allowed;
+}
+.ant-btn {
+  padding: 0 10px;
+}
+.underline {
+  text-decoration: underline;
+}
+// 小型文字按钮
+.ant-btn.text_btn {
+  padding: 0 10px;
+  height: 24px;
+  line-height: 24px;
+  background: rgba(239, 243, 250, 1);
+  border: 1px solid rgba(214, 216, 221, 1);
+  border-radius: 4px;
+  color: @main-text-color;
+  font-size: 14px;
+  &:hover {
+    color: @main-button-color;
+    border: 1px solid @main-button-color;
+    background: rgba(239, 243, 250, 1);
+  }
+}
+// 小型成功文字按钮
+.ant-btn.text_success_btn {
+  padding: 0 10px;
+  height: 24px;
+  line-height: 24px;
+  background: rgba(50, 203, 129, 0.08);
+  border: 1px solid rgba(214, 216, 221, 1);
+  border-radius: 4px;
+  color: @success;
+  font-size: 14px;
+  &:hover {
+    border: 1px solid @success;
+    filter: brightness(110%) opacity(0.9);
+  }
+}
+// 小型失败文字按钮
+.ant-btn.text_danger_btn {
+  padding: 0 10px;
+  height: 24px;
+  line-height: 24px;
+  background: rgba(220, 76, 64, 0.08);
+  border: 1px solid rgba(214, 216, 221, 1);
+  border-radius: 4px;
+  color: @danger;
+  font-size: 14px;
+  &:hover {
+    border: 1px solid @danger;
+    filter: brightness(110%) opacity(0.9);
+  }
+}
+// 按钮样式 底色浅色
+.ant-btn.default_btn {
+  min-width: 80px;
+  border-radius: 16px;
+  font-size: 14px;
+  border-color: @main-button-color;
+  color: #6185ee;
+  background-color: transparent;
+  &:hover,
+  &:focus {
+    background-color: fade(@main-button-color, 10%);
+    border-color: @main-button-color;
+    color: #6185ee;
+  }
+  .iconfont {
+    margin-right: 5px;
+  }
+}
+
+// 蓝色底色
+.ant-btn.primary_btn {
+  min-width: 80px;
+  border-radius: 16px;
+  font-size: 14px;
+  background-color: @main-button-color;
+  color: #fff;
+  border-color: @main-button-color;
+  &:hover,
+  &:focus {
+    color: #fff;
+    background-color: #5080d0;
+    border-color: @main-button-color;
+  }
+  .iconfont {
+    margin-right: 5px;
+  }
+}
+
+// 重置 底色灰色
+.ant-btn.general_btn {
+  min-width: 80px;
+  border-radius: 16px;
+  font-size: 14px;
+  background-color: @secondary-text-color;
+  color: #fff;
+  border-color: @secondary-text-color;
+  &:hover,
+  &:focus {
+    color: #fff;
+    background-color: #666e7f;
+    border-color: @secondary-text-color;
+  }
+  & > .anticon + span,
+  & > span + .anticon {
+    margin-left: 0 !important;
+  }
+  .iconfont {
+    margin-right: 5px;
+  }
+}
+
+// 删除 hover红色
+.ant-btn.danger_btn {
+  min-width: 80px;
+  border-radius: 16px;
+  font-size: 14px;
+  border-color: @danger;
+  color: @danger;
+  background-color: #fff;
+  &:hover,
+  &:focus {
+    background-color: fade(@danger, 10%);
+    border-color: @danger;
+    color: @danger;
+  }
+  .iconfont {
+    margin-right: 5px;
+  }
+}
+
+// 拒绝 白底红色边框
+.ant-btn.fail_btn {
+  min-width: 80px;
+  border-radius: 20px;
+  font-size: 14px;
+  border-color: @danger;
+  color: @danger;
+  background-color: #fff;
+  &:hover,
+  &:focus {
+    background-color: rgba(220, 76, 64, 0.1);
+    border-color: @danger;
+    color: @danger;
+  }
+  .iconfont {
+    margin-right: 5px;
+  }
+}
+// 通过 白底绿色边框
+.ant-btn.success_btn {
+  min-width: 80px;
+  border-radius: 20px;
+  font-size: 14px;
+  border-color: @success;
+  color: @success;
+  background-color: #fff;
+  &:hover,
+  &:focus {
+    background: rgba(50, 203, 129, 0.1);
+    border-color: @success;
+    color: @success;
+  }
+  .iconfont {
+    margin-right: 5px;
+  }
+}
+// disabled
+.ant-btn.disabled_btn {
+  min-width: 80px;
+  border-radius: 20px;
+  font-size: 14px;
+  border-color: #d6d8dd;
+  color: @select-border-color;
+  background-color: #d6d8dd;
+  &:hover,
+  &:focus {
+    border-color: #d6d8dd;
+    color: @select-border-color;
+    background-color: #d6d8dd;
+  }
+  .iconfont {
+    margin-right: 5px;
+  }
+}
+.ant-btn.small_btn {
+  height: 24px;
+  line-height: 24px;
+}
+
+.search_icon.ant-input-affix-wrapper {
+  width: auto;
+}
+.search_icon {
+  -webkit-app-region: no-drag;
+  width: 218px;
+  height: 34px;
+  .ant-input:not(:first-child) {
+    padding-left: 44px !important;
+  }
+  .iconfont {
+    font-size: 18px !important;
+  }
+  .ant-input-prefix {
+    color: @secondary-button;
+    left: 16px !important;
+  }
+  input {
+    width: 218px;
+    border-radius: 18px;
+    background-color: @search-box-bgColor;
+    border-color: @search-box-bgColor;
+    &::-webkit-input-placeholder {
+      color: @placeholder-color;
+    }
+  }
+  .ant-input {
+    border-color: @search-box-bgColor !important;
+  }
+  .ant-input:focus {
+    border-color: @search-box-bgColor !important;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+}
+
+.ant-message-notice-content {
+  width: 240px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 8px 0px rgba(50, 55, 90, 0.2);
+  i {
+    font-size: 18px;
+  }
+  .ant-message-custom-content {
+    font-size: 16px;
+  }
+  .ng-message-content {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 16px;
+    color: @select-border-color;
+  }
+}
+.ant-form-vertical .ant-form-item {
+  padding-bottom: 0 !important;
+}
+.ant-form {
+  .ant-form-item {
+    line-height: 1.5;
+    margin-bottom: 16px;
+    .ant-form-item-label {
+      label {
+        font-size: 14px;
+        color: @secondary-text-color;
+      }
+    }
+  }
+  .ant-form-item-with-help {
+    margin-bottom: 2px;
+    .ant-form-explain {
+      font-size: 12px;
+      line-height: 16px;
+    }
+  }
+  .ant-form-item-required:before {
+    color: @danger;
+  }
+}
+.ngForm_tooltip .ant-tooltip-arrow,
+.ngForm_tooltip .ant-tooltip-inner {
+  border-color: @search-box-bgColor;
+  color: #b9bec5;
+  background-color: @search-box-bgColor;
+  font-size: 12px;
+}
+.ant-select-tree {
+  max-height: 400px;
+  max-width: 500px;
+}
+
+.ngConfirmModal {
+  width: 240px !important;
+  top: calc(50% - 120px);
+  .anticon {
+    display: none;
+  }
+  .ant-modal-content {
+    width: 240px;
+    .ant-confirm-body {
+      text-align: center;
+    }
+  }
+  .ant-confirm-body .ant-confirm-content {
+    margin-left: 0;
+    text-align: center;
+  }
+  // 2.0修改
+  .ant-modal-confirm-title,
+  .ant-modal-confirm-content {
+    text-align: center;
+    margin-left: 0 !important;
+  }
+  .ant-confirm-btns,
+  .ant-modal-confirm-btns {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .ant-btn {
+    height: 24px;
+    line-height: 24px;
+    min-width: 60px;
+    border-radius: 16px;
+    font-size: 14px;
+    border-color: @main-button-color;
+    color: #6185ee;
+    background-color: #fff;
+    &:hover,
+    &:focus {
+      background-color: fade(@main-button-color, 10%);
+      border-color: @main-button-color;
+      color: #6185ee;
+    }
+    .iconfont {
+      margin-right: 5px;
+    }
+  }
+  .ant-btn-primary {
+    height: 24px;
+    line-height: 24px;
+    margin-left: 16px !important;
+    min-width: 60px;
+    border-radius: 16px;
+    font-size: 14px;
+    background-color: @main-button-color;
+    color: #fff;
+    border-color: @main-button-color;
+    &:hover,
+    &:focus {
+      color: #fff;
+      background-color: #5080d0;
+      border-color: @main-button-color;
+    }
+    .iconfont {
+      margin-right: 5px;
+    }
+  }
+  .ant-confirm-content {
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 14px;
+    color: @select-border-color;
+  }
+  .ant-modal-body {
+    padding: 26px 20px 18px;
+  }
+  .ant-confirm-title {
+    font-size: 16px;
+  }
+}
+
+.successColor {
+  color: @success;
+}
+.warningColor {
+  color: @warning;
+}
+.dangerColor {
+  color: @danger;
+}
+.mainColor {
+  color: @main-button-color;
+}
+.overdueColor {
+  color: @select-border-color !important;
+}
+.secondaryTextColor {
+  color: @secondary-text-color;
+}
+.mainTexeColor {
+  color: @main-text-color;
+}
+.fixed_table-hide {
+  .ant-table-fixed-columns-in-body,
+  .ant-table-fixed-columns-in-body {
+    .tablbOptions,
+    span {
+      display: none;
+    }
+  }
+}
+.ant-btn .icon-shuaxin {
+  width: 20px;
+  display: inline-block;
+  text-align: center;
+  margin-left: -5px;
+}
+
+.top_move:hover {
+  transform: translate(0, -6px);
+}
+
+.top_move {
+  transition: linear 0.1s;
+}

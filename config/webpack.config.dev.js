@@ -53,7 +53,7 @@ module.exports = {
     strictExportPresence: true,
     rules: [
       {
-        test: /\.(js|jsx|tsx|mjs)$/,
+        test: /\.(js|jsx|mjs)$/,
         enforce: 'pre',
         use: [
           {
@@ -96,7 +96,7 @@ module.exports = {
             },
           },
           {
-            test: /\.(js|jsx|tsx|mjs)$/,
+            test: /\.(js|jsx|mjs)$/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
               options: {

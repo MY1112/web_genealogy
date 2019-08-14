@@ -109,7 +109,7 @@ const Authverify = withRouter(props => {
     }
     beforeRouterName = '/login'
     return <Redirect to="/login" />
-  } else if (pathname !== '/login' && pathname !== '/not-found') {
+  } else if (pathname !== '/login' && pathname !== '/not-found' && pathname !== '/') {
     if (pathname === '/admin') {
       beforeRouterName = '/not-found'
       return <Redirect  to="/not-found" />
