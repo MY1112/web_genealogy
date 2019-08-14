@@ -53,6 +53,7 @@ module.exports = {
       'pages': resolve('src/pages'),
       'mock': resolve('src/public/mock'),
       'api': resolve('src/api'),
+      'style': resolve('src/style'),
       'react-native': 'react-native-web',
     },
     plugins: [

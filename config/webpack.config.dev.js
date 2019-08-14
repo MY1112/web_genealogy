@@ -44,6 +44,7 @@ module.exports = {
       'pages': resolve('src/pages'),
       'api': resolve('src/api'),
       'mock': resolve('src/public/mock'),
+      'style': resolve('src/style')
     },
     plugins: [
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
