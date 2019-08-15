@@ -1,0 +1,26 @@
+@import '../../style/color.less';
+.ngHeader {
+  width: 100%;
+  height: 40px;
+  background: fade(#598fe8, 4%);
+  font-size: 14px;
+  color: #32375a;
+  display: flex;
+  &_span {
+    margin-left: 12px !important;
+    line-height: 40px;
+  }
+  &::before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    width: 2px;
+    background: #598fe8;
+  }
+}
+.ngHeader_add{
+  color: #598FE8;
+  margin-left: 8px;
+  cursor: pointer;
+  min-width: 83px;
+}

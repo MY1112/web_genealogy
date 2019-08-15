@@ -48,12 +48,11 @@ module.exports = {
     extensions: ['.web.js', '.mjs', '.js', '.ts', '.json', '.web.jsx', '.jsx', '.tsx', '.less'],
     alias: {
       '@': resolve('src'),
-      'public': resolve('src/public'),
+      'style': resolve('src/style'),
       'components': resolve('src/components'),
       'pages': resolve('src/pages'),
       'mock': resolve('src/public/mock'),
       'api': resolve('src/api'),
-      'style': resolve('src/style'),
       'react-native': 'react-native-web',
     },
     plugins: [

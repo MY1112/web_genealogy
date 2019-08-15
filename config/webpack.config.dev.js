@@ -39,12 +39,11 @@ module.exports = {
     extensions: ['.web.js', '.mjs', '.js', '.ts', '.json', '.web.jsx', '.jsx', '.tsx', '.less','.scss'],
     alias: {
       '@': resolve('src'),
-      'public': resolve('src/public'),
+      'style': resolve('src/style'),
       'components': resolve('src/components'),
       'pages': resolve('src/pages'),
       'api': resolve('src/api'),
-      'mock': resolve('src/public/mock'),
-      'style': resolve('src/style')
+      'mock': resolve('src/public/mock')
     },
     plugins: [
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),

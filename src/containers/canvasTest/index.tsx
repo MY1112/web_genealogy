@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import './index.less'
-// import { Button } from 'antd'
+import { Icon, Tooltip } from 'antd'
 import NGTree from 'components/NGTree'
+import NGHeader from 'components/NGHeader'
 
 const initialState = {
   sertchVal: '',
@@ -16,7 +17,7 @@ const initialState = {
     num: 1,
     pid: "0",
     pids: "[0],",
-    title: "粤秀整形外科医院",
+    title: "蓝集虎",
     value: "4296ff558285482ea70045d8aabce81a",
     children: [{
       children: [],
@@ -26,7 +27,7 @@ const initialState = {
       num: 0,
       pid: "4296ff558285482ea70045d8aabce81a",
       pids: "[0],[4296ff558285482ea70045d8aabce81a],",
-      title: "调拨部门2",
+      title: "蓝祥月",
       value: "4cc2366ba1d7d288a23d900ee47f2ca0"
     }]
   }],
@@ -68,26 +69,14 @@ class CanvasTest extends Component<IProps, IState> {
   private getOptions() {
     const render = {
       value: (text: { key: string }) => (
-        <span>666</span>
-        // <Options
-        //   // clickOptions={this.clickOptions.bind(this, text)}
-        //   className="fs-14"
-        //   type={[
-        //     {
-        //       name: 'add',
-        //       icon: 'icon-icon02',
-        //       text: '新增',
-        //       authorize: 'addDepartment'
-        //     },
-        //     {
-        //       name: 'delete',
-        //       icon: 'icon-shanchu1',
-        //       text: '删除',
-        //       display: text.key === '0-0',
-        //       authorize: 'deleteDepartment'
-        //     }
-        //   ]}
-        // />
+        <React.Fragment>
+          <Tooltip title="新增">
+            <Icon type="plus-circle" />
+          </Tooltip>
+          <Tooltip title="删除">
+            <Icon type="usergroup-delete" style={{marginLeft: '10px'}} />
+          </Tooltip>
+        </React.Fragment>
       )
     }
     return render
@@ -101,10 +90,22 @@ class CanvasTest extends Component<IProps, IState> {
       selectedKeys
     } = this.state
     return (
-      <div className="canvasTest pt-20 pl-20 pr-24 pb-20">
+      <div className="canvasTest">
         <div className="flex">
           <div className="canvasTest_left">
-            <div>顶部</div>
+            <NGHeader
+              title="人物关系"
+              size="big"
+              className="canvasTest_left_header"
+              extra={
+                <span className="canvasTest_options">
+                  <Tooltip title="新增">
+                    <Icon type="plus-circle" />
+                  </Tooltip>
+                </span>
+              }
+            />
+            <div className="canvasTest_left_tree pl-24 pr-24">
               <NGTree
                 className="ng_select_tree"
                 seartchVal={sertchVal}
@@ -116,6 +117,7 @@ class CanvasTest extends Component<IProps, IState> {
                 selectedKeys={selectedKeys}
                 titleClass="pr-60"
               />
+            </div>
           </div>
         </div>
       </div>
