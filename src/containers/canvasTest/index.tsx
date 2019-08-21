@@ -17,7 +17,7 @@ const initialState = {
     num: 1,
     pid: "0",
     pids: "[0],",
-    title: "蓝集虎",
+    title: "一",
     value: "4296ff558285482ea70045d8aabce81a",
     children: [{
       children: [],
@@ -27,7 +27,7 @@ const initialState = {
       num: 0,
       pid: "4296ff558285482ea70045d8aabce81a",
       pids: "[0],[4296ff558285482ea70045d8aabce81a],",
-      title: "蓝祥月",
+      title: "二",
       value: "4cc2366ba1d7d288a23d900ee47f2ca0"
     }]
   }],
@@ -92,7 +92,7 @@ class CanvasTest extends Component<IProps, IState> {
     return (
       <div className="canvasTest">
         <div className="flex">
-          <div className="canvasTest_left">
+          <div className="canvasTest_left mr-16">
             <NGHeader
               title="人物关系"
               size="big"
@@ -118,6 +118,11 @@ class CanvasTest extends Component<IProps, IState> {
                 titleClass="pr-60"
               />
             </div>
+          </div>
+          <div
+            className="canvasTest_page"
+          >
+            dd
           </div>
         </div>
       </div>
