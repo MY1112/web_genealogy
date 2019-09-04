@@ -79,13 +79,18 @@ module.exports = {
       },
       {
         oneOf: [
+          // {
+          //   test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+          //   loader: require.resolve('url-loader'),
+          //   options: {
+          //     limit: 10000,
+          //     name: 'static/media/[name].[hash:8].[ext]',
+          //   },
+          // },
+          // Common Image Formats
           {
-            test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-            loader: require.resolve('url-loader'),
-            options: {
-              limit: 10000,
-              name: 'static/media/[name].[hash:8].[ext]',
-            },
+            test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
+            use: 'url-loader'
           },
           // Process JS with Babel.
           {
