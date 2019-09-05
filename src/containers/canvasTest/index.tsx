@@ -100,7 +100,7 @@ class CanvasTest extends Component<IProps, IState> {
               extra={
                 <span className="canvasTest_options">
                   <Tooltip title="新增">
-                    <Icon type="plus-circle" />
+                    <Icon className="csp" type="plus-circle" />
                   </Tooltip>
                 </span>
               }

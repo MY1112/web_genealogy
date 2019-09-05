@@ -144,9 +144,9 @@ class Circle {
   constructor(x, y) {
       this.x = x;
       this.y = y;
-      this.r = Math.random() * 10 ;
-      this._mx = Math.random() ;
-      this._my = Math.random() ;
+      this.r = 4;
+      this._mx = Math.random()*(Math.random() > 0.5 ? 1 : -1);
+      this._my = Math.random()*(Math.random() > 0.5 ? 1 : -1);
   }
 
   drawCircle = (ctx) => {
@@ -187,7 +187,7 @@ class currentCirle extends Circle {
   drawCircle = (ctx) => {
       ctx.beginPath();
       //this.r = (this.r < 14 && this.r > 1) ? this.r + (Math.random() * 2 - 1) : 2;
-      this.r = 8;
+      this.r = 6;
       ctx.arc(this.x, this.y, this.r, 0, 360);
       ctx.closePath();
       //ctx.fillStyle = 'rgba(0,0,0,' + (parseInt(Math.random() * 100) / 100) + ')'
