@@ -122,7 +122,7 @@ class CanvasTest extends Component<IProps, IState> {
           <div
             className="canvasTest_page"
           >
-            dd
+            空
           </div>
         </div>
       </div>
