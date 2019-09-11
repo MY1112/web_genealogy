@@ -122,7 +122,9 @@ class CanvasTest extends Component<IProps, IState> {
           <div
             className="canvasTest_page"
           >
-            空
+            <div className="canvasTest_page_content">
+              {/* {this.canvasTestPage()} */}
+            </div>
           </div>
         </div>
       </div>

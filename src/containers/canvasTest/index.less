@@ -2,7 +2,7 @@
  * @Author: mengyuan 
  * @Date: 2019-08-14 18:21:52 
  * @Last Modified by: mengyuan
- * @Last Modified time: 2019-09-10 17:48:22
+ * @Last Modified time: 2019-09-11 10:20:04
  */
 .canvasTest {
   &_left {
@@ -28,7 +28,22 @@
     background: url('../../assets/imgs/customer/leftTop.png') 0% 0% no-repeat,
     url('../../assets/imgs/customer/rightBottom.png') 100% 100% no-repeat;
     background-color: #ffffff;
-
+    &_content {
+      background: #ffffff;
+      width: 600px;
+      height: 560px;
+      max-width: 78%;
+      max-height: 90%;
+      margin-bottom: 20px;
+      box-shadow: 0px 0px 8px 0px rgba(50,55,90,0.08);
+      position: relative;
+    }
+    &_content::before {
+      content: '';
+      display: block;
+      height: 4px;
+      background: #598fe8;
+    }
   }
   &_options {
     position: absolute;
