@@ -1,3 +1,4 @@
+
 export const getFormList = (that: any) => [
   {
     className: 'flex_sb flex_wrap',
@@ -6,9 +7,9 @@ export const getFormList = (that: any) => [
         formItemLayout: {},
         type: 'input',
         field: 'title',
-        label: '部门名称',
+        label: '成员名称',
         fieldDecorator: {
-          rules: [{ required: true, message: '部门名称必须填写' }]
+          rules: [{ required: true, message: '成员名称必须填写' }]
         },
         attribute: {
           placeholder: '请输入名称',
@@ -19,23 +20,23 @@ export const getFormList = (that: any) => [
         formItemLayout: {},
         type: 'treeSelect',
         field: 'pid',
-        label: '上级部门',
+        label: '上级成员',
         fieldDecorator: {
-          rules: [{ required: true, message: '请选择上级部门' }]
+          rules: [{ required: true, message: '请选择上级成员' }]
         },
         attribute: {
           treeData: [...that.state.pidTree],
-          placeholder: '请选择上级部门'
+          placeholder: '请选择上级成员'
         }
       },
       {
         formItemLayout: {},
         type: 'radio',
         field: 'medicalFlag',
-        label: '是否为医疗部',
+        label: '是否在世',
         fieldDecorator: {
           initialValue: true,
-          rules: [{ required: true, message: '请选择是否为医疗部' }]
+          rules: [{ required: true, message: '请选择是否在世' }]
         },
         attribute: {
           options: [

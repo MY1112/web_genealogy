@@ -63,7 +63,7 @@ module.exports = {
     strictExportPresence: true,
     rules: [
       {
-        test: /\.(js|jsx|tsx|mjs)$/,
+        test: /\.(js|jsx|tsx|ts|mjs)$/,
         enforce: 'pre',
         use: [
           {
@@ -94,7 +94,7 @@ module.exports = {
           },
           // Process JS with Babel.
           {
-            test: /\.(js|jsx|tsx|mjs)$/,
+            test: /\.(js|jsx|tsx|ts|mjs)$/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
@@ -123,7 +123,7 @@ module.exports = {
           },
           {
             loader: require.resolve('file-loader'),
-            exclude: [/\.(js|jsx|tsx|mjs)$/,/\.(css|less)$/, /\.html$/, /\.json$/],
+            exclude: [/\.(js|jsx|tsx|ts|mjs)$/,/\.(css|less)$/, /\.html$/, /\.json$/],
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
             },

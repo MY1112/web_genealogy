@@ -175,7 +175,7 @@ module.exports = {
             ],
           },
           {
-            exclude: [/\.(js|jsx|tsx|mjs)$/,/\.(css|less)$/, /\.html$/, /\.json$/],
+            exclude: [/\.(js|jsx|tsx|ts|mjs)$/,/\.(css|less)$/, /\.html$/, /\.json$/],
             loader: require.resolve('file-loader'),
             options: {
               name: 'static/media/[name].[hash:8].[ext]',

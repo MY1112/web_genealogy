@@ -1,14 +1,14 @@
 /*
  * @Author: huangying
  * @Date: 2018-08-29 18:27:42
- * @Last Modified by: huangying
- * @Last Modified time: 2019-03-19 11:17:29
+ * @Last Modified by: mengyuan
+ * @Last Modified time: 2019-09-18 17:47:49
  */
 
 import React, { PureComponent } from 'react'
 import NGForm, { IWrappedComponentRef, IList, WrappedForm } from 'components/NGForm'
 import NGModal from '../NGModal'
-import { getFormList, getList } from './ExamplesList'
+import getFormList from './ExamplesList'
 import { Form, Input } from 'antd'
 import './Examples.less'
 const FormItem = Form.Item
@@ -124,7 +124,6 @@ class Home extends PureComponent<IProps, IState> {
   }
   public render() {
     const list: IList[] = getFormList(this)
-    const list2: IList[] = getList(this)
     const formItemLayout = {
       labelCol: { span: 24 },
       wrapperCol: { span: 24 }
@@ -140,21 +139,8 @@ class Home extends PureComponent<IProps, IState> {
         <div>
           <NGForm wrappedComponentRef={this.saveFormRef} list={list}  layout="vertical"
               formItemLayout={formItemLayout}/>
-          <NGForm wrappedComponentRef={this.saveFormRef} list={list2}  layout="vertical"
-              formItemLayout={formItemLayout}/>
         </div>
         </NGModal>
-        {/* <NGModal
-          width={600}
-          onCancel={this.resetFields}
-          visible={true}
-          onOk={this.validateFieldsAndScroll}
-        >
-        <div>
-          <NGForm wrappedComponentRef={this.saveFormRef} list={list} />
-          <NGForm wrappedComponentRef={this.saveFormRef} list={list2}  />
-        </div>
-        </NGModal> */}
       </div>
     )
   }

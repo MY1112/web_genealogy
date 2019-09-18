@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react'
 // import { message } from 'antd'
-// import NGForm, { IWrappedComponentRef } from 'components/NGForm'
+import NGForm, { IWrappedComponentRef } from 'components/NGForm'
 import NGModal from 'components/NGModal'
-// import { getFormList } from './GetFormList'
+import { getFormList } from './FormList'
 
 const initialState = {
   pidTree: [],
@@ -29,16 +29,16 @@ interface IState {
 }
 
 class CustomerAdd extends PureComponent<IProps, IState> {
-  // private form: IWrappedComponentRef
+  private form: IWrappedComponentRef
   constructor(props: IProps) {
     super(props)
     // this.handleAddOk = throttle(this.handleAddOk, 400)
   }
   readonly state: IState = initialState
 
-  // private saveFormRef = (form: IWrappedComponentRef) => {
-  //   this.form = form
-  // }
+  private saveFormRef = (form: IWrappedComponentRef) => {
+    this.form = form
+  }
 
   componentDidMount() {
     setTimeout(() => {
@@ -47,10 +47,10 @@ class CustomerAdd extends PureComponent<IProps, IState> {
   }
   private getParantTree = () => {
     const { addItme } = this.props
-    // const form = this.form.props.form
-    // if (addItme.value) {
-    //   form.setFieldsValue({ pid: addItme.value })
-    // }
+    const form = this.form.props.form
+    if (addItme.value) {
+      form.setFieldsValue({ pid: addItme.value })
+    }
     
       this.setState({
         pidTree: [{
@@ -99,11 +99,11 @@ class CustomerAdd extends PureComponent<IProps, IState> {
     this.props.onCancel()
   }
   render() {
-    // const list = getFormList(this)
-    // const { listDataLen } = this.props
-    // if (!listDataLen) {
-    //   delete list[0].list[1]
-    // }
+    const list = getFormList(this)
+    const { listDataLen } = this.props
+    if (!listDataLen) {
+      delete list[0].list[1]
+    }
     return (
       <React.Fragment>
         <NGModal
@@ -117,7 +117,7 @@ class CustomerAdd extends PureComponent<IProps, IState> {
           onCancel={this.onCancel}
           confirmLoading={this.state.confirmLoading}
         >
-          {/* <NGForm wrappedComponentRef={this.saveFormRef} list={list} /> */}
+          <NGForm wrappedComponentRef={this.saveFormRef} list={list} />
         </NGModal>
       </React.Fragment>
     )
