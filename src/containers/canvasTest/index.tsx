@@ -3,6 +3,7 @@ import './index.less'
 import { Icon, Tooltip } from 'antd'
 import NGTree from 'components/NGTree'
 import NGHeader from 'components/NGHeader'
+import CustomerAdd from './Components/CustomerAdd'
 
 const initialState = {
   sertchVal: '',
@@ -65,16 +66,32 @@ interface IProps {}
 class CanvasTest extends Component<IProps, IState> {
   readonly state: IState = initialState
 
+  private handleAdd(item: object) {
+    this.setState({
+      visible: true,
+      addItme: item
+    })
+  }
+
+  private onCancel() {
+    this.setState({
+      visible: false
+    })
+  }
 
   private getOptions() {
     const render = {
       value: (text: { key: string }) => (
         <React.Fragment>
           <Tooltip title="新增">
-            <Icon type="plus-circle" />
+            <span onClick={this.handleAdd.bind(this, text)} >
+              <Icon type="plus-circle" />
+            </span>
           </Tooltip>
           <Tooltip title="删除">
-            <Icon type="usergroup-delete" style={{marginLeft: '10px'}} />
+            <span onClick={this.handleAdd.bind(this, text)} >
+              <Icon type="usergroup-delete" style={{marginLeft: '10px'}} />
+            </span>
           </Tooltip>
         </React.Fragment>
       )
@@ -82,12 +99,19 @@ class CanvasTest extends Component<IProps, IState> {
     return render
   }
 
+  private addSuccess() {
+    // this.getList()
+    console.log('成功')
+  }
+
   render() {
     const {
       listData,
       sertchVal,
       loading,
-      selectedKeys
+      selectedKeys,
+      visible,
+      addItme
     } = this.state
     return (
       <div className="canvasTest">
@@ -98,7 +122,10 @@ class CanvasTest extends Component<IProps, IState> {
               size="big"
               className="canvasTest_left_header"
               extra={
-                <span className="canvasTest_options">
+                <span
+                  className="canvasTest_options"
+                  onClick={this.handleAdd.bind(this,{})}
+                >
                   <Tooltip title="新增">
                     <Icon className="csp" type="plus-circle" />
                   </Tooltip>
@@ -119,14 +146,20 @@ class CanvasTest extends Component<IProps, IState> {
               />
             </div>
           </div>
-          <div
-            className="canvasTest_page"
-          >
+          <div className="canvasTest_page">
             <div className="canvasTest_page_content">
               {/* {this.canvasTestPage()} */}
             </div>
           </div>
         </div>
+        {visible && (
+          <CustomerAdd
+            onCancel={this.onCancel.bind(this)}
+            addItme={addItme}
+            addSuccess={this.addSuccess}
+            listDataLen={listData.length}
+          />
+        )}
       </div>
     )
   }

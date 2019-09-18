@@ -1,0 +1,70 @@
+
+//  @import '../../style/color.less';
+
+ .ngForm {
+   .ant-form-item-control {
+     line-height: 1.5;
+   }
+   .ant-select-selection__rendered {
+   .employeePicker_depart {
+     display: none;
+   }
+   .employeePicker_name {
+    //  color: @secondary-text-color;
+   }
+   .employeePicker_name-active {
+    //  color: @secondary-text-color !important;
+   }
+ }
+
+
+ }
+
+ .ngForm_searchSelect, .ngForm_searchTreeSelect {
+  .ant-select-selection__rendered {
+    margin-right: 15px;
+    position: relative;
+    height: 32px!important;
+    overflow: hidden;
+  }
+   margin-top: 4px;
+   .ant-select-selection.ant-select-selection--multiple {
+    height: 32px;
+    overflow: hidden;
+   ul {
+     margin-right: 36px;
+     display: flex;
+     overflow: hidden;
+     .ant-select-selection__choice {
+       flex: none;
+       .ant-select-selection__choice__remove {
+         display: none
+       }
+     }
+     .ant-select-selection__choice.ant-select-selection__choice__disabled {
+       position: absolute;
+       right: 0;
+       border: none;
+       background-color: transparent;
+     }
+   }
+ }
+
+ }
+ .ngForm_searchTreeSelect {
+   .ant-select-selection.ant-select-selection--multiple{
+     ul.ant-select-selection__rendered {
+     margin-right: 30px;
+     padding-right: 36px;
+     position: relative;
+     & .ant-select-selection__choice{
+       &:not(:first-child) {
+           background: transparent;
+           position: absolute;
+           right: -24px;
+           border: none;
+       }
+     }
+   }
+   }
+ }
