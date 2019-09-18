@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import NGForm, { IWrappedComponentRef } from 'components/NGForm';
 import { Button, message } from 'antd';
-import Api, { IMODApiData } from '../Api';
+// import Api, { IMODApiData } from '../Api';
 import { IdetailItem } from '../index';
-import { throttle } from 'lodash-es';
+// import { throttle } from 'lodash-es';
 const initialState = {
   loading: false
 };
@@ -17,11 +17,11 @@ interface IProps {
 interface IState {
   loading: boolean;
 }
-export default class DepartmentEdit extends PureComponent<IProps, IState> {
+export default class CustomerEdit extends PureComponent<IProps, IState> {
   form: IWrappedComponentRef;
   constructor(props: IProps) {
     super(props);
-    this.handleEdit = throttle(this.handleEdit, 400);
+    // this.handleEdit = throttle(this.handleEdit, 400);
   }
   readonly state: IState = initialState;
 
@@ -116,28 +116,28 @@ export default class DepartmentEdit extends PureComponent<IProps, IState> {
     this.form = form;
   };
   private handleEdit = () => {
-    const form = this.form.props.form;
-    const { detailItem } = this.props;
-    this.setState({ loading: true });
-    form.validateFieldsAndScroll((err: object, values: object) => {
-      if (err) {
-        this.setState({ loading: false });
-        return;
-      }
-      Api.putEditList({ ...values, id: detailItem.id })
-        .then((res: IMODApiData) => {
-          const { code } = res;
-          this.setState({ loading: false });
-          if (code === 10000) {
-            message.success('编辑成功');
-            this.props.success({ ...values, value: detailItem.id });
-            this.props.cancel();
-          }
-        })
-        .catch(() => {
-          this.setState({ loading: false });
-        });
-    });
+    // const form = this.form.props.form;
+    // const { detailItem } = this.props;
+    // this.setState({ loading: true });
+    // form.validateFieldsAndScroll((err: object, values: object) => {
+    //   if (err) {
+    //     this.setState({ loading: false });
+    //     return;
+    //   }
+    //   Api.putEditList({ ...values, id: detailItem.id })
+    //     .then((res: IMODApiData) => {
+    //       const { code } = res;
+    //       this.setState({ loading: false });
+    //       if (code === 10000) {
+    //         message.success('编辑成功');
+    //         this.props.success({ ...values, value: detailItem.id });
+    //         this.props.cancel();
+    //       }
+    //     })
+    //     .catch(() => {
+    //       this.setState({ loading: false });
+    //     });
+    // });
   };
 
   private handleCancel = () => {

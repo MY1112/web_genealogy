@@ -3,7 +3,10 @@ import './index.less'
 import { Icon, Tooltip } from 'antd'
 import NGTree from 'components/NGTree'
 import NGHeader from 'components/NGHeader'
+import NGNoData from 'components/NGNoData'
 import CustomerAdd from './Components/CustomerAdd'
+import CustomerEdit from './Components/CustomerEdit'
+import CustomerDetail from './Components/CustomerDetail'
 
 const initialState = {
   sertchVal: '',
@@ -109,7 +112,7 @@ class CanvasTest extends Component<IProps, IState> {
     const departmentPage = isChecked ? (
       <div className="departmentDetail">
         {status ? (
-          <DepartmentEdit
+          <CustomerEdit
             listData={listData}
             handleEdit={this.handleEdit}
             detailItem={detailItem}
@@ -117,7 +120,7 @@ class CanvasTest extends Component<IProps, IState> {
             success={this.editSuccess}
           />
         ) : (
-          <DepartmentDetail
+          <CustomerDetail
             handleEdit={this.handleEdit}
             detailItem={detailItem}
           />
@@ -127,6 +130,18 @@ class CanvasTest extends Component<IProps, IState> {
       <NGNoData text="还没有选中的内容哦~"/>
     )
     return departmentPage
+  }
+
+  private handleEdit = () => {
+
+  }
+
+  private cancelEdit = () => {
+
+  }
+
+  private editSuccess = () => {
+
   }
 
   render() {
@@ -168,6 +183,7 @@ class CanvasTest extends Component<IProps, IState> {
                 autoExpandedKeys={['0-0']}
                 selectedKeys={selectedKeys}
                 titleClass="pr-60"
+                rowKey={'id'}
               />
             </div>
           </div>

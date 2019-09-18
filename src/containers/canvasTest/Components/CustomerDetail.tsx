@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react'
-import NGPage,{IPageProps} from 'components/NGPage'
+// import NGPage,{IPageProps} from 'components/NGPage'
 import { Button } from 'antd'
 const initialState = {}
-interface IProps extends IPageProps{
+interface IProps {
   handleEdit: () => void
   detailItem: any
 }
 interface IState {}
-class DepartmentDetail extends PureComponent<IProps, IState> {
+class CustomerDetail extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props)
     this.handleEdit = this.handleEdit.bind(this)
@@ -46,10 +46,10 @@ class DepartmentDetail extends PureComponent<IProps, IState> {
         <ul className="departmentDetail pl-50 pr-50">
         {this.getDetailItem()}
         </ul>
-        {this.props.getPerMiss('editDepartment')&&<div className=" flex_c departmentBtn">{addButton}</div>}
+        <div className=" flex_c departmentBtn">{addButton}</div>}
       </React.Fragment>
     )
   }
 }
 
-export default NGPage(DepartmentDetail)
+export default CustomerDetail
