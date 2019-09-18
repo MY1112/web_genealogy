@@ -103,6 +103,31 @@ class CanvasTest extends Component<IProps, IState> {
     // this.getList()
     console.log('成功')
   }
+  // 左边显示
+  private canvasTestPage() {
+    const { status, isChecked, listData, detailItem } = this.state
+    const departmentPage = isChecked ? (
+      <div className="departmentDetail">
+        {status ? (
+          <DepartmentEdit
+            listData={listData}
+            handleEdit={this.handleEdit}
+            detailItem={detailItem}
+            cancel={this.cancelEdit}
+            success={this.editSuccess}
+          />
+        ) : (
+          <DepartmentDetail
+            handleEdit={this.handleEdit}
+            detailItem={detailItem}
+          />
+        )}
+      </div>
+    ) : (
+      <NGNoData text="还没有选中的内容哦~"/>
+    )
+    return departmentPage
+  }
 
   render() {
     const {
@@ -148,7 +173,7 @@ class CanvasTest extends Component<IProps, IState> {
           </div>
           <div className="canvasTest_page">
             <div className="canvasTest_page_content">
-              {/* {this.canvasTestPage()} */}
+              {this.canvasTestPage()}
             </div>
           </div>
         </div>
