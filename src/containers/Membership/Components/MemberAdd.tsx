@@ -28,7 +28,7 @@ interface IState {
   confirmLoading: boolean
 }
 
-class CustomerAdd extends PureComponent<IProps, IState> {
+class MemberAdd extends PureComponent<IProps, IState> {
   private form: IWrappedComponentRef
   constructor(props: IProps) {
     super(props)
@@ -123,4 +123,4 @@ class CustomerAdd extends PureComponent<IProps, IState> {
     )
   }
 }
-export default CustomerAdd
+export default MemberAdd

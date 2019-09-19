@@ -15,7 +15,7 @@ interface IProps {
 interface IState {
   loading: boolean;
 }
-export default class CustomerEdit extends PureComponent<IProps, IState> {
+export default class MemberEdit extends PureComponent<IProps, IState> {
   form: IWrappedComponentRef;
   constructor(props: IProps) {
     super(props);
@@ -166,11 +166,11 @@ export default class CustomerEdit extends PureComponent<IProps, IState> {
     const list = this.getFormList();
     return (
       <React.Fragment>
-        <header className="CustomerDetail_header">{detailItem.title}</header>
-        <div className="CustomerEdit">
+        <header className="memberDetail_header">{detailItem.title}</header>
+        <div className="memberEdit">
           <NGForm wrappedComponentRef={this.saveFormRef} list={list} />
         </div>
-        <div className=" flex_c CustomerBtn">{this.getAddButton()}</div>
+        <div className=" flex_c memberBtn">{this.getAddButton()}</div>
       </React.Fragment>
     );
   }

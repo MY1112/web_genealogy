@@ -36,10 +36,20 @@ const routers = [
     ]
   },
   {
-    menuName: '测试',
-    menuIco: 'sliders',
-    component: 'canvasTest/index.tsx', // 主页
-    path: '/admin/test' // 主页
+    menuName: '成员',
+    menuIco: 'team',
+    children: [
+      {
+        menuName: '成员录入',
+        component: 'Membership/index.tsx',
+        path: '/admin/Membership'
+      },
+      {
+        menuName: '成员树',
+        component: 'Membership/MemberTree/index.tsx',
+        path: '/admin/MemberTree'
+      }
+    ]
   },
   {
     menuName: '关于我',

@@ -41,9 +41,7 @@ module.exports = {
       '@': resolve('src'),
       'style': resolve('src/style'),
       'components': resolve('src/components'),
-      'pages': resolve('src/pages'),
-      'api': resolve('src/api'),
-      'mock': resolve('src/public/mock')
+      'util': resolve('src/util')
     },
     plugins: [
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),

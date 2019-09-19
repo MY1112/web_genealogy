@@ -4,9 +4,9 @@ import { Icon, Tooltip, Input } from 'antd'
 import NGTree from 'components/NGTree'
 import NGHeader from 'components/NGHeader'
 import NGNoData from 'components/NGNoData'
-import CustomerAdd from './Components/CustomerAdd'
-import CustomerEdit from './Components/CustomerEdit'
-import CustomerDetail from './Components/CustomerDetail'
+import MemberAdd from './Components/MemberAdd'
+import MemberEdit from './Components/MemberEdit'
+import MemberDetail from './Components/MemberDetail'
 
 const initialState = {
   sertchVal: '',
@@ -66,7 +66,7 @@ interface IState {
 
 interface IProps {}
 
-class CanvasTest extends Component<IProps, IState> {
+class Membership extends Component<IProps, IState> {
   constructor(props: IProps) {
     super(props)
     this.onChangeContent = this.onChangeContent.bind(this)
@@ -78,7 +78,7 @@ class CanvasTest extends Component<IProps, IState> {
     this.cancelEdit = this.cancelEdit.bind(this)
     this.editSuccess = this.editSuccess.bind(this)
     this.getSearch = this.getSearch.bind(this)
-    this.canvasTestPage = this.canvasTestPage.bind(this)
+    this.MembershipPage = this.MembershipPage.bind(this)
   }
   readonly state: IState = initialState
 
@@ -197,12 +197,12 @@ class CanvasTest extends Component<IProps, IState> {
     })
   }
   // 左边显示
-  private canvasTestPage() {
+  private MembershipPage() {
     const { status, isChecked, listData, detailItem } = this.state
-    const CustomerPage = isChecked ? (
-      <div className="CustomerDetail">
+    const MemberPage = isChecked ? (
+      <div className="memberDetail">
         {status ? (
-          <CustomerEdit
+          <MemberEdit
             listData={listData}
             handleEdit={this.handleEdit}
             detailItem={detailItem}
@@ -210,7 +210,7 @@ class CanvasTest extends Component<IProps, IState> {
             success={this.editSuccess}
           />
         ) : (
-          <CustomerDetail
+          <MemberDetail
             handleEdit={this.handleEdit}
             detailItem={detailItem}
           />
@@ -219,7 +219,7 @@ class CanvasTest extends Component<IProps, IState> {
     ) : (
       <NGNoData text="还没有选中的内容哦~"/>
     )
-    return CustomerPage
+    return MemberPage
   }
 
   // 搜索
@@ -227,7 +227,7 @@ class CanvasTest extends Component<IProps, IState> {
     const search = (
       <Input
         className="search_icon mr-20"
-        placeholder="请输入部门名称"
+        placeholder="请输入成员名称"
         suffix={
           <i className="fs-18 iconfont icon-sousuo fs-20 ngLayout_headerTop_searchIcon csp" />
         }
@@ -248,16 +248,16 @@ class CanvasTest extends Component<IProps, IState> {
       addItme
     } = this.state
     return (
-      <div className="canvasTest">
+      <div className="Membership">
         <div className="flex">
-          <div className="canvasTest_left mr-16">
+          <div className="Membership_left mr-16">
             <NGHeader
               title="人物关系"
               size="big"
-              className="canvasTest_left_header"
+              className="Membership_left_header"
               extra={
                 <span
-                  className="canvasTest_options"
+                  className="Membership_options"
                   onClick={this.handleAdd.bind(this,{})}
                 >
                   <Tooltip title="新增">
@@ -267,7 +267,7 @@ class CanvasTest extends Component<IProps, IState> {
               }
             />
             <p className="pl-16 pr-16 mt-16">{this.getSearch()}</p>
-            <div className="canvasTest_left_tree pl-24 pr-24">
+            <div className="Membership_left_tree pl-24 pr-24">
               <NGTree
                 className="ng_select_tree"
                 seartchVal={sertchVal}
@@ -282,14 +282,14 @@ class CanvasTest extends Component<IProps, IState> {
               />
             </div>
           </div>
-          <div className="canvasTest_page">
-            <div className="canvasTest_page_content">
-              {this.canvasTestPage()}
+          <div className="Membership_page">
+            <div className="Membership_page_content">
+              {this.MembershipPage()}
             </div>
           </div>
         </div>
         {visible && (
-          <CustomerAdd
+          <MemberAdd
             onCancel={this.onCancel.bind(this)}
             addItme={addItme}
             addSuccess={this.addSuccess}
@@ -300,4 +300,4 @@ class CanvasTest extends Component<IProps, IState> {
     )
   }
 }
-export default CanvasTest
+export default Membership

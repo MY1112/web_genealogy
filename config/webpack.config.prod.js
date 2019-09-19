@@ -50,9 +50,7 @@ module.exports = {
       '@': resolve('src'),
       'style': resolve('src/style'),
       'components': resolve('src/components'),
-      'pages': resolve('src/pages'),
-      'mock': resolve('src/public/mock'),
-      'api': resolve('src/api'),
+      'util': resolve('src/util'),
       'react-native': 'react-native-web',
     },
     plugins: [

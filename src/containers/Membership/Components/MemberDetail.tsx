@@ -6,7 +6,7 @@ interface IProps {
   detailItem: any
 }
 interface IState {}
-class CustomerDetail extends PureComponent<IProps, IState> {
+class MemberDetail extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props)
     this.handleEdit = this.handleEdit.bind(this)
@@ -41,14 +41,14 @@ class CustomerDetail extends PureComponent<IProps, IState> {
 
     return (
       <React.Fragment>
-        <header className="CustomerDetail_header">{detailItem.title}</header>
-        <ul className="CustomerDetail_content pl-50 pr-50">
+        <header className="memberDetail_header">{detailItem.title}</header>
+        <ul className="memberDetail_content pl-50 pr-50">
         {this.getDetailItem()}
         </ul>
-        <div className="flex_c CustomerBtn">{addButton}</div>
+        <div className="flex_c memberBtn">{addButton}</div>
       </React.Fragment>
     )
   }
 }
 
-export default CustomerDetail
+export default MemberDetail
