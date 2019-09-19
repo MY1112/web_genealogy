@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.less'
-import { Icon, Tooltip } from 'antd'
+import { Icon, Tooltip, Input } from 'antd'
 import NGTree from 'components/NGTree'
 import NGHeader from 'components/NGHeader'
 import NGNoData from 'components/NGNoData'
@@ -59,7 +59,7 @@ interface IState {
   isChecked: boolean
   addItme: object
   listData: object[]
-  detailItem: IdetailItem
+  detailItem: any
   loading: boolean
   selectedKeys: string[]
 }
@@ -67,7 +67,26 @@ interface IState {
 interface IProps {}
 
 class CanvasTest extends Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props)
+    this.onChangeContent = this.onChangeContent.bind(this)
+    this.handleAdd = this.handleAdd.bind(this)
+    this.onCancel = this.onCancel.bind(this)
+    this.handleEdit = this.handleEdit.bind(this)
+    this.handleChecked = this.handleChecked.bind(this)
+    this.addSuccess = this.addSuccess.bind(this)
+    this.cancelEdit = this.cancelEdit.bind(this)
+    this.editSuccess = this.editSuccess.bind(this)
+    this.getSearch = this.getSearch.bind(this)
+    this.canvasTestPage = this.canvasTestPage.bind(this)
+  }
   readonly state: IState = initialState
+
+  private onChangeContent(e: any) {
+    this.setState({
+      sertchVal: e.target.value
+    })
+  }
 
   private handleAdd(item: object) {
     this.setState({
@@ -103,14 +122,85 @@ class CanvasTest extends Component<IProps, IState> {
   }
 
   private addSuccess() {
-    // this.getList()
+    this.getList()
     console.log('成功')
+  }
+  private handleEdit() {
+    this.setState({
+      status: true
+    })
+  }
+  private handleChecked(item: any) {
+    this.setState({
+      detailItem: {
+        value: '',
+        createBy: "1",
+        createDate: 1548402772000,
+        delFlag: 0,
+        id: "4cc2366ba1d7d288a23d900ee47f2ca0",
+        medicalFlag: true,
+        medicalFlagStr: "",
+        num: 1,
+        pTitle: "一",
+        pid: "4296ff558285482ea70045d8aabce81a",
+        pids: "[0],[4296ff558285482ea70045d8aabce81a],",
+        title: "二",
+        titps: null,
+        updateBy: "1",
+        updateDate: 1548402772000,
+        userSum: 8,
+        version: null
+      },
+      selectedKeys: [item.key]
+    },() => {
+      this.setState({
+        isChecked: true,
+        status: false
+      })
+    })
+  }
+
+  private editSuccess(val: { value: string; key: string }) {
+    this.getList()
+    this.handleChecked(val)
+  }
+
+  private getList = () => {
+          this.setState({
+            listData: [{
+              ext: "",
+              id: "",
+              key: "0-0",
+              num: 1,
+              pid: "0",
+              pids: "[0],",
+              title: "一",
+              value: "4296ff558285482ea70045d8aabce81a",
+              children: [{
+                children: [],
+                ext: "",
+                id: "",
+                key: "0-0-0",
+                num: 0,
+                pid: "4296ff558285482ea70045d8aabce81a",
+                pids: "[0],[4296ff558285482ea70045d8aabce81a],",
+                title: "二",
+                value: "4cc2366ba1d7d288a23d900ee47f2ca0"
+              }]
+            }]
+          })
+  }
+
+  private cancelEdit() {
+    this.setState({
+      status: false
+    })
   }
   // 左边显示
   private canvasTestPage() {
     const { status, isChecked, listData, detailItem } = this.state
-    const departmentPage = isChecked ? (
-      <div className="departmentDetail">
+    const CustomerPage = isChecked ? (
+      <div className="CustomerDetail">
         {status ? (
           <CustomerEdit
             listData={listData}
@@ -129,19 +219,23 @@ class CanvasTest extends Component<IProps, IState> {
     ) : (
       <NGNoData text="还没有选中的内容哦~"/>
     )
-    return departmentPage
+    return CustomerPage
   }
 
-  private handleEdit = () => {
-
-  }
-
-  private cancelEdit = () => {
-
-  }
-
-  private editSuccess = () => {
-
+  // 搜索
+  private getSearch() {
+    const search = (
+      <Input
+        className="search_icon mr-20"
+        placeholder="请输入部门名称"
+        suffix={
+          <i className="fs-18 iconfont icon-sousuo fs-20 ngLayout_headerTop_searchIcon csp" />
+        }
+        onBlur={this.onChangeContent}
+        onPressEnter={this.onChangeContent}
+      />
+    )
+    return search
   }
 
   render() {
@@ -172,11 +266,12 @@ class CanvasTest extends Component<IProps, IState> {
                 </span>
               }
             />
+            <p className="pl-16 pr-16 mt-16">{this.getSearch()}</p>
             <div className="canvasTest_left_tree pl-24 pr-24">
               <NGTree
                 className="ng_select_tree"
                 seartchVal={sertchVal}
-                // handleChecked={this.handleChecked}
+                handleChecked={this.handleChecked}
                 listData={listData}
                 opions={this.getOptions()}
                 loading={loading}

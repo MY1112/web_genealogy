@@ -4,6 +4,7 @@
  * @Last Modified by: mengyuan
  * @Last Modified time: 2019-09-11 10:20:04
  */
+@import '../../style/color.less';
 .canvasTest {
   &_left {
     overflow-y: auto;
@@ -28,6 +29,9 @@
     // background: url('../../assets/imgs/customer/leftTop.png') 0% 0% no-repeat,
     // url('../../assets/imgs/customer/rightBottom.png') 100% 100% no-repeat;
     background-color: #ffffff;
+    .ant-btn {
+      min-width: 140px;
+    }
     &_content {
       background: #ffffff;
       width: 600px;
@@ -35,7 +39,7 @@
       max-width: 78%;
       max-height: 90%;
       margin-bottom: 20px;
-      box-shadow: 0px 0px 8px 0px rgba(50,55,90,0.08);
+      box-shadow: 0px 0px 8px 0px rgba(50, 55, 90, 0.08);
       position: relative;
     }
     &_content::before {
@@ -43,6 +47,22 @@
       display: block;
       height: 4px;
       background: #598fe8;
+    }
+    &_noChose {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 192px;
+      height: 200px;
+      &_word {
+        margin-top: 58px;
+        text-align: center;
+        font-size: 14px;
+        color: #727b8d;
+      }
     }
   }
   &_options {
@@ -52,5 +72,104 @@
     right: 16px;
     margin: auto;
     height: 24px;
+  }
+
+  // 详情
+  .CustomerDetail {
+    .mes_list_row {
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    .CustomerBtn {
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+      margin-bottom: 36px;
+    }
+    font-size: 12px;
+    .mes_list_row_title,
+    .mes_list_row_value {
+      padding: 12px 0;
+    }
+    &_header {
+      background: #f5f8fe;
+      height: 80px;
+      line-height: 80px;
+      font-size: 24px;
+      text-align: center;
+      color: #598fe8;
+    }
+    &_content {
+      max-height: 380px;
+      overflow: auto;
+      font-size: 14px;
+    }
+  }
+
+  // 编辑
+  .CustomerEdit {
+    overflow: auto;
+    height: calc(~'100vh - 280px');
+    .ant-form-explain {
+      text-align: left;
+    }
+    .halfCol {
+      padding: 24px 50px 0px 50px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      .ant-form-item {
+        width: 200px;
+        .ant-input-disabled {
+          background: rgba(245, 246, 250, 1);
+          border: 1px solid #f1f2f3;
+          color: @main-text-color;
+          cursor: default;
+        }
+      }
+      .ant-form-item:nth-last-child(1):not(:nth-child(3)) {
+        width: 100%;
+      }
+    }
+  }
+  .postion_edit {
+    background: none;
+    padding: 20px 100px;
+  }
+  .search_icon.ant-input-affix-wrapper {
+    width: 100%;
+    border-bottom: 1px solid #f1f2f3;
+    .ant-input {
+      width: 100%;
+      background-color: #fff !important;
+      border: none;
+    }
+    &:hover {
+      border-color: #84b3f5;
+      .ngLayout_headerTop_searchIcon {
+        color: #84b3f5;
+      }
+    }
+    &:focus-within {
+      border-bottom: 1px solid #84b3f5;
+      .ngLayout_headerTop_searchIcon {
+        color: #84b3f5;
+      }
+    }
+  }
+}
+
+// 新增
+.treeTypeAddModal {
+  .ngForm {
+    height: auto;
+    padding: 20px 40px !important;
+    background: #ffffff;
+    .ant-form-item-control-wrapper {
+      width: 272px;
+    }
+  }
+  .ant-form-item:nth-last-child(1) {
+    margin-bottom: 10px;
   }
 }

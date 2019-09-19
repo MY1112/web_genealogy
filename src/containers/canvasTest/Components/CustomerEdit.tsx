@@ -1,9 +1,7 @@
 import React, { PureComponent } from 'react';
 import NGForm, { IWrappedComponentRef } from 'components/NGForm';
 import { Button, message } from 'antd';
-// import Api, { IMODApiData } from '../Api';
 import { IdetailItem } from '../index';
-// import { throttle } from 'lodash-es';
 const initialState = {
   loading: false
 };
@@ -12,7 +10,7 @@ interface IProps {
   cancel: () => void;
   detailItem: IdetailItem;
   listData: object[];
-  success: (val: object) => void;
+  success: (val: { value: string; key: string }) => void;
 }
 interface IState {
   loading: boolean;
@@ -33,7 +31,7 @@ export default class CustomerEdit extends PureComponent<IProps, IState> {
           formItemLayout: {},
           type: 'input',
           field: 'title',
-          label: '部门名称',
+          label: '成员名称',
           fieldDecorator: {
             rules: [{ required: true, message: '部门名称必须填写' }]
           },
@@ -46,22 +44,22 @@ export default class CustomerEdit extends PureComponent<IProps, IState> {
           formItemLayout: {},
           type: 'treeSelect',
           field: 'pid',
-          label: '上级部门',
+          label: '上级成员',
           fieldDecorator: {
-            rules: [{ required: true, message: '请选择上级部门' }]
+            rules: [{ required: true, message: '请选择上级成员' }]
           },
           attribute: {
             treeData: [...this.props.listData],
-            placeholder: '请选择上级部门'
+            placeholder: '请选择上级成员'
           }
         },
         {
           formItemLayout: {},
           type: 'radio',
           field: 'medicalFlag',
-          label: '是否为医疗部',
+          label: '是否在世',
           fieldDecorator: {
-            rules: [{ required: true, message: '请选择是否为医疗部' }]
+            rules: [{ required: true, message: '请选择是否在世' }]
           },
           attribute: {
             options: [
@@ -79,7 +77,7 @@ export default class CustomerEdit extends PureComponent<IProps, IState> {
         {
           type: 'input',
           field: 'userSum',
-          label: '部门人数',
+          label: '子孙人数',
           formItemLayout: {},
           attribute: {
             disabled: true
@@ -109,6 +107,7 @@ export default class CustomerEdit extends PureComponent<IProps, IState> {
       titps: detailItem.titps,
       medicalFlag: detailItem.medicalFlag
     };
+    console.log(editValue)
     form.setFieldsValue(editValue);
   }
 
@@ -167,11 +166,11 @@ export default class CustomerEdit extends PureComponent<IProps, IState> {
     const list = this.getFormList();
     return (
       <React.Fragment>
-        <header className="departmentDetail_header">{detailItem.title}</header>
-        <div className="departmentEdit">
+        <header className="CustomerDetail_header">{detailItem.title}</header>
+        <div className="CustomerEdit">
           <NGForm wrappedComponentRef={this.saveFormRef} list={list} />
         </div>
-        <div className=" flex_c departmentBtn">{this.getAddButton()}</div>
+        <div className=" flex_c CustomerBtn">{this.getAddButton()}</div>
       </React.Fragment>
     );
   }

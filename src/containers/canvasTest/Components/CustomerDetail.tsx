@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react'
-// import NGPage,{IPageProps} from 'components/NGPage'
 import { Button } from 'antd'
 const initialState = {}
 interface IProps {
@@ -22,10 +21,10 @@ class CustomerDetail extends PureComponent<IProps, IState> {
   private getDetailItem (){
     const {detailItem} = this.props
     const detailVal = [
-      { title: '部门名称', value: detailItem.title },
-      { title: '上级部门', value: detailItem.pTitle},
-      { title: '部门人数', value: detailItem.userSum },
-      { title: '是否为医疗部门', value: detailItem.medicalFlag?'是':'不是'},
+      { title: '成员名称', value: detailItem.title },
+      { title: '上级成员', value: detailItem.pTitle},
+      { title: '子孙人数', value: detailItem.userSum },
+      { title: '是否在世', value: detailItem.medicalFlag?'是':'不是'},
       {title: '备注', value:detailItem.titps?detailItem.titps:'-'}
     ]
     const detailItemData=detailVal.map((item:{title:string,value:string})=><li className="fs-16 mt-35  flex" key={item.title}><span style={{width:'150px'}}>{item.title}</span><span className="flex_1">{item.value}</span></li>)
@@ -42,11 +41,11 @@ class CustomerDetail extends PureComponent<IProps, IState> {
 
     return (
       <React.Fragment>
-        <header className="departmentDetail_header">{detailItem.title}</header>
-        <ul className="departmentDetail pl-50 pr-50">
+        <header className="CustomerDetail_header">{detailItem.title}</header>
+        <ul className="CustomerDetail_content pl-50 pr-50">
         {this.getDetailItem()}
         </ul>
-        <div className=" flex_c departmentBtn">{addButton}</div>}
+        <div className="flex_c CustomerBtn">{addButton}</div>
       </React.Fragment>
     )
   }
