@@ -94,10 +94,16 @@ module.exports = {
           {
             test: /\.(js|jsx|tsx|ts|mjs)$/,
             include: paths.appSrc,
-            loader: require.resolve('babel-loader'),
+            loader: require.resolve('babel-plugin-import'),
             options: {
               plugins: [
-                  ['import', [{ libraryName: 'antd', style: true }]],  // import less
+                  ['import', [{
+                    libraryName: 'antd', style: true
+                  },{
+                    style: true, // if true, use less
+                    libraryDirectory: 'components',
+                    libraryName: 'hermes-react',
+                  }]],  // import less
               ],
               compact: true,
             },
