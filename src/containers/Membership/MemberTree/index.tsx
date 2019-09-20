@@ -2,7 +2,7 @@
  * @Author: mengyuan 
  * @Date: 2019-09-19 14:21:01 
  * @Last Modified by: mengyuan
- * @Last Modified time: 2019-09-20 16:53:52
+ * @Last Modified time: 2019-09-20 17:42:48
  */
 import React, { PureComponent } from 'react'
 import G6 from '@antv/g6'
@@ -167,39 +167,3 @@ class MemberTree extends PureComponent<IProps, IState> {
     }
 }
 export default MemberTree
-
-// import G6 from "@antv/g6";
-// import React, { useRef, useEffect } from "react";
-// import ReactDOM from "react-dom";
-// export default ({ data }) => {
-//   const ref = useRef(null);
-//   useG6(ref, data);
-//   return <div ref={ref} />;
-// };
-// function useG6(ref, data) {
-//   useEffect(() => {
-//     if (ref.current) {
-//       const graph = new G6.Graph({
-//         container: ref.current,
-//         width: 1200,
-//         height: 500
-//       });
-//       graph.read(data);
-//     }
-//   }, []);
-// }
-// ReactDOM.render(
-//   <G6Graph
-//     data={{
-//       nodes: [
-//         {
-//           x: 100,
-//           y: 100,
-//           shape: "circle",
-//           label: "circle"
-//         }
-//       ]
-//     }}
-//   />,
-//   document.getElementById("root")
-// );
