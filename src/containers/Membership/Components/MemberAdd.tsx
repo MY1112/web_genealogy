@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react'
-// import { message } from 'antd'
+import { Form, DatePicker } from 'antd'
 import NGForm, { IWrappedComponentRef } from 'components/NGForm'
 import NGModal from 'components/NGModal'
 import { getFormList } from './FormList'
+
+const FormItem = Form.Item
 
 const initialState = {
   pidTree: [],
@@ -98,6 +100,19 @@ class MemberAdd extends PureComponent<IProps, IState> {
   private onCancel = () => {
     this.props.onCancel()
   }
+
+  public custom = (getFieldDecorator: Function) => {
+    return (
+      <React.Fragment>
+          <FormItem>
+            {getFieldDecorator(`dateDeath`, {
+              rules: [{ required: true, message: '请选择死亡日期' }]
+            })(<DatePicker placeholder='请选择死亡日期' />)}
+          </FormItem>
+      </React.Fragment>
+    )
+  }
+
   render() {
     const list = getFormList(this)
     const { listDataLen } = this.props
@@ -110,14 +125,16 @@ class MemberAdd extends PureComponent<IProps, IState> {
           textAlign="right"
           title="新增人员"
           visible={true}
-          width={400}
+          width={680}
           okText="保存"
           onOk={this.handleAddOk}
           wrapClassName="treeTypeAddModal"
           onCancel={this.onCancel}
           confirmLoading={this.state.confirmLoading}
         >
-          <NGForm wrappedComponentRef={this.saveFormRef} list={list} />
+          <div className="memberAddContent">
+            <NGForm wrappedComponentRef={this.saveFormRef} list={list} />
+          </div>
         </NGModal>
       </React.Fragment>
     )

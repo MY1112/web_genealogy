@@ -1,8 +1,8 @@
 /*
  * @Author: mengyuan 
  * @Date: 2019-08-14 18:21:52 
- * @Last Modified by: mengyuan
- * @Last Modified time: 2019-09-19 15:40:23
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2019-09-22 22:12:16
  */
 @import '../../style/color.less';
 .Membership {
@@ -161,12 +161,18 @@
 
 // 新增
 .treeTypeAddModal {
+  .memberAddContent {
+    overflow-y:auto;
+    max-height:700px;
+    min-height: 300px;
+    height: calc(~'100vh - 200px');
+  }
   .ngForm {
     height: auto;
     padding: 20px 40px !important;
     background: #ffffff;
     .ant-form-item-control-wrapper {
-      width: 272px;
+      width: 100% !important;
     }
   }
   .ant-form-item:nth-last-child(1) {
