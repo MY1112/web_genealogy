@@ -35,7 +35,7 @@
     &_content {
       background: #ffffff;
       width: 600px;
-      height: 560px;
+      height: calc(~'100vh - 271px');
       max-width: 78%;
       max-height: 90%;
       margin-bottom: 20px;
@@ -84,7 +84,7 @@
       position: absolute;
       bottom: 0px;
       width: 100%;
-      margin-bottom: 36px;
+      margin-bottom: 28px;
     }
     font-size: 12px;
     .mes_list_row_title,
@@ -100,7 +100,7 @@
       color: #598fe8;
     }
     &_content {
-      max-height: 380px;
+      height: calc(~'100vh - 415px');
       overflow: auto;
       font-size: 14px;
     }
@@ -109,7 +109,7 @@
   // 编辑
   .memberEdit {
     overflow: auto;
-    height: calc(~'100vh - 280px');
+    height: calc(~'100vh - 415px');
     .ant-form-explain {
       text-align: left;
     }

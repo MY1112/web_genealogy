@@ -51,6 +51,16 @@ export interface IdetailItem {
   id?: string
   name?: string
   titps?: string
+  genderFlag?: boolean
+  dateBirth?: number
+  livingFlag?: boolean
+  dateDeath?: number
+  deeds?: string
+  remark?: string
+  birthplace?: string
+  address?: string
+  marryFlag?: true
+  spouseName?: string
 }
 interface IState {
   sertchVal: string
@@ -149,7 +159,17 @@ class Membership extends Component<IProps, IState> {
         updateBy: "1",
         updateDate: 1548402772000,
         userSum: 8,
-        version: null
+        version: null,
+        genderFlag: true, //性别
+        dateBirth: 1548402772000,
+        livingFlag: true,
+        dateDeath: null,
+        deeds: "一岁能言，三岁习武，七岁擅骑射，九岁能伏虎，十岁已降龙",
+        remark: "天赋异禀，项羽再世",
+        birthplace: "四川省自贡市富顺县",
+        address: "紫禁之巅",
+        marryFlag: true,
+        spouseName: "虞小姬"
       },
       selectedKeys: [item.key]
     },() => {
@@ -166,29 +186,29 @@ class Membership extends Component<IProps, IState> {
   }
 
   private getList = () => {
-          this.setState({
-            listData: [{
-              ext: "",
-              id: "",
-              key: "0-0",
-              num: 1,
-              pid: "0",
-              pids: "[0],",
-              title: "一",
-              value: "4296ff558285482ea70045d8aabce81a",
-              children: [{
-                children: [],
-                ext: "",
-                id: "",
-                key: "0-0-0",
-                num: 0,
-                pid: "4296ff558285482ea70045d8aabce81a",
-                pids: "[0],[4296ff558285482ea70045d8aabce81a],",
-                title: "二",
-                value: "4cc2366ba1d7d288a23d900ee47f2ca0"
-              }]
-            }]
-          })
+    this.setState({
+      listData: [{
+        ext: "",
+        id: "",
+        key: "0-0",
+        num: 1,
+        pid: "0",
+        pids: "[0],",
+        title: "一",
+        value: "4296ff558285482ea70045d8aabce81a",
+        children: [{
+          children: [],
+          ext: "",
+          id: "",
+          key: "0-0-0",
+          num: 0,
+          pid: "4296ff558285482ea70045d8aabce81a",
+          pids: "[0],[4296ff558285482ea70045d8aabce81a],",
+          title: "二",
+          value: "4cc2366ba1d7d288a23d900ee47f2ca0"
+        }]
+      }]
+    })
   }
 
   private cancelEdit() {

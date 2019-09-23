@@ -1,7 +1,7 @@
 
 export const getFormList = (that: any) => [
   {
-    className: '',
+    className: 'flex_sb flex_wrap',
     list: [
       {
         formItemLayout: {},
@@ -30,7 +30,12 @@ export const getFormList = (that: any) => [
           treeData: [...that.state.pidTree],
           placeholder: '请选择上级成员'
         }
-      },
+      }
+    ]
+  },
+  {
+    className: 'flex_sb',
+    list: [
       {
         formItemLayout: {},
         type: 'radio',
@@ -62,17 +67,24 @@ export const getFormList = (that: any) => [
           rules: [{ required: true, message: '请选择出生日期' }]
         },
         attribute: {
+          style: { width: 200 },
           placeholder: '请选择出生日期'
         }
-      },
+      }
+    ]
+  },
+  {
+    className: 'flex_sb',
+    list: [
       {
         formItemLayout: {},
         type: 'radio',
-        field: 'medicalFlag',
+        field: 'livingFlag',
         label: '是否在世',
         fieldDecorator: {
-          initialValue: true,
-          rules: [{ required: true, message: '请选择是否在世' }]
+          // initialValue: true,
+          rules: [{ required: true, message: '请选择是否在世' }],
+          onChange: that.handleChangeLiving
         },
         attribute: {
           options: [
@@ -89,15 +101,24 @@ export const getFormList = (that: any) => [
       },
       {
         formItemLayout: {},
-        type: 'custom',
+        type: 'datePicker',
         field: 'dateDeath',
-        label: '死亡时间',
-        custom: that.custom
-      },
-      {
-        formItemLayout: {
-          labelCol:  { span: 24 }
+        label: '去世时间',
+        fieldDecorator: {
+          rules: [{ required: true, message: '请选择去世时间' }]
         },
+        attribute: {
+          style: { width: 200 },
+          placeholder: '请选择去世时间'
+        },
+        isShow: that.state.livingVisble
+      }
+    ]
+  },
+  {
+    list: [
+      {
+        formItemLayout: {},
         type: 'textArea',
         field: 'deeds',
         label: '生平经历',
@@ -109,9 +130,7 @@ export const getFormList = (that: any) => [
         }
       },
       {
-        formItemLayout: {
-          labelCol:  { span: 24 }
-        },
+        formItemLayout: {},
         type: 'textArea',
         field: 'remark',
         label: '备注',
@@ -122,6 +141,106 @@ export const getFormList = (that: any) => [
           maxLength: 200
         }
       },
+      {
+        formItemLayout: {},
+        type: 'cascader',
+        field: 'birthplace',
+        label: '籍贯',
+        fieldDecorator: {
+          initialValue: ['sichuan', 'zigong', 'fushun'],
+          // rules: [{ required: true, message: '籍贯' }],
+          // onChange: that.onChange
+        },
+        attribute: {
+          options: [
+            {
+              value: 'sichuan',
+              label: '四川',
+              children: [
+                {
+                  value: 'zigong',
+                  label: '自贡',
+                  children: [
+                    {
+                      value: 'fushun',
+                      label: '富顺'
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              value: 'hebei',
+              label: '河北',
+              children: [
+                {
+                  value: 'zhangjiakou',
+                  label: '张家口',
+                  children: [
+                    {
+                      value: 'huailai',
+                      label: '怀来'
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        formItemLayout: {},
+        type: 'textArea',
+        field: 'address',
+        label: '现居地',
+        attribute: {
+          style: {width: '100%'},
+          placeholder: '请输入地址',
+          autosize: { minRows: 1, maxRows: 2 },
+          maxLength: 100
+        }
+      },
     ]
-  }
+  },
+  {
+    className: 'flex_sb',
+    list: [
+      {
+        formItemLayout: {},
+        type: 'radio',
+        field: 'marryFlag',
+        label: '是否结婚',
+        fieldDecorator: {
+          rules: [{ required: true, message: '请选择是否结婚' }],
+          onChange: that.handleChangeMarry
+        },
+        attribute: {
+          options: [
+            {
+              value: true,
+              label: '是'
+            },
+            {
+              value: false,
+              label: '否'
+            }
+          ]
+        }
+      },
+      {
+        formItemLayout: {},
+        type: 'input',
+        field: 'spouseName',
+        label: '配偶姓名',
+        fieldDecorator: {
+          rules: [{ required: true, message: '请输入配偶姓名' }]
+        },
+        attribute: {
+          style: { width: 200 },
+          placeholder: '请输入配偶姓名'
+        },
+        isShow: that.state.marryVisble
+      }
+    ]
+  },
 ]

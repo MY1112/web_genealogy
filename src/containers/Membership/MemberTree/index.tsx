@@ -5,9 +5,10 @@
  * @Last Modified time: 2019-09-20 17:42:48
  */
 import React, { PureComponent } from 'react'
-import G6 from '@antv/g6'
+// import G6 from '@antv/g6'
 import './index.less'
 
+const G6 = require('@antv/g6')
 
 interface IProps {}
 
@@ -16,60 +17,60 @@ interface IState {
 }
 
 const data = {
-    "id": "Modeling Methods",
+    "id": "蓝-1",
     "children": [
       {
-        "id": "Classification",
+        "id": "蓝-2-1",
         "children": [
-          { "id": "Logistic regression" },
-          { "id": "Linear discriminant analysis" },
-          { "id": "Rules" },
-          { "id": "Decision trees" },
-          { "id": "Naive Bayes" },
-          { "id": "K nearest neighbor" },
-          { "id": "Probabilistic neural network" },
-          { "id": "Support vector machine" }
+          { "id": "蓝-3-1" },
+          { "id": "蓝-3-2" },
+          { "id": "蓝-3-3" },
+          { "id": "蓝-3-4" },
+          { "id": "蓝-3-5" },
+          { "id": "蓝-3-6" },
+          { "id": "蓝-3-7" },
+          { "id": "蓝-3-8" }
         ]
       },
       {
-        "id": "Consensus",
+        "id": "蓝-2-2",
         "children": [
           {
-            "id": "Models diversity",
+            "id": "蓝-3-9",
             "children": [
-              { "id": "Different initializations" },
-              { "id": "Different parameter choices" },
-              { "id": "Different architectures" },
-              { "id": "Different modeling methods" },
-              { "id": "Different training sets" },
-              { "id": "Different feature sets" }
+              { "id": "蓝-4-1" },
+              { "id": "蓝-4-2" },
+              { "id": "蓝-4-3" },
+              { "id": "蓝-4-4" },
+              { "id": "蓝-4-5" },
+              { "id": "蓝-4-6" }
             ]
           },
           {
-            "id": "Methods",
+            "id": "蓝-3-10",
             "children": [
-              { "id": "Classifier selection" },
-              { "id": "Classifier fusion" }
+              { "id": "蓝-4-7" },
+              { "id": "蓝-4-8" }
             ]
           },
           {
-            "id": "Common",
+            "id": "蓝-3-11",
             "children": [
-              { "id": "Bagging" },
-              { "id": "Boosting" },
-              { "id": "AdaBoost" }
+              { "id": "蓝-4-9" },
+              { "id": "蓝-4-10" },
+              { "id": "蓝-4-11" }
             ]
           }
         ]
       },
       {
-        "id": "Regression",
+        "id": "蓝-2-3",
         "children": [
-          { "id": "Multiple linear regression" },
-          { "id": "Partial least squares" },
-          { "id": "Multi-layer feedforward neural network" },
-          { "id": "General regression neural network" },
-          { "id": "Support vector regression" }
+          { "id": "蓝-3-12" },
+          { "id": "蓝-3-13" },
+          { "id": "蓝-3-14" },
+          { "id": "蓝-3-15" },
+          { "id": "蓝-3-16" }
         ]
       }
     ]
@@ -160,9 +161,7 @@ class MemberTree extends PureComponent<IProps, IState> {
 
     render() {
         return (
-            <div id="mountNode" className="memberTree">
-                <p>charts树状图</p>
-            </div>
+            <div id="mountNode" className="memberTree"/>
         )
     }
 }

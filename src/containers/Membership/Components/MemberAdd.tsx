@@ -1,14 +1,18 @@
 import React, { PureComponent } from 'react'
-import { Form, DatePicker } from 'antd'
+import { Form } from 'antd'
 import NGForm, { IWrappedComponentRef } from 'components/NGForm'
 import NGModal from 'components/NGModal'
+import { RadioChangeEvent } from 'antd/lib/radio'
 import { getFormList } from './FormList'
 
 const FormItem = Form.Item
 
 const initialState = {
   pidTree: [],
-  confirmLoading: false
+  confirmLoading: false,
+  livingVisble: false,
+  marryVisble: false,
+  dateDeath: []
 }
 
 interface IdateItem {
@@ -28,6 +32,9 @@ interface IProps {
 interface IState {
   pidTree: object[]
   confirmLoading: boolean
+  livingVisble: boolean
+  marryVisble: boolean
+  dateDeath: object[]
 }
 
 class MemberAdd extends PureComponent<IProps, IState> {
@@ -100,17 +107,15 @@ class MemberAdd extends PureComponent<IProps, IState> {
   private onCancel = () => {
     this.props.onCancel()
   }
-
-  public custom = (getFieldDecorator: Function) => {
-    return (
-      <React.Fragment>
-          <FormItem>
-            {getFieldDecorator(`dateDeath`, {
-              rules: [{ required: true, message: '请选择死亡日期' }]
-            })(<DatePicker placeholder='请选择死亡日期' />)}
-          </FormItem>
-      </React.Fragment>
-    )
+  public handleChangeLiving = (e: RadioChangeEvent) => {
+    this.setState({
+      livingVisble: !e.target.value
+    })
+  }
+  public handleChangeMarry = (e: RadioChangeEvent) => {
+    this.setState({
+      marryVisble: e.target.value
+    })
   }
 
   render() {
