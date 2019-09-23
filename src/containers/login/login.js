@@ -167,7 +167,7 @@ class Circle {
           ctx.moveTo(this.x, this.y);   //起始点
           ctx.lineTo(_circle.x, _circle.y);   //终点
           ctx.closePath();
-          ctx.strokeStyle = 'rgba(204, 204, 204, 0.3)';
+          ctx.strokeStyle = 'rgba(204, 204, 204, 0.1)';
           ctx.stroke();
       }
   }
