@@ -2,10 +2,10 @@
  * @Author: mengyuan 
  * @Date: 2019-09-19 14:21:01 
  * @Last Modified by: mengyuan
- * @Last Modified time: 2019-09-20 17:42:48
+ * @Last Modified time: 2019-09-24 16:27:49
  */
 import React, { PureComponent } from 'react'
-// import G6 from '@antv/g6'
+import { Button } from 'antd'
 import './index.less'
 
 const G6 = require('@antv/g6')
@@ -83,85 +83,106 @@ class MemberTree extends PureComponent<IProps, IState> {
             CDNLoading: false
         }
     }
+    private graph: any
 
     componentDidMount() {
-        const graph = new G6.TreeGraph({
-            container: 'mountNode',
-            width: window.innerWidth,
-            height: window.innerHeight,
-            pixelRatio: 2,
-            modes: {
-              default: [{
-                type: 'collapse-expand',
-                onChange: function onChange(item, collapsed) {
-                  var data = item.get('model').data;
-                  data.collapsed = collapsed;
-                  return true;
-                }
-            }, 'drag-canvas', 'zoom-canvas']
-            },
-            defaultNode: {
-              size: 16,
-              anchorPoints: [[0, 0.5], [1, 0.5]]
-            },
-            defaultEdge: {
-              shape: 'cubic-horizontal'
-            },
-            nodeStyle: {
-              default: {
-                fill: '#40a9ff',
-                stroke: '#096dd9'
-              }
-            },
-            edgeStyle: {
-              default: {
-                stroke: '#A3B1BF'
-              }
-            },
-            layout: {
-              type: 'compactBox',
-              direction: 'LR',
-              getId: function getId(d) {
-                return d.id;
-              },
-              getHeight: function getHeight() {
-                return 16;
-              },
-              getWidth: function getWidth() {
-                return 16;
-              },
-              getVGap: function getVGap() {
-                return 10;
-              },
-              getHGap: function getHGap() {
-                return 100;
-              }
-            }
-          });
-      
-          graph.node(function(node: any) {
-            return {
-              size: 26,
-              style: {
-                fill: '#40a9ff',
-                stroke: '#096dd9'
-              },
-              label: node.id,
-              labelCfg: {
-                position: node.children && node.children.length > 0 ? 'left' : 'right'
-              }
-            };
-          });
-      
-          graph.data(data);
-          graph.render();
-          graph.fitView();
+        this.getGraphTree()
     }
 
+    private getGraphTree = () => {
+      this.graph = new G6.TreeGraph({
+        container: 'mountNode',
+        width: window.innerWidth - 250,
+        height: window.innerHeight - 187,
+        pixelRatio: 2,
+        modes: {
+          default: [{
+            type: 'collapse-expand',
+            onChange: function onChange(item, collapsed) {
+              var data = item.get('model').data;
+              data.collapsed = collapsed;
+              return true;
+            }
+        }, 'drag-canvas', 'zoom-canvas']
+        },
+        defaultNode: {
+          size: 16,
+          anchorPoints: [[0, 0.5], [1, 0.5]]
+        },
+        defaultEdge: {
+          shape: 'cubic-horizontal'
+        },
+        nodeStyle: {
+          default: {
+            fill: '#40a9ff',
+            stroke: '#096dd9'
+          }
+        },
+        edgeStyle: {
+          default: {
+            stroke: '#A3B1BF'
+          }
+        },
+        layout: {
+          type: 'compactBox',
+          direction: 'LR',
+          getId: function getId(d) {
+            return d.id;
+          },
+          getHeight: function getHeight() {
+            return 16;
+          },
+          getWidth: function getWidth() {
+            return 16;
+          },
+          getVGap: function getVGap() {
+            return 10;
+          },
+          getHGap: function getHGap() {
+            return 100;
+          }
+        }
+      });
+  
+      this.graph.node(function(node: any) {
+        return {
+          size: 26,
+          style: {
+            fill: '#40a9ff',
+            stroke: '#096dd9'
+          },
+          label: node.id,
+          labelCfg: {
+            position: node.children && node.children.length > 0 ? 'left' : 'right'
+          }
+        };
+      });
+  
+      this.graph.data(data);
+      this.graph.render();
+      this.graph.fitView();
+    }
+
+    private handleDownloadTree = () => {
+      // const dataURL = this.graph.toDataURL()
+      // console.log(dataURL)
+      this.graph.downloadImage('成员树')
+    }
 
     render() {
         return (
-            <div id="mountNode" className="memberTree"/>
+          <div className="memberTree">
+            <div className="memberTree_download">
+              <Button
+                className="default_btn csp"
+                icon="download"
+                onClick={() => this.handleDownloadTree()}
+              >
+                导出
+              </Button>
+            </div>
+            <div id="mountNode" className="memberTree_content"/>
+          </div>
         )
     }
 }

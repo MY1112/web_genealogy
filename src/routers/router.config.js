@@ -5,7 +5,7 @@ const routers = [
   {
     menuName: '主页',
     menuIco: 'home',
-    component: 'home/home.js', // 主页
+    component: 'home/home.tsx', // 主页
     path: '/admin/home' // 主页
   },
   {
@@ -16,22 +16,6 @@ const routers = [
         menuName: '用户列表',
         component: 'user/list.js', // 主页
         path: '/admin/user/list' // 主页
-      }
-    ]
-  },
-  {
-    menuName: '多级菜单',
-    menuIco: 'setting',
-    children: [
-      {
-        menuName: '多级菜单2',
-        children: [
-          {
-            menuName: '菜单',
-            component: 'user/list.js', // 主页
-            path: '/admin/user/list3' // 主页
-          }
-        ]
       }
     ]
   },
