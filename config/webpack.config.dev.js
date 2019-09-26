@@ -20,7 +20,7 @@ module.exports = {
   mode: 'development',
   devtool: 'cheap-module-source-map',
   entry: [
-    require.resolve('./polyfills'),
+    // require.resolve('./polyfills'),
     require.resolve('react-dev-utils/webpackHotDevClient'),
     paths.appIndexJs,
   ],
@@ -50,39 +50,11 @@ module.exports = {
   module: {
     strictExportPresence: true,
     rules: [
-      {
-        test: /\.(js|jsx|mjs)$/,
-        enforce: 'pre',
-        use: [
-          {
-            options: {
-              formatter: eslintFormatter,
-              eslintPath: require.resolve('eslint'),
-              
-            },
-            loader: require.resolve('eslint-loader'),
-          },
-        ],
-        include: paths.appSrc,
-      },
-      {
-        test: /\.[jt]sx?$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              cacheDirectory: true
-            }
-          },
-          {
-            loader: 'ts-loader',
-            options: {
-              transpileOnly: true
-            }
-          }
-        ]
-      },
+      // {
+      //   test: /\.(js|jsx|tsx|ts)$/,
+      //   exclude: /node_modules/,
+      //   loader: 'babel-loader'
+      // },
       {
         oneOf: [
           // {
@@ -98,7 +70,7 @@ module.exports = {
             use: 'url-loader'
           },
           {
-            test: /\.(js|jsx|mjs)$/,
+            test: /\.(js|jsx|mjs|tsx|ts)$/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
               options: {

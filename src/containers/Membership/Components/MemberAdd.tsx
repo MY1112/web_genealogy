@@ -1,11 +1,8 @@
 import React, { PureComponent } from 'react'
-import { Form } from 'antd'
 import NGForm, { IWrappedComponentRef } from 'components/NGForm'
 import NGModal from 'components/NGModal'
 import { RadioChangeEvent } from 'antd/lib/radio'
 import { getFormList } from './FormList'
-
-const FormItem = Form.Item
 
 const initialState = {
   pidTree: [],

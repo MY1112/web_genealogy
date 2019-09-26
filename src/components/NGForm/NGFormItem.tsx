@@ -1,9 +1,3 @@
-/*
- * @Author: huangying
- * @Date: 2018-08-28 21:31:02
- * @Last Modified by: huangying
- * @Last Modified time: 2019-05-14 19:05:17
- */
 
 import React, { Component, ReactNode } from 'react';
 import {

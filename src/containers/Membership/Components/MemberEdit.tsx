@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import NGForm, { IWrappedComponentRef } from 'components/NGForm';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio'
 import { IdetailItem } from '../index';
 const initialState = {

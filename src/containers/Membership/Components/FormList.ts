@@ -1,5 +1,14 @@
 
-export const getFormList = (that: any) => [
+interface IFormList {
+  state:{
+    pidTree: object[]
+    livingVisble: boolean
+    marryVisble: boolean
+  }
+  handleChangeLiving: () => void
+  handleChangeMarry: () => void
+}
+export const getFormList = (that: IFormList) => [
   {
     className: 'flex_sb flex_wrap',
     list: [

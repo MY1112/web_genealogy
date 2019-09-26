@@ -8,16 +8,22 @@
       "jsx": "react",                           /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
       "sourceMap": true,                        /* Generates corresponding '.map' file. */
       "outDir": "./dist",                       /* Redirect output structure to the directory. */
-      "isolatedModules": true,                  /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */
-      "resolveJsonModule": true,
       "forceConsistentCasingInFileNames": true,
-      "skipLibCheck": true,
-      "strict": true,                           /* Enable all strict type-checking options. */
       "noImplicitThis": true,                   /* Raise error on 'this' expressions with an implied 'any' type. */
       "noImplicitReturns": true,                /* Report error when not all code paths in function return a value. */
       "moduleResolution": "node",               /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
       "baseUrl": "src",                       /* Base directory to resolve non-absolute module names. */
-      "paths": {},                                        /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
+      "paths": {
+        "components/*": ["components/*"],
+        "containers/*": ["containers/*"],
+        "style/*": ["style/*"],
+        "util/*": ["util/*"],
+        "assets/*": ["assets/*"],
+        "actions/*": ["actions/*"],
+        "constants/*": ["constants/*"],
+        "reducer/*": ["reducer/*"],
+        "lodash/*": ["node_modules/@types/lodash/*"]
+      },                                  /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
       "allowSyntheticDefaultImports": true,     /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
       "esModuleInterop": true,                  /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
       "experimentalDecorators": true,           /* Enables experimental support for ES7 decorators. */

@@ -10,6 +10,7 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 // const theme = require('theme.js');
@@ -29,7 +30,7 @@ module.exports = {
   mode: "production",
   bail: true,
   devtool: shouldUseSourceMap ? 'source-map' : false,
-  entry: [require.resolve('./polyfills'), paths.appIndexJs],
+  entry: [paths.appIndexJs],
   output: {
     path: paths.appBuild,
     filename: 'static/js/[name].[chunkhash:8].js',
@@ -54,27 +55,27 @@ module.exports = {
       'react-native': 'react-native-web',
     },
     plugins: [
-      new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+      new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson])
     ],
   },
   module: {
     strictExportPresence: true,
     rules: [
-      {
-        test: /\.(js|jsx|tsx|ts|mjs)$/,
-        enforce: 'pre',
-        use: [
-          {
-            options: {
-              formatter: eslintFormatter,
-              eslintPath: require.resolve('eslint'),
+      // {
+      //   test: /\.(js|jsx|mjs)$/,
+      //   enforce: 'pre',
+      //   use: [
+      //     {
+      //       options: {
+      //         formatter: eslintFormatter,
+      //         eslintPath: require.resolve('eslint'),
               
-            },
-            loader: require.resolve('eslint-loader'),
-          },
-        ],
-        include: paths.appSrc,
-      },
+      //       },
+      //       loader: require.resolve('eslint-loader'),
+      //     },
+      //   ],
+      //   include: paths.appSrc,
+      // },
       {
         oneOf: [
           // {
@@ -94,19 +95,15 @@ module.exports = {
           {
             test: /\.(js|jsx|tsx|ts|mjs)$/,
             include: paths.appSrc,
-            loader: require.resolve('babel-plugin-import'),
+            loader: require.resolve('babel-loader'),
             options: {
               plugins: [
-                  ['import', [{
+                  ['import', {
                     libraryName: 'antd', style: true
-                  },{
-                    style: true, // if true, use less
-                    libraryDirectory: 'components',
-                    libraryName: 'hermes-react',
-                  }]],  // import less
+                  }],  // import less
               ],
-              compact: true,
             },
+            exclude: /node_modules/,
           },
           {
             test: /\.(less|css)$/,
@@ -143,10 +140,10 @@ module.exports = {
     minimize: true,
     noEmitOnErrors: true,
     minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
+      new TerserPlugin({
         parallel: true,
-        sourceMap: false
+        sourceMap: false,
+        cache: true
       }),
       new OptimizeCSSAssetsPlugin({})
     ],

@@ -98,7 +98,7 @@ class MemberTree extends PureComponent<IProps, IState> {
         modes: {
           default: [{
             type: 'collapse-expand',
-            onChange: function onChange(item, collapsed) {
+            onChange: function onChange(item: any, collapsed: any) {
               var data = item.get('model').data;
               data.collapsed = collapsed;
               return true;
@@ -126,7 +126,7 @@ class MemberTree extends PureComponent<IProps, IState> {
         layout: {
           type: 'compactBox',
           direction: 'LR',
-          getId: function getId(d) {
+          getId: function getId(d: any) {
             return d.id;
           },
           getHeight: function getHeight() {

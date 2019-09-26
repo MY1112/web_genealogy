@@ -46,7 +46,7 @@
   };
   
   export const searchToObj = (str: string) => {
-    const arr = str.slice(1).split('&');
+    const arr: any = str.slice(1).split('&');
     const obj: IObj = {};
     arr.forEach((item: string) => {
       const objMap = item.split('=');
@@ -63,7 +63,7 @@
   
   export const objToSearch = (obj: IObj) => {
     let result = '';
-    const arr = Object.keys(obj);
+    const arr: any = Object.keys(obj);
     arr.forEach((item: string) => {
       result += `&${item}=${JSON.stringify(obj[item])}`;
     });
@@ -265,7 +265,7 @@
      * @function plus 加法
      */
     plus(...args: TNGBigArgs) {
-      const arg = [...args];
+      // const arg = [...args];
       for (let i of args) {
         this.big =
           typeof i === 'number' ? this.big.plus(i) : this.big.plus(i.big);
@@ -391,7 +391,7 @@
   };
   export const isCardID = (sId: string) => {
     let iSum = 0;
-    let info = '';
+    // let info = '';
     let sBirthday = '';
     if (!/^\d{17}(\d|x)$/i.test(sId)) return '你输入的身份证长度或格式错误';
     sId = sId.replace(/x$/i, 'a');

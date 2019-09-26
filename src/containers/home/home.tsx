@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './home.less'
-import { loading } from '../../actions/rootActions'
+// import { loading } from '../../actions/rootActions'
 
 class Home extends Component {
   render() {

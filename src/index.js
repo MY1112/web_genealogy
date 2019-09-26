@@ -1,4 +1,4 @@
-import 'babel-polyfill' // ie
+import '@babel/polyfill' // ie
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'

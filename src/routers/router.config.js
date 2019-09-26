@@ -54,7 +54,7 @@ const mapRouters = item => {
     item.props = {}
     item.component = function(props){
       return (
-      <Bundle { ...props } load={() => import('../containers/' + component)}>
+      <Bundle { ...props } load={() => import(`../containers/${component}`)}>
         {Comp => {
           return Comp ? <Comp {...props} { ...item.props } /> : <div>加载中...</div>
         }}

@@ -31,7 +31,7 @@ interface IState {
   }
 }
 export default class NGModal extends PureComponent<IProps, IState> {
-  private ngModalRef = createRef()
+  private ngModalRef = createRef() as any
   constructor(props: IProps) {
     super(props)
     this.getButtonNode = this.getButtonNode.bind(this)

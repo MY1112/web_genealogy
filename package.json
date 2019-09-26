@@ -4,17 +4,11 @@
   "private": true,
   "dependencies": {
     "@antv/g6": "^3.0.7-beta.1",
+    "@babel/runtime": "^7.6.2",
     "antd": "^3.9.0-beta.6",
     "autoprefixer": "7.1.6",
     "axios": "^0.18.0",
-    "babel-core": "6.26.0",
-    "babel-eslint": "7.2.3",
-    "babel-jest": "20.0.3",
     "babel-loader": "7.1.2",
-    "babel-plugin-import": "^1.8.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-react-app": "^3.1.1",
-    "babel-runtime": "^6.26.0",
     "big.js": "^5.2.2",
     "bundle-loader": "^0.5.6",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
@@ -37,8 +31,6 @@
     "file-loader": "1.1.5",
     "fs-extra": "3.0.1",
     "good-storage": "^1.0.1",
-    "highcharts": "^7.2.0",
-    "highcharts-react-official": "^2.2.2",
     "history": "^4.7.2",
     "html-webpack-plugin": "^4.0.0-beta.8",
     "immutable": "^3.8.2",
@@ -87,15 +79,13 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "eslint": "eslint src --ext .ts"
   },
   "homepage": ".",
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,tsx,mjs}"
-    ],
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js"
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,tsx,mjs}",
@@ -126,53 +116,49 @@
       "node"
     ]
   },
-  "babel": {
-    "presets": [
-      "react-app"
-    ],
-    "plugins": [
-      [
-        "import",
-        {
-          "libraryName": "antd",
-          "style": true
-        },
-        {
-          "style": true,
-          "libraryDirectory": "components",
-          "libraryName": "hermes-react"
-        }
-      ],
-      [
-        "transform-runtime",
-        {
-          "helpers": false,
-          "polyfill": false,
-          "regenerator": true,
-          "moduleName": "babel-runtime"
-        }
-      ]
-    ]
-  },
   "eslintConfig": {
     "extends": "react-app"
   },
   "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-transform-react-constant-elements": "^7.6.0",
+    "@babel/plugin-transform-react-inline-elements": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/polyfill": "^7.6.0",
+    "@babel/preset-env": "^7.6.2",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.6.0",
     "@types/big.js": "^4.0.5",
     "@types/lodash": "^4.14.136",
     "@types/node": "^12.6.8",
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.5",
-    "awesome-typescript-loader": "^5.2.1",
-    "babel-plugin-import": "^1.6.3",
-    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-plugin-dev-expression": "^0.2.2",
+    "babel-plugin-import": "^1.12.2",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-formatter-pretty": "^2.0.0",
+    "eslint-import-resolver-webpack": "^0.10.1",
+    "eslint-plugin-compat": "^2.6.3",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^22.1.2",
+    "eslint-plugin-jsx-a11y": "6.1.2",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-testcafe": "^0.2.1",
+    "eslint-plugin-typescript": "^0.14.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-webpack-plugin": "^4.0.0-beta.8",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "react-hot-loader": "^4.1.1",
+    "terser-webpack-plugin": "^2.1.0",
     "ts-loader": "^6.0.4",
-    "typescript": "^3.5.3",
+    "typescript": "3.2.1",
+    "typescript-eslint-parser": "^22.0.0",
     "webpack": "^4.39.1",
     "webpack-cli": "^3.3.6",
     "webpack-dev-server": "^3.7.2"
