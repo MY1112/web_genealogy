@@ -8,7 +8,7 @@ class Home extends Component {
       <div className="home">
         <div className="home_bg" />
         <div className="home_title">
-          蓝氏族谱
+          王氏族谱
         </div>
       </div>
     )

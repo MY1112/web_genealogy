@@ -156,7 +156,7 @@ export const getFormList = (that: IFormList) => [
         field: 'birthplace',
         label: '籍贯',
         fieldDecorator: {
-          initialValue: ['sichuan', 'zigong', 'fushun'],
+          initialValue: ['hebei', 'zhangjiakou', 'huailai'],
           // rules: [{ required: true, message: '籍贯' }],
           // onChange: that.onChange
         },

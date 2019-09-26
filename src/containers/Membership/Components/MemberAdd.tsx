@@ -66,7 +66,7 @@ class MemberAdd extends PureComponent<IProps, IState> {
           num: 1,
           pid: "0",
           pids: "[0],",
-          title: "一",
+          title: "王一",
           value: "4296ff558285482ea70045d8aabce81a",
           children: [{
             children: [],
@@ -76,7 +76,7 @@ class MemberAdd extends PureComponent<IProps, IState> {
             num: 0,
             pid: "4296ff558285482ea70045d8aabce81a",
             pids: "[0],[4296ff558285482ea70045d8aabce81a],",
-            title: "二",
+            title: "王二",
             value: "4cc2366ba1d7d288a23d900ee47f2ca0"
           }]
         }]
@@ -116,7 +116,7 @@ class MemberAdd extends PureComponent<IProps, IState> {
   }
 
   render() {
-    const list = getFormList(this)
+    const list = getFormList(this as any)
     const { listDataLen } = this.props
     if (!listDataLen) {
       delete list[0].list[1]

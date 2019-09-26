@@ -21,7 +21,7 @@ const initialState = {
     num: 1,
     pid: "0",
     pids: "[0],",
-    title: "一",
+    title: "王一",
     value: "4296ff558285482ea70045d8aabce81a",
     children: [{
       children: [],
@@ -31,7 +31,7 @@ const initialState = {
       num: 0,
       pid: "4296ff558285482ea70045d8aabce81a",
       pids: "[0],[4296ff558285482ea70045d8aabce81a],",
-      title: "二",
+      title: "王二",
       value: "4cc2366ba1d7d288a23d900ee47f2ca0"
     }]
   }],
@@ -151,10 +151,10 @@ class Membership extends Component<IProps, IState> {
         medicalFlag: true,
         medicalFlagStr: "",
         num: 1,
-        pTitle: "一",
+        pTitle: "王一",
         pid: "4296ff558285482ea70045d8aabce81a",
         pids: "[0],[4296ff558285482ea70045d8aabce81a],",
-        title: "二",
+        title: "王二",
         titps: null,
         updateBy: "1",
         updateDate: 1548402772000,
@@ -166,7 +166,7 @@ class Membership extends Component<IProps, IState> {
         dateDeath: null,
         deeds: "一岁能言，三岁习武，七岁擅骑射，九岁能伏虎，十岁已降龙",
         remark: "天赋异禀，项羽再世",
-        birthplace: "四川省自贡市富顺县",
+        birthplace: "河北省张家口市怀来县",
         address: "紫禁之巅",
         marryFlag: true,
         spouseName: "虞小姬"
@@ -194,7 +194,7 @@ class Membership extends Component<IProps, IState> {
         num: 1,
         pid: "0",
         pids: "[0],",
-        title: "一",
+        title: "王一",
         value: "4296ff558285482ea70045d8aabce81a",
         children: [{
           children: [],
@@ -204,7 +204,7 @@ class Membership extends Component<IProps, IState> {
           num: 0,
           pid: "4296ff558285482ea70045d8aabce81a",
           pids: "[0],[4296ff558285482ea70045d8aabce81a],",
-          title: "二",
+          title: "王二",
           value: "4cc2366ba1d7d288a23d900ee47f2ca0"
         }]
       }]
