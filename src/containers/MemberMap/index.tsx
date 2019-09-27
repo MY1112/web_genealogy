@@ -11,7 +11,8 @@ class MemberMap extends Component<IProps, IState> {
     componentDidMount() {
         const BMap = window.BMap
         const mp = new BMap.Map('memberMap_content');  
-        mp.centerAndZoom(new BMap.Point(121.491, 31.233), 15);  
+        mp.centerAndZoom(new BMap.Point(116.404, 39.915), 15);
+        mp.enableScrollWheelZoom(true);
     }
 
     render() {
