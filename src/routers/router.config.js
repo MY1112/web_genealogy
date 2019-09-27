@@ -36,6 +36,12 @@ const routers = [
     ]
   },
   {
+    menuName: '成员地图',
+    menuIco: 'user',
+    component: 'MemberMap/index.tsx',
+    path: '/admin/MemberMap'
+  },
+  {
     menuName: '关于我',
     menuIco: 'smile-o',
     component: 'about/about.js', // 主页

@@ -61,32 +61,8 @@ module.exports = {
   module: {
     strictExportPresence: true,
     rules: [
-      // {
-      //   test: /\.(js|jsx|mjs)$/,
-      //   enforce: 'pre',
-      //   use: [
-      //     {
-      //       options: {
-      //         formatter: eslintFormatter,
-      //         eslintPath: require.resolve('eslint'),
-              
-      //       },
-      //       loader: require.resolve('eslint-loader'),
-      //     },
-      //   ],
-      //   include: paths.appSrc,
-      // },
       {
         oneOf: [
-          // {
-          //   test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-          //   loader: require.resolve('url-loader'),
-          //   options: {
-          //     limit: 10000,
-          //     name: 'static/media/[name].[hash:8].[ext]',
-          //   },
-          // },
-          // Common Image Formats
           {
             test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
             use: 'url-loader'
