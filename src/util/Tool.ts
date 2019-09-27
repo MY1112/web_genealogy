@@ -471,4 +471,21 @@
   
     return myArray[index];
   };
+
+
+  export const getCookie = (cookie_name: string) => {
+    const allcookies = decodeURIComponent(document.cookie)
+    let cookie_pos = allcookies.indexOf(cookie_name)
+    let value = ''
+    if (cookie_pos !== -1) {
+      cookie_pos += cookie_name.length + 1
+      let cookie_end = allcookies.indexOf(';', cookie_pos)
+      if (cookie_end === -1) {
+        cookie_end = allcookies.length
+      }
+      value = allcookies.substring(cookie_pos, cookie_end)
+    }
+    return value
+  }
+  
   

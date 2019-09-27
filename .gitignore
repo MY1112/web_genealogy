@@ -9,6 +9,9 @@
 # production
 /build
 
+# App packaged
+src/dev_config.json
+
 # misc
 .DS_Store
 .env.local

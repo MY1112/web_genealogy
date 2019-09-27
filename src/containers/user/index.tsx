@@ -1,16 +1,34 @@
 import React, { Component } from 'react'
 import { Input, Row, Col, Button, Table } from 'antd'
-import './list.less'
 import Dialog from './DialogAdd'
+import './index.less'
 const Search = Input.Search
 
-class Home extends Component {
-  state = {
-    name: '',
-    list: [],
-    filterList: [],
-    visibel: false
-  }
+const initialState = {
+  name: '',
+  list: [],
+  filterList: [],
+  visibel: false
+}
+
+interface IListItem {
+  name: string
+  age: number
+  key: number
+  sex: string
+}
+
+interface IProps {}
+
+interface IState {
+  name: string
+  visibel: boolean
+  list: IListItem[]
+  filterList: IListItem[]
+}
+
+class UserList extends Component<IProps, IState> {
+  readonly state: IState = initialState
   componentWillMount = () => {
     let list = []
     for (let i = 0; i < 100; i++) {
@@ -27,12 +45,12 @@ class Home extends Component {
     })
   }
 
-  onchange = e => {
+  private onchange = e => {
     this.setState({
       name: e.target.value
     })
   }
-  filterHandler = _ => {
+  private filterHandler = () => {
     let name = this.state.name
     if (!name || name === '0') {
       this.setState({
@@ -48,12 +66,12 @@ class Home extends Component {
       })
     }
   }
-  handleCancel = _ => {
+  private handleCancel = () => {
     this.setState({
       visibel: false
     })
   }
-  handleOk = value => {
+  private handleOk = (value) => {
     value.key = this.state.list.length + 1
     this.state.list.unshift(value)
     this.setState({
@@ -62,7 +80,7 @@ class Home extends Component {
     })
     this.filterHandler()
   }
-  handleAdd = _ => {
+  private handleAdd = () => {
     this.setState({
       visibel: true
     })
@@ -109,4 +127,4 @@ class Home extends Component {
   }
 }
 
-export default Home
+export default UserList

@@ -1,16 +1,26 @@
 import React, { Component } from 'react'
 import { Modal, Form, Input, Radio } from 'antd'
+import { FormComponentProps } from 'antd/lib/form'
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
-class Dialog extends Component {
-  handleOk = () => {
+
+interface IProps extends FormComponentProps {
+  visibel: boolean
+  handleOk: (value: any) => void
+  handleCancel: () => void
+}
+
+interface IState {}
+
+class Dialog extends Component<IProps, IState> {
+  private handleOk = () => {
     this.props.form.validateFields((err,value) => {
       if (!err) {
         this.props.handleOk(value)
       }
     })
   }
-  componentWillReceiveProps = (nextProps) => {
+  componentWillReceiveProps = (nextProps: IProps) => {
     if (nextProps.visibel && !this.props.visibel) {
       this.props.form.resetFields()
     }

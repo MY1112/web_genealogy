@@ -50,21 +50,8 @@ module.exports = {
   module: {
     strictExportPresence: true,
     rules: [
-      // {
-      //   test: /\.(js|jsx|tsx|ts)$/,
-      //   exclude: /node_modules/,
-      //   loader: 'babel-loader'
-      // },
       {
         oneOf: [
-          // {
-          //   test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-          //   loader: require.resolve('url-loader'),
-          //   options: {
-          //     limit: 10000,
-          //     name: 'static/media/[name].[hash:8].[ext]',
-          //   },
-          // },
           {
             test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
             use: 'url-loader'
@@ -73,8 +60,13 @@ module.exports = {
             test: /\.(js|jsx|mjs|tsx|ts)$/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
-              options: {
+            options: {
               cacheDirectory: true,
+              plugins: [
+                ['import', {
+                  libraryName: 'antd', style: true
+                }],  // import less
+              ]
             },
             exclude: /node_modules/
           },

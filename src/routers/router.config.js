@@ -14,7 +14,7 @@ const routers = [
     children: [
       {
         menuName: '用户列表',
-        component: 'user/list.js', // 主页
+        component: 'user/index.tsx', // 主页
         path: '/admin/user/list' // 主页
       }
     ]
