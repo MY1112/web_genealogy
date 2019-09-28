@@ -20,7 +20,8 @@ module.exports = {
   mode: 'development',
   devtool: 'cheap-module-source-map',
   entry: [
-    // require.resolve('./polyfills'),
+    require.resolve('@babel/polyfill'),
+    require.resolve('react-hot-loader/patch'),
     require.resolve('react-dev-utils/webpackHotDevClient'),
     paths.appIndexJs,
   ],
@@ -167,6 +168,9 @@ module.exports = {
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   ],
 
+  devServer: {
+    hot: true
+  },
   node: {
     dgram: 'empty',
     fs: 'empty',

@@ -1,30 +1,44 @@
-import React, { Component } from 'react'
-import { Input, Row, Col, Button, Table } from 'antd'
-import Dialog from './DialogAdd'
+import React, { Component, ChangeEvent } from 'react'
+import { Input, Row, Col, Button, Table, Modal } from 'antd'
+import UserAdd from './Components/UserAdd'
+import UserEdit from './Components/UserEdit'
+import { getColumns } from './Columns'
 import './index.less'
 const Search = Input.Search
+const confirm = Modal.confirm
 
 const initialState = {
   name: '',
   list: [],
   filterList: [],
-  visibel: false
+  addVisibel: false,
+  editVisibel: false,
+  userInfo: {
+    name: '',
+    key: '',
+    Identity: '',
+    account: '',
+    password: ''
+  }
 }
 
-interface IListItem {
+export interface IListItem {
   name: string
-  age: number
-  key: number
-  sex: string
+  Identity: string
+  key: string
+  account: string
+  password: string
 }
 
 interface IProps {}
 
 interface IState {
   name: string
-  visibel: boolean
+  addVisibel: boolean
+  editVisibel: boolean
   list: IListItem[]
   filterList: IListItem[]
+  userInfo: IListItem
 }
 
 class UserList extends Component<IProps, IState> {
@@ -34,9 +48,10 @@ class UserList extends Component<IProps, IState> {
     for (let i = 0; i < 100; i++) {
       list.push({
         name: `张三${i}`,
-        age: i,
-        key: i,
-        sex: Math.random() > 0.5 ? '男' : '女'
+        key: `${i}`,
+        Identity: Math.random() > 0.5 ? 'admin' : '',
+        account: `${i}`,
+        password: '123456'
       })
     }
     this.setState({
@@ -45,7 +60,7 @@ class UserList extends Component<IProps, IState> {
     })
   }
 
-  private onchange = e => {
+  private onchange = (e: ChangeEvent<HTMLInputElement>) => {
     this.setState({
       name: e.target.value
     })
@@ -68,26 +83,53 @@ class UserList extends Component<IProps, IState> {
   }
   private handleCancel = () => {
     this.setState({
-      visibel: false
+      addVisibel: false,
+      editVisibel: false
     })
   }
-  private handleOk = (value) => {
-    value.key = this.state.list.length + 1
+  private handleAddOk = (value: IListItem) => {
+    value.key = `${this.state.list.length + 1}`
     this.state.list.unshift(value)
     this.setState({
-      visibel: false,
+      addVisibel: false,
       list: this.state.list
     })
     this.filterHandler()
   }
   private handleAdd = () => {
     this.setState({
-      visibel: true
+      addVisibel: true
     })
   }
+
+  public handleEditUser = (row: IListItem) => {
+    this.setState({
+      editVisibel: true,
+      userInfo: row
+    })
+  }
+
+  public handleDeleteUser = (key: string) => {
+    confirm({
+      title: '确认删除该用户吗?',
+      onOk() {
+        return new Promise((resolve, reject) => {
+          setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+        }).catch(() => console.log('Oops errors!'));
+      },
+      onCancel() {},
+    });
+  }
   render() {
+    const {
+      addVisibel,
+      editVisibel,
+      userInfo,
+      filterList
+    } = this.state
+    const columns = getColumns(this)
     return (
-      <div>
+      <div className="userList">
         <Row gutter={16}>
           <Col span={4}>
             <Search
@@ -102,26 +144,35 @@ class UserList extends Component<IProps, IState> {
             </Button>
           </Col>
           <Col span={4} offset={12}>
-            <Button style={{ float: `right` }} onClick={this.handleAdd}>
-              新增
+            <Button className="primary_btn" style={{ float: `right` }} onClick={this.handleAdd}>
+              新增用户
             </Button>
           </Col>
         </Row>
-        <div className="table">
+        <div className="mt-16">
           <Table
-            dataSource={this.state.filterList}
+            bordered={true}
+            columns={columns}
+            dataSource={filterList}
             pagination={{ pageSize: 6 }}
-          >
-            <Table.Column title="姓名" dataIndex="name" />
-            <Table.Column title="性别" dataIndex="sex" />
-            <Table.Column title="年龄" dataIndex="age" />
-          </Table>
+          />
         </div>
-        <Dialog
-          visibel={this.state.visibel}
-          handleCancel={this.handleCancel}
-          handleOk={this.handleOk}
-        />
+        {
+          addVisibel &&
+          <UserAdd
+            visibel={this.state.addVisibel}
+            handleCancel={this.handleCancel}
+            handleOk={this.handleAddOk}
+          />
+        }
+        {
+          editVisibel && 
+          <UserEdit
+            visibel={editVisibel}
+            userInfo={userInfo}
+            handleCancel={this.handleCancel}
+          />
+        }
       </div>
     )
   }

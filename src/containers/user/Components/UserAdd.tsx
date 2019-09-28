@@ -12,7 +12,7 @@ interface IProps extends FormComponentProps {
 
 interface IState {}
 
-class Dialog extends Component<IProps, IState> {
+class UserAdd extends Component<IProps, IState> {
   private handleOk = () => {
     this.props.form.validateFields((err,value) => {
       if (!err) {
@@ -36,36 +36,47 @@ class Dialog extends Component<IProps, IState> {
         <Modal
           okText="确认"
           cancelText="取消"
-          title="新增"
+          title="新增用户"
           visible={this.props.visibel}
           onCancel={this.props.handleCancel}
           onOk={this.handleOk}
         >
-          <FormItem {...formItemLayout} label="姓名">
+          <FormItem {...formItemLayout} label="用户名">
             {getFieldDecorator('name', {
               rules: [
                 {
                   required: true,
-                  message: '请输入姓名'
+                  message: '请输入用户名'
                 }
               ]
-            })(<Input placeholder="请输入姓名" />)}
+            })(<Input placeholder="请输入用户名" />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="年龄">
-            {getFieldDecorator('age', {
+          <FormItem {...formItemLayout} label="账号">
+            {getFieldDecorator('account', {
               rules: [
                 {
                   required: true,
-                  message: '请输入年龄'
+                  message: '请输入账号'
                 }
               ]
-            })(<Input placeholder="请输入年龄" />)}
+            })(<Input placeholder="请输入账号" />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="性别">
-            {getFieldDecorator('sex')(
+          <FormItem {...formItemLayout} label="密码">
+            {getFieldDecorator('password', {
+              rules: [
+                {
+                  required: true,
+                  message: '请输入密码'
+                }
+              ]
+            })(<Input placeholder="请输入密码" />)}
+          </FormItem>
+          <FormItem {...formItemLayout} label="身份">
+            {getFieldDecorator('Identity')(
               <RadioGroup>
-                <Radio value="男">男</Radio>
-                <Radio value="女">女</Radio>
+                <Radio value="admin">管理员</Radio>
+                <Radio value="user">普通</Radio>
+                <Radio value="god">神</Radio>
               </RadioGroup>
             )}
           </FormItem>
@@ -75,4 +86,4 @@ class Dialog extends Component<IProps, IState> {
   }
 }
 
-export default Form.create()(Dialog)
+export default Form.create()(UserAdd)
