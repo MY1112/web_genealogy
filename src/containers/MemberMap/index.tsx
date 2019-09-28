@@ -14,9 +14,12 @@ class MemberMap extends Component<IProps, IState> {
         this.BMap = window.BMap
     }
     componentDidMount() {
-        const mp = new this.BMap.Map('memberMap_content');  
+        const mp = new this.BMap.Map('memberMap_content');
         const point = new this.BMap.Point(116.404, 39.915)
         mp.centerAndZoom(point, 15);
+        mp.setMapStyleV2({     
+            styleId: '7c89ae5e874bab456f62ce9edaeb2ed5'
+          });
         mp.enableScrollWheelZoom(true);
         mp.addControl(new this.BMap.NavigationControl())
         const marker = new this.BMap.Marker(point);        // 创建标注    

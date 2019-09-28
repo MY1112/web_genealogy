@@ -139,7 +139,7 @@ class UserList extends Component<IProps, IState> {
             />
           </Col>
           <Col span={4}>
-            <Button type="primary" onClick={this.filterHandler}>
+            <Button className="search_user_btn" type="primary" onClick={this.filterHandler}>
               查询
             </Button>
           </Col>

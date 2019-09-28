@@ -1,2 +1,26 @@
 .userList {
+    .search_user_btn {
+        outline: none;
+        border: none;
+    }
+    .search_user_btn:hover {
+        cursor: pointer;
+        animation: jelly 0.5s;
+    }
 }
+
+@keyframes jelly {
+    0%,
+    100% {
+      transform: scale(1, 1);
+    }
+  
+    25%,
+    75% {
+      transform: scale(0.9, 1.1);
+    }
+  
+    50% {
+      transform: scale(1.1, 0.9);
+    }
+  }
