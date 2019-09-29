@@ -4,6 +4,7 @@ import UserAdd from './Components/UserAdd'
 import UserEdit from './Components/UserEdit'
 import { getColumns } from './Columns'
 import './index.less'
+import Api, { IMODApiData } from './Api'
 const Search = Input.Search
 const confirm = Modal.confirm
 
@@ -97,6 +98,11 @@ class UserList extends Component<IProps, IState> {
     this.filterHandler()
   }
   private handleAdd = () => {
+    // Api.getTestApi().then(() => {
+    //   console.log('success api')
+    // }).catch(() => {
+    //   console.log('error api')
+    // })
     this.setState({
       addVisibel: true
     })
