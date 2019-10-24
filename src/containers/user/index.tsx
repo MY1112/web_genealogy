@@ -98,14 +98,14 @@ class UserList extends Component<IProps, IState> {
     this.filterHandler()
   }
   private handleAdd = () => {
-    // Api.getTestApi().then(() => {
-    //   console.log('success api')
-    // }).catch(() => {
-    //   console.log('error api')
-    // })
-    this.setState({
-      addVisibel: true
+    Api.getTestApi().then(() => {
+      console.log('success api')
+    }).catch(() => {
+      console.log('error api')
     })
+    // this.setState({
+    //   addVisibel: true
+    // })
   }
 
   public handleEditUser = (row: IListItem) => {
