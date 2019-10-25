@@ -2,17 +2,29 @@
 import Axios, { IApiData } from 'util/Axios';
 export interface IMODApiData extends IApiData {}
 const urlServer = {
-  getTest: `/login/test`,
+  signup: `/login/signup`,
+  userList: '/user/userList',
+  userDel: '/user/userDel',
+  userUpdate: '/user/userUpdate'
 };
-const getTestApi = () =>
-  Axios.getInstance().get(urlServer.getTest)
+// 获取用户列表
+const getUserList = (data: object) =>
+  Axios.getInstance().post(urlServer.userList, { data });
 
-// const getExport = (data: object) =>
-//   Axios.getInstance().post(urlServer.export, { data });
+// 新增用户
+const signup = (data: object) =>
+  Axios.getInstance().post(urlServer.signup, { data });
 
-// const canclePaymentOrder = (id: string) =>
-//   Axios.getInstance().put(urlServer.canclePaymentOrder, { params: { id } });
+// 修改用户
+const userUpdate = (data: object) =>
+  Axios.getInstance().post(urlServer.userUpdate, { data });
+
+// 删除用户
+const userDel = (id:string) => Axios.getInstance().get(urlServer.userDel, { params : { id } })
 
 export default {
-    getTestApi
+  signup,
+  getUserList,
+  userDel,
+  userUpdate
 };

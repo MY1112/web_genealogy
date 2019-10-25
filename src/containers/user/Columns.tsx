@@ -2,24 +2,22 @@ import React from 'react'
 import { IListItem } from './index'
 
 export const getColumns = (that: any) => {
+    let n = 0
     const columns = [
       {
         className: 'columns_header',
         title: '序号',
-        dataIndex: 'key',
-        key: 'key',
-        width: 60
+        dataIndex: '_id',
+        key: '_id',
+        width: 40,
+        render: (text: String) => {
+          return ++n
+        }
       },
       {
         title: '用户名',
-        key: 'name',
-        dataIndex: 'name',
-        width: 100
-      },
-      {
-        title: '账号',
-        key: 'account',
-        dataIndex: 'account',
+        key: 'username',
+        dataIndex: 'username',
         width: 100
       },
       {
@@ -30,8 +28,8 @@ export const getColumns = (that: any) => {
       },
       {
         title: '身份',
-        key: 'Identity',
-        dataIndex: 'Identity',
+        key: 'identity',
+        dataIndex: 'identity',
         width: 100,
         render: (text: string) => text || '-'
       },
@@ -53,7 +51,7 @@ export const getColumns = (that: any) => {
               <span
                 className="csp"
                 style={{color: 'red'}}
-                onClick={() => that.handleDeleteUser(row.key)}
+                onClick={() => that.handleDeleteUser(row._id)}
               >
                 删除
               </span>

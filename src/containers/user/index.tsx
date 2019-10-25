@@ -1,5 +1,5 @@
 import React, { Component, ChangeEvent } from 'react'
-import { Input, Row, Col, Button, Table, Modal } from 'antd'
+import { Input, Row, Col, Button, Table, Modal, message } from 'antd'
 import UserAdd from './Components/UserAdd'
 import UserEdit from './Components/UserEdit'
 import { getColumns } from './Columns'
@@ -9,78 +9,67 @@ const Search = Input.Search
 const confirm = Modal.confirm
 
 const initialState = {
-  name: '',
+  tableLoading: false,
+  username: '',
   list: [],
-  filterList: [],
   addVisibel: false,
   editVisibel: false,
   userInfo: {
-    name: '',
-    key: '',
-    Identity: '',
-    account: '',
-    password: ''
+    username: '',
+    identity: '',
+    password: '',
+    _id: ''
   }
 }
 
 export interface IListItem {
-  name: string
-  Identity: string
-  key: string
-  account: string
+  username: string
+  identity: string
   password: string
+  _id: string
 }
 
 interface IProps {}
 
 interface IState {
-  name: string
+  tableLoading: boolean
+  username: string
   addVisibel: boolean
   editVisibel: boolean
   list: IListItem[]
-  filterList: IListItem[]
   userInfo: IListItem
 }
 
 class UserList extends Component<IProps, IState> {
   readonly state: IState = initialState
-  componentWillMount = () => {
-    let list = []
-    for (let i = 0; i < 100; i++) {
-      list.push({
-        name: `张三${i}`,
-        key: `${i}`,
-        Identity: Math.random() > 0.5 ? 'admin' : '',
-        account: `${i}`,
-        password: '123456'
+  componentDidMount() {
+    this.getUserList()
+  }
+
+  private getUserList = () => {
+    const { username } = this.state
+    this.setState({tableLoading:true},() => {
+      Api.getUserList({ username }).then((res: IMODApiData) => {
+        if (res.code === 10001) {
+          this.setState({
+            list: res.data,
+            tableLoading: false
+          })
+        }
+        this.setState({
+          tableLoading: false
+        })
+      }).catch((err: Error) => {
+        this.setState({tableLoading: false})
+        console.log(err)
       })
-    }
-    this.setState({
-      list,
-      filterList: list
     })
   }
 
   private onchange = (e: ChangeEvent<HTMLInputElement>) => {
     this.setState({
-      name: e.target.value
+      username: e.target.value
     })
-  }
-  private filterHandler = () => {
-    let name = this.state.name
-    if (!name || name === '0') {
-      this.setState({
-        filterList: this.state.list
-      })
-      return false
-    } else {
-      let filterList = this.state.list.filter(el => {
-        return el.name === name
-      })
-      this.setState({
-        filterList
-      })
-    }
   }
   private handleCancel = () => {
     this.setState({
@@ -88,24 +77,18 @@ class UserList extends Component<IProps, IState> {
       editVisibel: false
     })
   }
-  private handleAddOk = (value: IListItem) => {
-    value.key = `${this.state.list.length + 1}`
-    this.state.list.unshift(value)
+  private handleAddOk = () => {
     this.setState({
       addVisibel: false,
-      list: this.state.list
+      editVisibel: false
+    },() => {
+      this.getUserList()
     })
-    this.filterHandler()
   }
   private handleAdd = () => {
-    Api.getTestApi().then(() => {
-      console.log('success api')
-    }).catch(() => {
-      console.log('error api')
+    this.setState({
+      addVisibel: true
     })
-    // this.setState({
-    //   addVisibel: true
-    // })
   }
 
   public handleEditUser = (row: IListItem) => {
@@ -115,24 +98,23 @@ class UserList extends Component<IProps, IState> {
     })
   }
 
-  public handleDeleteUser = (key: string) => {
+  public handleDeleteUser = (id: string) => {
+    const THIS = this
     confirm({
       title: '确认删除该用户吗?',
       onOk() {
-        return new Promise((resolve, reject) => {
-          setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-        }).catch(() => console.log('Oops errors!'));
+        Api.userDel(id).then((res: IMODApiData) => {
+          message.success('删除成功')
+          THIS.getUserList()
+        }).catch(err => {
+          console.log(err)
+        })
       },
-      onCancel() {},
-    });
+      onCancel() {}
+    })
   }
   render() {
-    const {
-      addVisibel,
-      editVisibel,
-      userInfo,
-      filterList
-    } = this.state
+    const { addVisibel, editVisibel, userInfo, list, tableLoading } = this.state
     const columns = getColumns(this)
     return (
       <div className="userList">
@@ -141,44 +123,53 @@ class UserList extends Component<IProps, IState> {
             <Search
               placeholder="姓名"
               onChange={this.onchange}
-              value={this.state.name}
+              value={this.state.username}
             />
           </Col>
           <Col span={4}>
-            <Button className="search_user_btn" type="primary" onClick={this.filterHandler}>
+            <Button
+              className="search_user_btn"
+              type="primary"
+              onClick={this.getUserList}
+            >
               查询
             </Button>
           </Col>
           <Col span={4} offset={12}>
-            <Button className="primary_btn" style={{ float: `right` }} onClick={this.handleAdd}>
+            <Button
+              className="primary_btn"
+              style={{ float: `right` }}
+              onClick={this.handleAdd}
+            >
               新增用户
             </Button>
           </Col>
         </Row>
         <div className="mt-16">
           <Table
+            loading={tableLoading}
             bordered={true}
             columns={columns}
-            dataSource={filterList}
+            dataSource={list}
             pagination={{ pageSize: 6 }}
+            rowKey={'_id'}
           />
         </div>
-        {
-          addVisibel &&
+        {addVisibel && (
           <UserAdd
             visibel={this.state.addVisibel}
             handleCancel={this.handleCancel}
             handleOk={this.handleAddOk}
           />
-        }
-        {
-          editVisibel && 
+        )}
+        {editVisibel && (
           <UserEdit
             visibel={editVisibel}
             userInfo={userInfo}
+            handleOk={this.handleAddOk}
             handleCancel={this.handleCancel}
           />
-        }
+        )}
       </div>
     )
   }

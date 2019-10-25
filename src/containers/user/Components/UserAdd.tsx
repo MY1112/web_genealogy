@@ -1,22 +1,45 @@
 import React, { Component } from 'react'
-import { Modal, Form, Input, Radio } from 'antd'
+import { Modal, Form, Input, Radio, message } from 'antd'
 import { FormComponentProps } from 'antd/lib/form'
+import Api, { IMODApiData } from '../Api'
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
+const initialState = {
+  loading: false
+}
 
 interface IProps extends FormComponentProps {
   visibel: boolean
-  handleOk: (value: any) => void
+  handleOk: () => void
   handleCancel: () => void
 }
 
-interface IState {}
+interface IState {
+  loading: boolean
+}
 
 class UserAdd extends Component<IProps, IState> {
+  readonly state: IState = initialState
   private handleOk = () => {
     this.props.form.validateFields((err,value) => {
       if (!err) {
-        this.props.handleOk(value)
+        this.setState({loading: true},() => {
+          const values = {
+            identity: value.identity || 'user',
+            username: value.username,
+            password: value.password
+          }
+          console.log(values)
+          Api.signup(values).then((res: IMODApiData) => {
+            if(res.code === 10000) {
+              message.success('注册成功')
+              this.setState({loading: false})
+              this.props.handleOk()
+            }
+          }).catch((err: Error) => {
+            this.setState({loading: false})
+          })
+        })
       }
     })
   }
@@ -26,6 +49,7 @@ class UserAdd extends Component<IProps, IState> {
     }
   }  
   render() {
+    const { loading } = this.state
     const { getFieldDecorator } = this.props.form
     const formItemLayout = {
       labelCol: { span: 4 },
@@ -40,9 +64,10 @@ class UserAdd extends Component<IProps, IState> {
           visible={this.props.visibel}
           onCancel={this.props.handleCancel}
           onOk={this.handleOk}
+          confirmLoading={loading}
         >
           <FormItem {...formItemLayout} label="用户名">
-            {getFieldDecorator('name', {
+            {getFieldDecorator('username', {
               rules: [
                 {
                   required: true,
@@ -50,16 +75,6 @@ class UserAdd extends Component<IProps, IState> {
                 }
               ]
             })(<Input placeholder="请输入用户名" />)}
-          </FormItem>
-          <FormItem {...formItemLayout} label="账号">
-            {getFieldDecorator('account', {
-              rules: [
-                {
-                  required: true,
-                  message: '请输入账号'
-                }
-              ]
-            })(<Input placeholder="请输入账号" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="密码">
             {getFieldDecorator('password', {
@@ -72,7 +87,7 @@ class UserAdd extends Component<IProps, IState> {
             })(<Input placeholder="请输入密码" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="身份">
-            {getFieldDecorator('Identity')(
+            {getFieldDecorator('identity')(
               <RadioGroup>
                 <Radio value="admin">管理员</Radio>
                 <Radio value="user">普通</Radio>
