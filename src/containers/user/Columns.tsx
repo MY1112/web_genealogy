@@ -27,6 +27,13 @@ export const getColumns = (that: any) => {
         width: 100
       },
       {
+        title: '姓氏',
+        key: 'parents',
+        dataIndex: 'parents',
+        width: 100,
+        render: (text: string) => text ?`${text}氏族谱` : '-'
+      },
+      {
         title: '身份',
         key: 'identity',
         dataIndex: 'identity',

@@ -58,29 +58,29 @@ class MemberAdd extends PureComponent<IProps, IState> {
       form.setFieldsValue({ pid: addItme.value })
     }
     
-      this.setState({
-        pidTree: [{
+    this.setState({
+      pidTree: [{
+        ext: "",
+        id: "",
+        key: "0-0",
+        num: 1,
+        pid: "0",
+        pids: "[0],",
+        title: "王一",
+        value: "4296ff558285482ea70045d8aabce81a",
+        children: [{
+          children: [],
           ext: "",
           id: "",
-          key: "0-0",
-          num: 1,
-          pid: "0",
-          pids: "[0],",
-          title: "王一",
-          value: "4296ff558285482ea70045d8aabce81a",
-          children: [{
-            children: [],
-            ext: "",
-            id: "",
-            key: "0-0-0",
-            num: 0,
-            pid: "4296ff558285482ea70045d8aabce81a",
-            pids: "[0],[4296ff558285482ea70045d8aabce81a],",
-            title: "王二",
-            value: "4cc2366ba1d7d288a23d900ee47f2ca0"
-          }]
+          key: "0-0-0",
+          num: 0,
+          pid: "4296ff558285482ea70045d8aabce81a",
+          pids: "[0],[4296ff558285482ea70045d8aabce81a],",
+          title: "王二",
+          value: "4cc2366ba1d7d288a23d900ee47f2ca0"
         }]
-      })
+      }]
+    })
   }
 
   private handleAddOk = () => {
@@ -143,3 +143,27 @@ class MemberAdd extends PureComponent<IProps, IState> {
   }
 }
 export default MemberAdd
+
+
+
+// pidTree: [{
+//   ext: "",
+//   id: "",
+//   key: "0-0",
+//   num: 1,
+//   pid: "0",
+//   pids: "[0],",
+//   title: "王一",
+//   value: "4296ff558285482ea70045d8aabce81a",
+//   children: [{
+//     children: [],
+//     ext: "",
+//     id: "",
+//     key: "0-0-0",
+//     num: 0,
+//     pid: "4296ff558285482ea70045d8aabce81a",
+//     pids: "[0],[4296ff558285482ea70045d8aabce81a],",
+//     title: "王二",
+//     value: "4cc2366ba1d7d288a23d900ee47f2ca0"
+//   }]
+// }]

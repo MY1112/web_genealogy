@@ -30,6 +30,7 @@ class UserEdit extends Component<IProps, IState> {
             identity: value.identity || 'user',
             username: value.username,
             password: value.password,
+            parents: value.parents,
             id: this.props.userInfo._id
           }
           console.log(values)
@@ -70,6 +71,7 @@ class UserEdit extends Component<IProps, IState> {
           onCancel={this.props.handleCancel}
           onOk={this.handleOk}
           confirmLoading={loading}
+          maskClosable={false}
         >
           <FormItem {...formItemLayout} label="用户名">
             {getFieldDecorator('username', {
@@ -93,9 +95,21 @@ class UserEdit extends Component<IProps, IState> {
               initialValue: userInfo.password || ''
             })(<Input placeholder="请输入密码" />)}
           </FormItem>
+          <FormItem {...formItemLayout} label="家谱姓氏">
+            {getFieldDecorator('parents', {
+              rules: [
+                {
+                  required: true,
+                  message: '请输入家谱姓氏'
+                }
+              ],
+              initialValue: userInfo.parents || ''
+            })(<Input style={{ width: 200, marginRight: 8 }} placeholder="请输入家谱姓氏" />)}
+            氏族谱
+          </FormItem>
           <FormItem {...formItemLayout} label="身份">
             {getFieldDecorator('identity',{
-                initialValue: userInfo.identity || 'user'
+              initialValue: userInfo.identity || 'user'
             })(
               <RadioGroup>
                 <Radio value="admin">管理员</Radio>

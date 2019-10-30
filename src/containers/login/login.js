@@ -70,6 +70,7 @@ class NormalLoginForm extends Component {
               })
             )
             localStorage.setItem('user',true)
+            localStorage.setItem('userInfo',JSON.stringify(res.data))
             setTimeout(() => {
               this.props.history.push('/admin/home')
             }, 2000)

@@ -18,6 +18,7 @@ const initialState = {
     username: '',
     identity: '',
     password: '',
+    parents: '',
     _id: ''
   }
 }
@@ -26,6 +27,7 @@ export interface IListItem {
   username: string
   identity: string
   password: string
+  parents: string
   _id: string
 }
 

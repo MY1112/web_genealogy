@@ -49,6 +49,8 @@ const routers = [
   }
 ]
 
+// const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+
 // 递归路由
 const mapRouters = item => {
   if (item.children && item.children.length) {
@@ -67,10 +69,20 @@ const mapRouters = item => {
       </Bundle>
       )
     }
-    }
-    return item
   }
+  return item
+}
 
+// const routers = routersArr.filter(item => {
+//   if (['admin','god'].includes(userInfo.identity)) {
+//     return true
+//   } else {
+//     if (item.menuName !== '用户') {
+//       return true
+//     }
+//     return false
+//   }
+// })
 const initRouters = routers.map(item => {
   return mapRouters(item)
 })

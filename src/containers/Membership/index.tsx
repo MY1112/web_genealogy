@@ -116,13 +116,13 @@ class Membership extends Component<IProps, IState> {
       value: (text: { key: string }) => (
         <React.Fragment>
           <Tooltip title="新增">
-            <span onClick={this.handleAdd.bind(this, text)} >
+            <span className="mr-8" onClick={this.handleAdd.bind(this, text)} >
               <Icon type="plus-circle" />
             </span>
           </Tooltip>
           <Tooltip title="删除">
-            <span onClick={this.handleAdd.bind(this, text)} >
-              <Icon type="usergroup-delete" style={{marginLeft: '10px'}} />
+            <span className="mr-8" onClick={this.handleAdd.bind(this, text)} >
+              <Icon type="usergroup-delete" />
             </span>
           </Tooltip>
         </React.Fragment>

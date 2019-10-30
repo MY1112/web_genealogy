@@ -27,7 +27,8 @@ class UserAdd extends Component<IProps, IState> {
           const values = {
             identity: value.identity || 'user',
             username: value.username,
-            password: value.password
+            password: value.password,
+            parents: value.parents
           }
           console.log(values)
           Api.signup(values).then((res: IMODApiData) => {
@@ -65,6 +66,7 @@ class UserAdd extends Component<IProps, IState> {
           onCancel={this.props.handleCancel}
           onOk={this.handleOk}
           confirmLoading={loading}
+          maskClosable={false}
         >
           <FormItem {...formItemLayout} label="用户名">
             {getFieldDecorator('username', {
@@ -74,7 +76,7 @@ class UserAdd extends Component<IProps, IState> {
                   message: '请输入用户名'
                 }
               ]
-            })(<Input placeholder="请输入用户名" />)}
+            })(<Input style={{ width: 200 }} placeholder="请输入用户名" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="密码">
             {getFieldDecorator('password', {
@@ -84,7 +86,18 @@ class UserAdd extends Component<IProps, IState> {
                   message: '请输入密码'
                 }
               ]
-            })(<Input placeholder="请输入密码" />)}
+            })(<Input style={{ width: 200 }} placeholder="请输入密码" />)}
+          </FormItem>
+          <FormItem {...formItemLayout} label="家谱姓氏">
+            {getFieldDecorator('parents', {
+              rules: [
+                {
+                  required: true,
+                  message: '请输入家谱姓氏'
+                }
+              ]
+            })(<Input style={{ width: 200, marginRight: 8 }} placeholder="请输入家谱姓氏" />)}
+            氏族谱
           </FormItem>
           <FormItem {...formItemLayout} label="身份">
             {getFieldDecorator('identity')(

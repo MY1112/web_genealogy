@@ -32,7 +32,7 @@ export const getFormList = (that: IFormList) => [
         field: 'pid',
         label: '上级成员',
         fieldDecorator: {
-          rules: [{ required: true, message: '请选择上级成员' }]
+          rules: [{ required: !!that.state.pidTree.length, message: '请选择上级成员' }]
         },
         attribute: {
           style: { width: 200 },

@@ -4,14 +4,35 @@ import './admin.less'
 import Header from './children/header'
 import Content from './children/content'
 import Footer from './children/footer'
-import { routers } from '../../routers/router.config'
-import { initRouters } from '../../routers/router.config'
+import { initRouters, routers } from '../../routers/router.config'
 import logo from '../../assets/imgs/base_home.png'
 
 const SubMenu = Menu.SubMenu
-
+const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+const newRouters = routers.filter(item => {
+  if (['admin','god'].includes(userInfo.identity)) {
+    return true
+  } else {
+    if (item.menuName !== '用户') {
+      return true
+    }
+    return false
+  }
+})
+const initRoutersNew = initRouters.filter(item => {
+  if (['admin','god'].includes(userInfo.identity)) {
+    return true
+  } else {
+    if (item.menuName !== '用户') {
+      return true
+    }
+    return false
+  }
+})
 class Admin extends Component {
-  rootSubmenuKeys = JSON.parse(JSON.stringify(initRouters))
+  newRouters = newRouters
+  initRoutersNew = initRoutersNew
+  rootSubmenuKeys = JSON.parse(JSON.stringify(this.initRoutersNew))
   state = {
     collapsed: false,
     openKeys: [], // 打开的菜单
@@ -75,7 +96,7 @@ class Admin extends Component {
   toggleCollapsed = () => {
     if (!this.state.collapsed) {
       // 重置菜单，全部关闭
-      this.rootSubmenuKeys = JSON.parse(JSON.stringify(initRouters))
+      this.rootSubmenuKeys = JSON.parse(JSON.stringify(this.initRoutersNew))
     }
     this.setState({
       collapsed: !this.state.collapsed,
@@ -232,6 +253,32 @@ class Admin extends Component {
     }
   }
   render() {
+    const userInfoNew = JSON.parse(localStorage.getItem('userInfo'))
+    if (userInfoNew.username !== userInfo.username &&
+        !this.state.openKeys.length && !this.state.selectedKeys.length
+      ) {
+      this.newRouters = routers.filter(item => {
+        if (['admin','god'].includes(userInfoNew.identity)) {
+          return true
+        } else {
+          if (item.menuName !== '用户') {
+            return true
+          }
+          return false
+        }
+      })
+      this.initRoutersNew = initRouters.filter(item => {
+        if (['admin','god'].includes(userInfo.identity)) {
+          return true
+        } else {
+          if (item.menuName !== '用户') {
+            return true
+          }
+          return false
+        }
+      })
+      this.rootSubmenuKeys = JSON.parse(JSON.stringify(this.initRoutersNew))
+    }
     // 递归路由
     const mapRouters = item => {
       if (item.children && item.children.length) {
@@ -280,7 +327,7 @@ class Admin extends Component {
             onOpenChange={this.onOpenChange}
             onClick={event => this.menuClick(event)}
           >
-            {routers.map(item => {
+            {this.newRouters.map(item => {
               if (!item.children) {
                 return (
                   <Menu.Item key={item.path}>
