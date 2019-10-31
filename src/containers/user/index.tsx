@@ -15,6 +15,7 @@ const initialState = {
   addVisibel: false,
   editVisibel: false,
   userInfo: {
+    pid: '',
     username: '',
     identity: '',
     password: '',
@@ -24,12 +25,15 @@ const initialState = {
 }
 
 export interface IListItem {
+  pid: string
   username: string
   identity: string
   password: string
   parents: string
   _id: string
 }
+
+const userItem = JSON.parse(localStorage.getItem('userInfo')||'')
 
 interface IProps {}
 
@@ -44,14 +48,20 @@ interface IState {
 
 class UserList extends Component<IProps, IState> {
   readonly state: IState = initialState
+  public userItem = userItem
   componentDidMount() {
+    this.userItem = JSON.parse(localStorage.getItem('userInfo')||'')
     this.getUserList()
   }
 
   private getUserList = () => {
     const { username } = this.state
     this.setState({tableLoading:true},() => {
-      Api.getUserList({ username }).then((res: IMODApiData) => {
+      Api.getUserList({
+        keywords: username,
+        identity: this.userItem.identity,
+        pid: this.userItem._id
+      }).then((res: IMODApiData) => {
         if (res.code === 10001) {
           this.setState({
             list: res.data,
@@ -159,6 +169,7 @@ class UserList extends Component<IProps, IState> {
         </div>
         {addVisibel && (
           <UserAdd
+            userInfo={this.userItem}
             visibel={this.state.addVisibel}
             handleCancel={this.handleCancel}
             handleOk={this.handleAddOk}

@@ -55,13 +55,16 @@ export const getColumns = (that: any) => {
               >
                 编辑
               </span>
-              <span
-                className="csp"
-                style={{color: 'red'}}
-                onClick={() => that.handleDeleteUser(row._id)}
-              >
-                删除
-              </span>
+              {
+                that.userItem.username !== row.username &&
+                <span
+                  className="csp"
+                  style={{color: 'red'}}
+                  onClick={() => that.handleDeleteUser(row._id)}
+                >
+                  删除
+                </span>
+              }
             </div>
           )
         }

@@ -6,7 +6,7 @@ import NGHeader from 'components/NGHeader'
 import NGNoData from 'components/NGNoData'
 import MemberAdd from './Components/MemberAdd'
 import MemberEdit from './Components/MemberEdit'
-import MemberDetail from './Components/MemberDetail'
+import MemberDetail, { IListItem } from './Components/MemberDetail'
 
 const initialState = {
   sertchVal: '',
@@ -90,7 +90,11 @@ class Membership extends Component<IProps, IState> {
     this.getSearch = this.getSearch.bind(this)
     this.MembershipPage = this.MembershipPage.bind(this)
   }
+  private userInfo: IListItem
   readonly state: IState = initialState
+  componentDidMount() {
+    this.userInfo = JSON.parse(localStorage.getItem('userInfo')||'')
+  }
 
   private onChangeContent(e: any) {
     this.setState({
@@ -112,7 +116,7 @@ class Membership extends Component<IProps, IState> {
   }
 
   private getOptions() {
-    const render = {
+    const render = ['god','admin'].includes(this.userInfo && this.userInfo.identity) ? {
       value: (text: { key: string }) => (
         <React.Fragment>
           <Tooltip title="新增">
@@ -127,6 +131,8 @@ class Membership extends Component<IProps, IState> {
           </Tooltip>
         </React.Fragment>
       )
+    } : {
+      value: (text: { key: string }) => null
     }
     return render
   }
@@ -233,6 +239,7 @@ class Membership extends Component<IProps, IState> {
           <MemberDetail
             handleEdit={this.handleEdit}
             detailItem={detailItem}
+            userInfo={this.userInfo}
           />
         )}
       </div>
@@ -276,6 +283,7 @@ class Membership extends Component<IProps, IState> {
               size="big"
               className="Membership_left_header"
               extra={
+                ['god','admin'].includes(this.userInfo && this.userInfo.identity) &&
                 <span
                   className="Membership_options"
                   onClick={this.handleAdd.bind(this,{})}

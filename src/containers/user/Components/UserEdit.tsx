@@ -10,7 +10,7 @@ const initialState = {
 }
 
 interface IProps extends FormComponentProps {
-  userInfo: IListItem
+  userInfo: IListItem // 修改的用户信息
   visibel: boolean
   handleOk: () => void
   handleCancel: () => void
@@ -27,7 +27,6 @@ class UserEdit extends Component<IProps, IState> {
       if (!err) {
         this.setState({loading: true},() => {
           const values = {
-            identity: value.identity || 'user',
             username: value.username,
             password: value.password,
             parents: value.parents,
@@ -95,29 +94,21 @@ class UserEdit extends Component<IProps, IState> {
               initialValue: userInfo.password || ''
             })(<Input placeholder="请输入密码" />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="家谱姓氏">
-            {getFieldDecorator('parents', {
-              rules: [
-                {
-                  required: true,
-                  message: '请输入家谱姓氏'
-                }
-              ],
-              initialValue: userInfo.parents || ''
-            })(<Input style={{ width: 200, marginRight: 8 }} placeholder="请输入家谱姓氏" />)}
-            氏族谱
-          </FormItem>
-          <FormItem {...formItemLayout} label="身份">
-            {getFieldDecorator('identity',{
-              initialValue: userInfo.identity || 'user'
-            })(
-              <RadioGroup>
-                <Radio value="admin">管理员</Radio>
-                <Radio value="user">普通</Radio>
-                <Radio value="god">神</Radio>
-              </RadioGroup>
-            )}
-          </FormItem>
+          {
+            (userInfo.identity === 'god' || userInfo.identity === 'admin') &&
+            <FormItem {...formItemLayout} label="家谱姓氏">
+              {getFieldDecorator('parents', {
+                rules: [
+                  {
+                    required: true,
+                    message: '请输入家谱姓氏'
+                  }
+                ],
+                initialValue: userInfo.parents || ''
+              })(<Input style={{ width: 200, marginRight: 8 }} placeholder="请输入家谱姓氏" />)}
+              氏族谱
+            </FormItem>
+          }
         </Modal>
       </div>
     )

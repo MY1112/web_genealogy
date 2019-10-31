@@ -9,9 +9,19 @@ const initialState = {
 }
 
 interface IProps extends FormComponentProps {
+  userInfo: IListItem // 当前登录人信息
   visibel: boolean
   handleOk: () => void
   handleCancel: () => void
+}
+
+interface IListItem {
+  pid: string
+  username: string
+  identity: string
+  password: string
+  parents: string
+  _id: string
 }
 
 interface IState {
@@ -21,6 +31,7 @@ interface IState {
 class UserAdd extends Component<IProps, IState> {
   readonly state: IState = initialState
   private handleOk = () => {
+    const { userInfo } = this.props
     this.props.form.validateFields((err,value) => {
       if (!err) {
         this.setState({loading: true},() => {
@@ -28,7 +39,8 @@ class UserAdd extends Component<IProps, IState> {
             identity: value.identity || 'user',
             username: value.username,
             password: value.password,
-            parents: value.parents
+            parents: value.parents || userInfo.parents,
+            pid: userInfo._id
           }
           console.log(values)
           Api.signup(values).then((res: IMODApiData) => {
@@ -50,6 +62,7 @@ class UserAdd extends Component<IProps, IState> {
     }
   }  
   render() {
+    const { userInfo }  = this.props
     const { loading } = this.state
     const { getFieldDecorator } = this.props.form
     const formItemLayout = {
@@ -88,23 +101,35 @@ class UserAdd extends Component<IProps, IState> {
               ]
             })(<Input style={{ width: 200 }} placeholder="请输入密码" />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="家谱姓氏">
-            {getFieldDecorator('parents', {
-              rules: [
-                {
-                  required: true,
-                  message: '请输入家谱姓氏'
-                }
-              ]
-            })(<Input style={{ width: 200, marginRight: 8 }} placeholder="请输入家谱姓氏" />)}
-            氏族谱
-          </FormItem>
+          {
+            userInfo.identity === 'god' &&
+            <FormItem {...formItemLayout} label="家谱姓氏">
+              {getFieldDecorator('parents', {
+                rules: [
+                  {
+                    required: true,
+                    message: '请输入家谱姓氏'
+                  }
+                ]
+              })(<Input style={{ width: 200, marginRight: 8 }} placeholder="请输入家谱姓氏" />)}
+              氏族谱
+            </FormItem>
+          }
           <FormItem {...formItemLayout} label="身份">
             {getFieldDecorator('identity')(
               <RadioGroup>
-                <Radio value="admin">管理员</Radio>
-                <Radio value="user">普通</Radio>
-                <Radio value="god">神</Radio>
+                {
+                  userInfo.identity === 'god' ? 
+                  <React.Fragment>
+                    <Radio value="admin">管理员</Radio>
+                    <Radio value="user">普通</Radio>
+                    <Radio value="god">神</Radio>
+                  </React.Fragment>
+                  :
+                  <React.Fragment>
+                    <Radio value="user">普通</Radio>
+                  </React.Fragment>
+                }
               </RadioGroup>
             )}
           </FormItem>

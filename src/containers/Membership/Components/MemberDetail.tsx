@@ -2,9 +2,19 @@ import React, { PureComponent } from 'react'
 import { Button } from 'antd'
 import moment from 'moment'
 const initialState = {}
+
+export interface IListItem {
+  pid: string
+  username: string
+  identity: string
+  password: string
+  parents: string
+  _id: string
+}
 interface IProps {
   handleEdit: () => void
   detailItem: any
+  userInfo: IListItem
 }
 interface IState {}
 class MemberDetail extends PureComponent<IProps, IState> {
@@ -46,7 +56,7 @@ class MemberDetail extends PureComponent<IProps, IState> {
   }
 
   render() {
-    const {detailItem} = this.props
+    const { detailItem, userInfo } = this.props
     const addButton = (
       <Button className="primary_btn" onClick={this.handleEdit}>
         编辑
@@ -59,7 +69,10 @@ class MemberDetail extends PureComponent<IProps, IState> {
         <ul className="memberDetail_content pl-50 pr-50 pb-20">
           {this.getDetailItem()}
         </ul>
-        <div className="flex_c memberBtn">{addButton}</div>
+        {
+          ['god','admin'].includes(userInfo.identity) &&
+          <div className="flex_c memberBtn">{addButton}</div>
+        }
       </React.Fragment>
     )
   }
