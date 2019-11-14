@@ -4,9 +4,11 @@ import { Icon, Tooltip, Input } from 'antd'
 import NGTree from 'components/NGTree'
 import NGHeader from 'components/NGHeader'
 import NGNoData from 'components/NGNoData'
-import MemberAdd from './Components/MemberAdd'
+import MemberAdd, { IDateItem } from './Components/MemberAdd'
 import MemberEdit from './Components/MemberEdit'
 import MemberDetail, { IListItem } from './Components/MemberDetail'
+import Api from './Api'
+import { IMODApiData } from 'containers/login/Api'
 
 const initialState = {
   sertchVal: '',
@@ -14,27 +16,7 @@ const initialState = {
   status: false,
   isChecked: false,
   addItme: {},
-  listData: [{
-    ext: "",
-    id: "",
-    key: "0-0",
-    num: 1,
-    pid: "0",
-    pids: "[0],",
-    title: "王一",
-    value: "4296ff558285482ea70045d8aabce81a",
-    children: [{
-      children: [],
-      ext: "",
-      id: "",
-      key: "0-0-0",
-      num: 0,
-      pid: "4296ff558285482ea70045d8aabce81a",
-      pids: "[0],[4296ff558285482ea70045d8aabce81a],",
-      title: "王二",
-      value: "4cc2366ba1d7d288a23d900ee47f2ca0"
-    }]
-  }],
+  listData: [],
   detailItem: { value: '' },
   loading: false,
   selectedKeys: []
@@ -67,8 +49,8 @@ interface IState {
   visible: boolean
   status: boolean
   isChecked: boolean
-  addItme: object
-  listData: object[]
+  addItme: IDateItem
+  listData: IDateItem[]
   detailItem: any
   loading: boolean
   selectedKeys: string[]
@@ -94,6 +76,7 @@ class Membership extends Component<IProps, IState> {
   readonly state: IState = initialState
   componentDidMount() {
     this.userInfo = JSON.parse(localStorage.getItem('userInfo')||'')
+    this.getList()
   }
 
   private onChangeContent(e: any) {
@@ -102,7 +85,7 @@ class Membership extends Component<IProps, IState> {
     })
   }
 
-  private handleAdd(item: object) {
+  private handleAdd(item: IDateItem) {
     this.setState({
       visible: true,
       addItme: item
@@ -192,29 +175,17 @@ class Membership extends Component<IProps, IState> {
   }
 
   private getList = () => {
-    this.setState({
-      listData: [{
-        ext: "",
-        id: "",
-        key: "0-0",
-        num: 1,
-        pid: "0",
-        pids: "[0],",
-        title: "王一",
-        value: "4296ff558285482ea70045d8aabce81a",
-        children: [{
-          children: [],
-          ext: "",
-          id: "",
-          key: "0-0-0",
-          num: 0,
-          pid: "4296ff558285482ea70045d8aabce81a",
-          pids: "[0],[4296ff558285482ea70045d8aabce81a],",
-          title: "王二",
-          value: "4cc2366ba1d7d288a23d900ee47f2ca0"
-        }]
-      }]
-    })
+    Api.memberTreeList().then((res: IMODApiData) => {
+      if (res.code === 10000 || res.code === 10001) {
+        this.setState({
+          listData: res.data
+        })
+      } else {
+        this.setState({
+          listData: []
+        })
+      }
+    }).catch(() => {})
   }
 
   private cancelEdit() {
@@ -322,6 +293,7 @@ class Membership extends Component<IProps, IState> {
             addItme={addItme}
             addSuccess={this.addSuccess}
             listDataLen={listData.length}
+            pidTree={listData}
           />
         )}
       </div>
