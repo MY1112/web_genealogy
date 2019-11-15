@@ -15,17 +15,17 @@ const initialState = {
 }
 
 export interface IDateItem {
-  value?: string
-  title?: string
-  children?: Object[]
-  key?: string
-  pid?: string
-  pids?: string[]
+  value: string
+  title: string
+  children: Object[]
+  key: string
+  pid: string
+  pids: string[]
 }
 
 interface IProps {
   onCancel: () => void
-  addItme: IDateItem;
+  addItem: IDateItem;
   addSuccess: () => void;
   listDataLen: number
   pidTree: IDateItem[]
@@ -55,15 +55,15 @@ class MemberAdd extends PureComponent<IProps, IState> {
     }, 10)
   }
   private getParantTree = () => {
-    const { addItme } = this.props
+    const { addItem } = this.props
     const form = this.form.props.form
-    if (addItme.value) {
-      form.setFieldsValue({ pid: addItme.value })
+    if (addItem.value) {
+      form.setFieldsValue({ pid: addItem.value })
     }
   }
 
   private handleAddOk = () => {
-    const { addItme, pidTree } = this.props
+    const { addItem, pidTree } = this.props
     const form = this.form.props.form
     this.setState({ confirmLoading: true })
     form.validateFieldsAndScroll((err: Error, values: any) => {
@@ -77,12 +77,13 @@ class MemberAdd extends PureComponent<IProps, IState> {
         values.dateDeath = moment(values.dateDeath).format('YYYY-MM-DD')
       }
       if (pidTree.length > 0) {
-        values.pids = addItme.pids
+        const newPids = [...addItem.pids]
+        newPids.push(addItem.value)
+        values.pids = newPids
       } else {
         values.pid = "0"
         values.pids = ["0"]
       }
-      console.log(values)
       Api.memberAdd(values).then((res: IMODApiData) => {
         if (res.code === 10000) {
           message.success('新增成功')

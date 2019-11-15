@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.less'
-import { Icon, Tooltip, Input } from 'antd'
+import { Icon, Tooltip, Input, Modal, message } from 'antd'
 import NGTree from 'components/NGTree'
 import NGHeader from 'components/NGHeader'
 import NGNoData from 'components/NGNoData'
@@ -10,12 +10,21 @@ import MemberDetail, { IListItem } from './Components/MemberDetail'
 import Api from './Api'
 import { IMODApiData } from 'containers/login/Api'
 
+const { confirm } = Modal
+
 const initialState = {
   sertchVal: '',
   visible: false,
   status: false,
   isChecked: false,
-  addItme: {},
+  addItem: {
+    value: '',
+    title: '',
+    children: [],
+    key: '',
+    pid: '',
+    pids: []
+  },
   listData: [],
   detailItem: { value: '' },
   loading: false,
@@ -49,7 +58,7 @@ interface IState {
   visible: boolean
   status: boolean
   isChecked: boolean
-  addItme: IDateItem
+  addItem: IDateItem
   listData: IDateItem[]
   detailItem: any
   loading: boolean
@@ -88,7 +97,7 @@ class Membership extends Component<IProps, IState> {
   private handleAdd(item: IDateItem) {
     this.setState({
       visible: true,
-      addItme: item
+      addItem: item
     })
   }
 
@@ -98,20 +107,42 @@ class Membership extends Component<IProps, IState> {
     })
   }
 
+  private handleDel = (item: IDateItem) => {
+    confirm({
+      title: '是否确定删除此条数据',
+      onOk: () => {
+        this.deleteMember(item.value)
+      },
+      okText: '确认',
+      cancelText: '取消'
+    })
+  }
+
+  private deleteMember = (id: string) => {
+    Api.memberDel(id).then(() => {
+      message.success('删除成功')
+      this.getList()
+    }).catch(() => {})
+  }
+
   private getOptions() {
     const render = ['god','admin'].includes(this.userInfo && this.userInfo.identity) ? {
-      value: (text: { key: string }) => (
+      value: (text: IDateItem) => (
         <React.Fragment>
           <Tooltip title="新增">
             <span className="mr-8" onClick={this.handleAdd.bind(this, text)} >
               <Icon type="plus-circle" />
             </span>
           </Tooltip>
-          <Tooltip title="删除">
-            <span className="mr-8" onClick={this.handleAdd.bind(this, text)} >
-              <Icon type="usergroup-delete" />
-            </span>
-          </Tooltip>
+          {
+            !text.children.length ?
+            <Tooltip title="删除">
+              <span className="mr-8" onClick={this.handleDel.bind(this, text)} >
+                <Icon type="usergroup-delete" />
+              </span>
+            </Tooltip>
+            : null
+          }
         </React.Fragment>
       )
     } : {
@@ -130,43 +161,36 @@ class Membership extends Component<IProps, IState> {
     })
   }
   private handleChecked(item: any) {
-    this.setState({
-      detailItem: {
-        value: '',
-        createBy: "1",
-        createDate: 1548402772000,
-        delFlag: 0,
-        id: "4cc2366ba1d7d288a23d900ee47f2ca0",
-        medicalFlag: true,
-        medicalFlagStr: "",
-        num: 1,
-        pTitle: "王一",
-        pid: "4296ff558285482ea70045d8aabce81a",
-        pids: "[0],[4296ff558285482ea70045d8aabce81a],",
-        title: "王二",
-        titps: null,
-        updateBy: "1",
-        updateDate: 1548402772000,
-        userSum: 8,
-        version: null,
-        genderFlag: true, //性别
-        dateBirth: 1548402772000,
-        livingFlag: true,
-        dateDeath: null,
-        deeds: "一岁能言，三岁习武，七岁擅骑射，九岁能伏虎，十岁已降龙",
-        remark: "天赋异禀，项羽再世",
-        birthplace: "河北省张家口市怀来县",
-        address: "紫禁之巅",
-        marryFlag: true,
-        spouseName: "虞小姬"
-      },
-      selectedKeys: [item.key]
-    },() => {
-      this.setState({
-        isChecked: true,
-        status: false
-      })
-    })
+    console.log(item)
+    Api.memberDetail(item.value).then((res: IMODApiData) => {
+      console.log(res.data)
+    }).catch(() => {})
+    // this.setState({
+    //   detailItem: {
+    //     uid: "4cc2366ba1d7d288a23d900ee47f2ca0",
+    //     pTitle: "王一",
+    //     pid: "4296ff558285482ea70045d8aabce81a",
+    //     pids: "[0],[4296ff558285482ea70045d8aabce81a],",
+    //     title: "王二",
+    //     userSum: 8,
+    //     genderFlag: true, //性别
+    //     dateBirth: 1548402772000,
+    //     livingFlag: true,
+    //     dateDeath: null,
+    //     deeds: "一岁能言，三岁习武，七岁擅骑射，九岁能伏虎，十岁已降龙",
+    //     remark: "天赋异禀，项羽再世",
+    //     birthplace: "河北省张家口市怀来县",
+    //     address: "紫禁之巅",
+    //     marryFlag: true,
+    //     spouseName: "虞小姬"
+    //   },
+    //   selectedKeys: [item.key]
+    // },() => {
+    //   this.setState({
+    //     isChecked: true,
+    //     status: false
+    //   })
+    // })
   }
 
   private editSuccess(val: { value: string; key: string }) {
@@ -243,7 +267,7 @@ class Membership extends Component<IProps, IState> {
       loading,
       selectedKeys,
       visible,
-      addItme
+      addItem
     } = this.state
     return (
       <div className="Membership">
@@ -277,7 +301,7 @@ class Membership extends Component<IProps, IState> {
                 autoExpandedKeys={['0-0']}
                 selectedKeys={selectedKeys}
                 titleClass="pr-60"
-                rowKey={'id'}
+                rowKey={'value'}
               />
             </div>
           </div>
@@ -290,7 +314,7 @@ class Membership extends Component<IProps, IState> {
         {visible && (
           <MemberAdd
             onCancel={this.onCancel.bind(this)}
-            addItme={addItme}
+            addItem={addItem}
             addSuccess={this.addSuccess}
             listDataLen={listData.length}
             pidTree={listData}
