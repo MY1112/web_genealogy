@@ -9,6 +9,7 @@ interface IFormList {
   }
   handleChangeLiving: () => void
   handleChangeMarry: () => void
+  handleChangeBirthplace: () => void
 }
 export const getFormList = (that: IFormList) => [
   {
@@ -53,7 +54,6 @@ export const getFormList = (that: IFormList) => [
         field: 'genderFlag',
         label: '性别',
         fieldDecorator: {
-          initialValue: true,
           rules: [{ required: true, message: '请选择性别' }]
         },
         attribute: {
@@ -163,6 +163,8 @@ export const getFormList = (that: IFormList) => [
           // onChange: that.onChange
         },
         attribute: {
+          onChange: that.handleChangeBirthplace,
+          changeOnSelect: true,
           options: [
             {
               value: 'sichuan',

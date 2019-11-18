@@ -8,6 +8,7 @@ import moment from 'moment'
 import Api, { IMODApiData } from '../Api'
 
 const initialState = {
+  birthplaceText: '',
   confirmLoading: false,
   livingVisble: false,
   marryVisble: false,
@@ -31,6 +32,7 @@ interface IProps {
   pidTree: IDateItem[]
 }
 interface IState {
+  birthplaceText: string
   confirmLoading: boolean
   livingVisble: boolean
   marryVisble: boolean
@@ -64,6 +66,7 @@ class MemberAdd extends PureComponent<IProps, IState> {
 
   private handleAddOk = () => {
     const { addItem, pidTree } = this.props
+    const { birthplaceText } = this.state
     const form = this.form.props.form
     this.setState({ confirmLoading: true })
     form.validateFieldsAndScroll((err: Error, values: any) => {
@@ -76,6 +79,7 @@ class MemberAdd extends PureComponent<IProps, IState> {
       if (values.dateDeath) {
         values.dateDeath = moment(values.dateDeath).format('YYYY-MM-DD')
       }
+      values.birthplaceText = birthplaceText
       if (pidTree.length > 0) {
         const newPids = [...addItem.pids]
         newPids.push(addItem.value)
@@ -107,6 +111,15 @@ class MemberAdd extends PureComponent<IProps, IState> {
   public handleChangeMarry = (e: RadioChangeEvent) => {
     this.setState({
       marryVisble: e.target.value
+    })
+  }
+  public handleChangeBirthplace = (value: any, selectedOptions: any) => {
+    let birthplaceText = ''
+    selectedOptions.forEach((item: any) => {
+      birthplaceText += item.label
+    })
+    this.setState({
+      birthplaceText
     })
   }
 

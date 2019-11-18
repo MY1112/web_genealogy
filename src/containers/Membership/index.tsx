@@ -161,36 +161,18 @@ class Membership extends Component<IProps, IState> {
     })
   }
   private handleChecked(item: any) {
-    console.log(item)
     Api.memberDetail(item.value).then((res: IMODApiData) => {
       console.log(res.data)
+      this.setState({
+        detailItem: res.data,
+        selectedKeys: [item.key]
+      },() => {
+        this.setState({
+          isChecked: true,
+          status: false
+        })
+      })
     }).catch(() => {})
-    // this.setState({
-    //   detailItem: {
-    //     uid: "4cc2366ba1d7d288a23d900ee47f2ca0",
-    //     pTitle: "王一",
-    //     pid: "4296ff558285482ea70045d8aabce81a",
-    //     pids: "[0],[4296ff558285482ea70045d8aabce81a],",
-    //     title: "王二",
-    //     userSum: 8,
-    //     genderFlag: true, //性别
-    //     dateBirth: 1548402772000,
-    //     livingFlag: true,
-    //     dateDeath: null,
-    //     deeds: "一岁能言，三岁习武，七岁擅骑射，九岁能伏虎，十岁已降龙",
-    //     remark: "天赋异禀，项羽再世",
-    //     birthplace: "河北省张家口市怀来县",
-    //     address: "紫禁之巅",
-    //     marryFlag: true,
-    //     spouseName: "虞小姬"
-    //   },
-    //   selectedKeys: [item.key]
-    // },() => {
-    //   this.setState({
-    //     isChecked: true,
-    //     status: false
-    //   })
-    // })
   }
 
   private editSuccess(val: { value: string; key: string }) {
