@@ -2,7 +2,7 @@
  * @Author: mengyuan 
  * @Date: 2019-09-19 14:21:01 
  * @Last Modified by: mengyuan
- * @Last Modified time: 2019-11-19 17:17:22
+ * @Last Modified time: 2019-11-19 17:55:19
  */
 import React, { PureComponent } from 'react'
 import { Button } from 'antd'
@@ -121,13 +121,16 @@ class MemberTree extends PureComponent<IProps, IState> {
         return (
           <div className="memberTree">
             <div className="memberTree_download">
-              <Button
-                className="default_btn csp"
-                icon="download"
-                onClick={() => this.handleDownloadTree()}
-              >
-                导出
-              </Button>
+              {
+                this.treeData ?
+                <Button
+                  className="default_btn csp"
+                  icon="download"
+                  onClick={() => this.handleDownloadTree()}
+                >
+                  导出
+                </Button> : <span>家族空空如也～～请先创建家族成员吧～</span>
+              }
             </div>
             <div id="mountNode" className="memberTree_content"/>
           </div>
