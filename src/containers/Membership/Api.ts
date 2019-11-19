@@ -6,19 +6,19 @@ const urlServer = {
   memberTreeList: '/member/memberTreeList',
   memberDel: '/member/memberDel',
   memberDetail: '/member/memberDetail',
-//   userUpdate: '/user/userUpdate'
+  memberUpdate: '/member/memberUpdate'
 };
 // 获取成员列表树
-const memberTreeList = () =>
-  Axios.getInstance().get(urlServer.memberTreeList, { });
+const memberTreeList = (userId: string) =>
+  Axios.getInstance().get(urlServer.memberTreeList, { params: { userId } });
 
 // 新增成员
 const memberAdd = (data: object) =>
   Axios.getInstance().post(urlServer.memberAdd, { data });
 
-// // 修改用户
-// const userUpdate = (data: object) =>
-//   Axios.getInstance().post(urlServer.userUpdate, { data });
+// 修改用户
+const memberUpdate = (data: object) =>
+  Axios.getInstance().post(urlServer.memberUpdate, { data });
 
 // 删除成员
 const memberDel = (id:string) => Axios.getInstance().get(urlServer.memberDel, { params: { id }})
@@ -30,5 +30,6 @@ export default {
     memberAdd,
     memberTreeList,
     memberDel,
-    memberDetail
+    memberDetail,
+    memberUpdate
 };

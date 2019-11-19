@@ -36,10 +36,10 @@ export interface IdetailItem {
   value: string
   title?: string
   medicalFlag?: boolean
-  userSum?: number
+  memberNum?: number
   tips?: string
   pTitle?: string
-  id?: string
+  uid: string
   name?: string
   titps?: string
   genderFlag?: boolean
@@ -48,7 +48,8 @@ export interface IdetailItem {
   dateDeath?: number
   deeds?: string
   remark?: string
-  birthplace?: string
+  birthplace?: string[]
+  birthplaceText?: string
   address?: string
   marryFlag?: true
   spouseName?: string
@@ -181,7 +182,7 @@ class Membership extends Component<IProps, IState> {
   }
 
   private getList = () => {
-    Api.memberTreeList().then((res: IMODApiData) => {
+    Api.memberTreeList(this.userInfo._id).then((res: IMODApiData) => {
       if (res.code === 10000 || res.code === 10001) {
         this.setState({
           listData: res.data
@@ -295,6 +296,7 @@ class Membership extends Component<IProps, IState> {
         </div>
         {visible && (
           <MemberAdd
+            userInfo={this.userInfo}
             onCancel={this.onCancel.bind(this)}
             addItem={addItem}
             addSuccess={this.addSuccess}

@@ -6,6 +6,7 @@ import { RadioChangeEvent } from 'antd/lib/radio'
 import { getFormList } from './FormList'
 import moment from 'moment'
 import Api, { IMODApiData } from '../Api'
+import { IListItem } from './MemberDetail'
 
 const initialState = {
   birthplaceText: '',
@@ -30,6 +31,7 @@ interface IProps {
   addSuccess: () => void;
   listDataLen: number
   pidTree: IDateItem[]
+  userInfo: IListItem
 }
 interface IState {
   birthplaceText: string
@@ -65,7 +67,7 @@ class MemberAdd extends PureComponent<IProps, IState> {
   }
 
   private handleAddOk = () => {
-    const { addItem, pidTree } = this.props
+    const { addItem, pidTree, userInfo } = this.props
     const { birthplaceText } = this.state
     const form = this.form.props.form
     this.setState({ confirmLoading: true })
@@ -74,11 +76,13 @@ class MemberAdd extends PureComponent<IProps, IState> {
         this.setState({ confirmLoading: false })
         return
       }
-      
-      values.dateBirth = moment(values.dateBirth).format('YYYY-MM-DD')
+      if (values.dateBirth) {
+        values.dateBirth = moment(values.dateBirth).format('YYYY-MM-DD')
+      }
       if (values.dateDeath) {
         values.dateDeath = moment(values.dateDeath).format('YYYY-MM-DD')
       }
+      values.userId = userInfo._id
       values.birthplaceText = birthplaceText
       if (pidTree.length > 0) {
         const newPids = [...addItem.pids]
@@ -115,8 +119,8 @@ class MemberAdd extends PureComponent<IProps, IState> {
   }
   public handleChangeBirthplace = (value: any, selectedOptions: any) => {
     let birthplaceText = ''
-    selectedOptions.forEach((item: any) => {
-      birthplaceText += item.label
+    selectedOptions.forEach((item: any, index: number) => {
+      birthplaceText += index === selectedOptions.length - 1 ? item.label : `${item.label}/`
     })
     this.setState({
       birthplaceText
