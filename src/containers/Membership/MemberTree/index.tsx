@@ -2,11 +2,12 @@
  * @Author: mengyuan 
  * @Date: 2019-09-19 14:21:01 
  * @Last Modified by: mengyuan
- * @Last Modified time: 2019-09-26 16:03:48
+ * @Last Modified time: 2019-11-19 17:17:22
  */
 import React, { PureComponent } from 'react'
 import { Button } from 'antd'
 import './index.less'
+import Api, { IMODApiData } from '../Api'
 
 const G6 = require('@antv/g6')
 
@@ -16,66 +17,6 @@ interface IState {
     CDNLoading: boolean
 }
 
-const data = {
-    "id": "王志恒",
-    "children": [
-      {
-        "id": "王-2-1",
-        "children": [
-          { "id": "王-3-1" },
-          { "id": "王-3-2" },
-          { "id": "王-3-3" },
-          { "id": "王-3-4" },
-          { "id": "王-3-5" },
-          { "id": "王-3-6" },
-          { "id": "王-3-7" },
-          { "id": "王-3-8" }
-        ]
-      },
-      {
-        "id": "王-2-2",
-        "children": [
-          {
-            "id": "王-3-9",
-            "children": [
-              { "id": "王-4-1" },
-              { "id": "王-4-2" },
-              { "id": "王-4-3" },
-              { "id": "王-4-4" },
-              { "id": "王-4-5" },
-              { "id": "王-4-6" }
-            ]
-          },
-          {
-            "id": "王-3-10",
-            "children": [
-              { "id": "王-4-7" },
-              { "id": "王-4-8" }
-            ]
-          },
-          {
-            "id": "王-3-11",
-            "children": [
-              { "id": "王-4-9" },
-              { "id": "王-4-10" },
-              { "id": "王-4-11" }
-            ]
-          }
-        ]
-      },
-      {
-        "id": "王-2-3",
-        "children": [
-          { "id": "王-3-12" },
-          { "id": "王-3-13" },
-          { "id": "王-3-14" },
-          { "id": "王-3-15" },
-          { "id": "王-3-16" }
-        ]
-      }
-    ]
-  }
-
 class MemberTree extends PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props)
@@ -84,9 +25,16 @@ class MemberTree extends PureComponent<IProps, IState> {
         }
     }
     private graph: any
+    private treeData: any
 
     componentDidMount() {
-        this.getGraphTree()
+      const userInfo = JSON.parse(localStorage.getItem('userInfo')||'')
+      Api.memberTree(userInfo._id).then((res: IMODApiData) => {
+        if (res.code === 10000) {
+          this.treeData = res.data[0]
+          this.getGraphTree()
+        }
+      })
     }
 
     private getGraphTree = () => {
@@ -158,7 +106,7 @@ class MemberTree extends PureComponent<IProps, IState> {
         };
       });
   
-      this.graph.data(data);
+      this.graph.data(this.treeData);
       this.graph.render();
       this.graph.fitView();
     }
