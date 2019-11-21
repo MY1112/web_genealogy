@@ -57,7 +57,7 @@ class MemberDetail extends PureComponent<IProps, IState> {
 
   render() {
     const { detailItem, userInfo } = this.props
-    const addButton = (
+    const editButton = (
       <Button className="primary_btn" onClick={this.handleEdit}>
         编辑
       </Button>
@@ -71,7 +71,7 @@ class MemberDetail extends PureComponent<IProps, IState> {
         </ul>
         {
           ['god','admin'].includes(userInfo.identity) &&
-          <div className="flex_c memberBtn">{addButton}</div>
+          <div className="flex_c memberBtn">{editButton}</div>
         }
       </React.Fragment>
     )

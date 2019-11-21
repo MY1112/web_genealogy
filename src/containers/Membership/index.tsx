@@ -90,6 +90,7 @@ class Membership extends Component<IProps, IState> {
   }
 
   private onChangeContent(e: any) {
+    console.log(e.target.value)
     this.setState({
       sertchVal: e.target.value
     })
@@ -182,7 +183,11 @@ class Membership extends Component<IProps, IState> {
   }
 
   private getList = () => {
-    Api.memberTreeList(this.userInfo._id).then((res: IMODApiData) => {
+    let userId = this.userInfo._id
+      if (this.userInfo.identity === 'user') {
+        userId = this.userInfo.pid
+      }
+    Api.memberTreeList(userId).then((res: IMODApiData) => {
       if (res.code === 10000 || res.code === 10001) {
         this.setState({
           listData: res.data
@@ -234,7 +239,7 @@ class Membership extends Component<IProps, IState> {
         className="search_icon mr-20"
         placeholder="请输入成员名称"
         suffix={
-          <i className="fs-18 iconfont icon-sousuo fs-20 ngLayout_headerTop_searchIcon csp" />
+          <Icon className="fs-20 ngLayout_headerTop_searchIcon csp" type="search" />
         }
         onBlur={this.onChangeContent}
         onPressEnter={this.onChangeContent}
@@ -284,7 +289,6 @@ class Membership extends Component<IProps, IState> {
                 autoExpandedKeys={['0-0']}
                 selectedKeys={selectedKeys}
                 titleClass="pr-60"
-                rowKey={'value'}
               />
             </div>
           </div>

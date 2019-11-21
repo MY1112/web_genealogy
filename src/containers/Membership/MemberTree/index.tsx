@@ -2,7 +2,7 @@
  * @Author: mengyuan 
  * @Date: 2019-09-19 14:21:01 
  * @Last Modified by: mengyuan
- * @Last Modified time: 2019-11-19 17:55:19
+ * @Last Modified time: 2019-11-20 19:14:39
  */
 import React, { PureComponent } from 'react'
 import { Button } from 'antd'
@@ -29,10 +29,18 @@ class MemberTree extends PureComponent<IProps, IState> {
 
     componentDidMount() {
       const userInfo = JSON.parse(localStorage.getItem('userInfo')||'')
-      Api.memberTree(userInfo._id).then((res: IMODApiData) => {
+      let userId = userInfo._id
+      if (userInfo.identity === 'user') {
+        userId = userInfo.pid
+      }
+      Api.memberTree(userId).then((res: IMODApiData) => {
         if (res.code === 10000) {
           this.treeData = res.data[0]
-          this.getGraphTree()
+          this.setState({
+            CDNLoading: true
+          },() => {
+            this.getGraphTree()
+          })
         }
       })
     }
@@ -122,7 +130,7 @@ class MemberTree extends PureComponent<IProps, IState> {
           <div className="memberTree">
             <div className="memberTree_download">
               {
-                this.treeData ?
+                this.state.CDNLoading ?
                 <Button
                   className="default_btn csp"
                   icon="download"
