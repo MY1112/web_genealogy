@@ -32,7 +32,11 @@ class MemberTree extends PureComponent<IProps, IState> {
       Api.memberTree(userInfo._id).then((res: IMODApiData) => {
         if (res.code === 10000) {
           this.treeData = res.data[0]
-          this.getGraphTree()
+          this.setState({
+            CDNLoading: true
+          },() => {
+             this.getGraphTree()
+          })
         }
       })
     }
@@ -118,23 +122,24 @@ class MemberTree extends PureComponent<IProps, IState> {
     }
 
     render() {
-        return (
-          <div className="memberTree">
-            <div className="memberTree_download">
-              {
-                this.treeData ?
-                <Button
-                  className="default_btn csp"
-                  icon="download"
-                  onClick={() => this.handleDownloadTree()}
-                >
-                  导出
-                </Button> : <span>家族空空如也～～请先创建家族成员吧～</span>
-              }
-            </div>
-            <div id="mountNode" className="memberTree_content"/>
+      const { CDNLoading } = this.state
+      return (
+        <div className="memberTree">
+          <div className="memberTree_download">
+            {
+              this.treeData && CDNLoading ?
+              <Button
+                className="default_btn csp"
+                icon="download"
+                onClick={() => this.handleDownloadTree()}
+              >
+                导出
+              </Button> : <span>家族空空如也～～请先创建家族成员吧～</span>
+            }
           </div>
-        )
+          <div id="mountNode" className="memberTree_content"/>
+        </div>
+      )
     }
 }
 export default MemberTree
