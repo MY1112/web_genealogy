@@ -1,0 +1,41 @@
+
+.ellipsis {
+    &_overlayPopover{
+      .ant-popover-inner-content{
+        padding:12px 10px;
+        word-break: break-all;
+        max-width: 300px;
+        max-height: 200px;
+        overflow: auto;
+      }
+    }
+    &_project {
+      display: inline-block;
+      background: #eff3fa;
+      border-radius: 10px;
+      font-size: 14px;
+      color: #727B8D;
+      padding: 0px 10px;
+      margin-right: 6px;
+      margin: 2px 6px 2px 0px;
+    }
+    &_block {
+      display: block;
+      &_ib {
+        display: inline-block;
+      }
+    }
+    &_popoverCont{
+      color: #727B8D;
+      font-size:14px;
+      max-width: 120px;
+      max-width: 500px;
+      word-break: break-all;
+      &_li{
+        display: inline;
+      }
+      &_li:not(:last-child)::after{
+        content: ','
+      }
+    }
+  }

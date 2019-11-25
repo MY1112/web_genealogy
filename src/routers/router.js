@@ -100,9 +100,9 @@ const Authverify = withRouter(props => {
   if (beforeRouterName === pathname ) {
     return null 
   }
-  console.log(userToken)
-  console.log(props.isLogin)
-  console.log(pathname)
+  // console.log(userToken)
+  // console.log(props.isLogin)
+  // console.log(pathname)
   if (!userToken) {
     if (location.pathname === '/login' ) {
       return null

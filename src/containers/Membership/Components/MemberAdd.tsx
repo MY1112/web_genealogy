@@ -1,33 +1,40 @@
 import React, { PureComponent } from 'react'
+import { message } from 'antd'
 import NGForm, { IWrappedComponentRef } from 'components/NGForm'
 import NGModal from 'components/NGModal'
 import { RadioChangeEvent } from 'antd/lib/radio'
 import { getFormList } from './FormList'
+import moment from 'moment'
+import Api, { IMODApiData } from '../Api'
+import { IListItem } from './MemberDetail'
 
 const initialState = {
-  pidTree: [],
+  birthplaceText: '',
   confirmLoading: false,
   livingVisble: false,
   marryVisble: false,
   dateDeath: []
 }
 
-interface IdateItem {
-  value?: string
-  title?: string
-  children?: Object[]
-  key?: string
-  pid?: string
+export interface IDateItem {
+  value: string
+  title: string
+  children: Object[]
+  key: string
+  pid: string
+  pids: string[]
 }
 
 interface IProps {
   onCancel: () => void
-  addItme: IdateItem;
+  addItem: IDateItem;
   addSuccess: () => void;
   listDataLen: number
+  pidTree: IDateItem[]
+  userInfo: IListItem
 }
 interface IState {
-  pidTree: object[]
+  birthplaceText: string
   confirmLoading: boolean
   livingVisble: boolean
   marryVisble: boolean
@@ -52,54 +59,50 @@ class MemberAdd extends PureComponent<IProps, IState> {
     }, 10)
   }
   private getParantTree = () => {
-    const { addItme } = this.props
+    const { addItem } = this.props
     const form = this.form.props.form
-    if (addItme.value) {
-      form.setFieldsValue({ pid: addItme.value })
+    if (addItem.value) {
+      form.setFieldsValue({ pid: addItem.value })
     }
-    
-      this.setState({
-        pidTree: [{
-          ext: "",
-          id: "",
-          key: "0-0",
-          num: 1,
-          pid: "0",
-          pids: "[0],",
-          title: "王一",
-          value: "4296ff558285482ea70045d8aabce81a",
-          children: [{
-            children: [],
-            ext: "",
-            id: "",
-            key: "0-0-0",
-            num: 0,
-            pid: "4296ff558285482ea70045d8aabce81a",
-            pids: "[0],[4296ff558285482ea70045d8aabce81a],",
-            title: "王二",
-            value: "4cc2366ba1d7d288a23d900ee47f2ca0"
-          }]
-        }]
-      })
   }
 
   private handleAddOk = () => {
-    // const form = this.form.props.form
-    // this.setState({ confirmLoading: true })
-    // form.validateFieldsAndScroll((err: Error, values: object) => {
-    //   this.setState({ confirmLoading: false })
-    //   if (err) {
-    //     return
-    //   }
-    //   Api.addDepartment(values).then((res: IMODApiData) => {
-    //     if (res.code === 10000) {
-    //       message.success('新增成功')
-    //       this.props.addSuccess()
-    //     }
-    //   })
-    //   this.props.onCancel()
-    //   this.setState({ confirmLoading: false })
-    // })
+    const { addItem, pidTree, userInfo } = this.props
+    const { birthplaceText } = this.state
+    const form = this.form.props.form
+    this.setState({ confirmLoading: true })
+    form.validateFieldsAndScroll((err: Error, values: any) => {
+      if (err) {
+        this.setState({ confirmLoading: false })
+        return
+      }
+      if (values.dateBirth) {
+        values.dateBirth = moment(values.dateBirth).format('YYYY-MM-DD')
+      }
+      if (values.dateDeath) {
+        values.dateDeath = moment(values.dateDeath).format('YYYY-MM-DD')
+      }
+      values.userId = userInfo._id
+      values.birthplaceText = birthplaceText
+      if (pidTree.length > 0) {
+        const newPids = [...addItem.pids]
+        newPids.push(addItem.value)
+        values.pids = newPids
+      } else {
+        values.pid = "0"
+        values.pids = ["0"]
+      }
+      Api.memberAdd(values).then((res: IMODApiData) => {
+        if (res.code === 10000) {
+          message.success('新增成功')
+          this.setState({ confirmLoading: false })
+          this.props.addSuccess()
+          this.props.onCancel()
+        }
+      }).catch(() => {
+        this.setState({ confirmLoading: false })
+      })
+    })
   }
   private onCancel = () => {
     this.props.onCancel()
@@ -112,6 +115,15 @@ class MemberAdd extends PureComponent<IProps, IState> {
   public handleChangeMarry = (e: RadioChangeEvent) => {
     this.setState({
       marryVisble: e.target.value
+    })
+  }
+  public handleChangeBirthplace = (value: any, selectedOptions: any) => {
+    let birthplaceText = ''
+    selectedOptions.forEach((item: any, index: number) => {
+      birthplaceText += index === selectedOptions.length - 1 ? item.label : `${item.label}/`
+    })
+    this.setState({
+      birthplaceText
     })
   }
 
@@ -143,3 +155,27 @@ class MemberAdd extends PureComponent<IProps, IState> {
   }
 }
 export default MemberAdd
+
+
+
+// pidTree: [{
+//   ext: "",
+//   id: "",
+//   key: "0-0",
+//   num: 1,
+//   pid: "0",
+//   pids: "[0],",
+//   title: "王一",
+//   value: "4296ff558285482ea70045d8aabce81a",
+//   children: [{
+//     children: [],
+//     ext: "",
+//     id: "",
+//     key: "0-0-0",
+//     num: 0,
+//     pid: "4296ff558285482ea70045d8aabce81a",
+//     pids: "[0],[4296ff558285482ea70045d8aabce81a],",
+//     title: "王二",
+//     value: "4cc2366ba1d7d288a23d900ee47f2ca0"
+//   }]
+// }]

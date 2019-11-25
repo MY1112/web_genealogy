@@ -20,7 +20,8 @@ module.exports = {
   mode: 'development',
   devtool: 'cheap-module-source-map',
   entry: [
-    // require.resolve('./polyfills'),
+    require.resolve('@babel/polyfill'),
+    require.resolve('react-hot-loader/patch'),
     require.resolve('react-dev-utils/webpackHotDevClient'),
     paths.appIndexJs,
   ],
@@ -50,21 +51,8 @@ module.exports = {
   module: {
     strictExportPresence: true,
     rules: [
-      // {
-      //   test: /\.(js|jsx|tsx|ts)$/,
-      //   exclude: /node_modules/,
-      //   loader: 'babel-loader'
-      // },
       {
         oneOf: [
-          // {
-          //   test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-          //   loader: require.resolve('url-loader'),
-          //   options: {
-          //     limit: 10000,
-          //     name: 'static/media/[name].[hash:8].[ext]',
-          //   },
-          // },
           {
             test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
             use: 'url-loader'
@@ -73,8 +61,13 @@ module.exports = {
             test: /\.(js|jsx|mjs|tsx|ts)$/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
-              options: {
+            options: {
               cacheDirectory: true,
+              plugins: [
+                ['import', {
+                  libraryName: 'antd', style: true
+                }],  // import less
+              ]
             },
             exclude: /node_modules/
           },
@@ -175,6 +168,9 @@ module.exports = {
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   ],
 
+  devServer: {
+    hot: true
+  },
   node: {
     dgram: 'empty',
     fs: 'empty',

@@ -1,22 +1,22 @@
 /*
  * @Author: mengyuan 
  * @Date: 2019-08-14 18:21:52 
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2019-09-22 22:12:16
+ * @Last Modified by: mengyuan
+ * @Last Modified time: 2019-11-20 20:15:51
  */
 @import '../../style/color.less';
 .Membership {
   &_left {
-    overflow-y: auto;
-    overflow-x: hidden;
     border-right: 1px solid #f1f2f3;
-    width: 450px;
+    width: 400px;
     box-shadow: 0px 0px 8px 0px rgba(50, 55, 90, 0.06);
     background: #ffffff;
     &_header {
       position: relative;
     }
     &_tree {
+      overflow: auto;
+
       height: calc(~'100vh - 261px');
     }
   }
@@ -24,11 +24,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    flex: 1;
     height: calc(~'100vh - 171px');
     // background: url('../../assets/imgs/member/leftTop.png') 0% 0% no-repeat,
     // url('../../assets/imgs/member/rightBottom.png') 100% 100% no-repeat;
     background-color: #ffffff;
+    box-shadow: 0px 0px 8px 0px rgba(50, 55, 90, 0.06);
     .ant-btn {
       min-width: 140px;
     }

@@ -1,12 +1,15 @@
 
 interface IFormList {
-  state:{
+  props: {
     pidTree: object[]
+  }
+  state:{
     livingVisble: boolean
     marryVisble: boolean
   }
   handleChangeLiving: () => void
   handleChangeMarry: () => void
+  handleChangeBirthplace: () => void
 }
 export const getFormList = (that: IFormList) => [
   {
@@ -32,11 +35,11 @@ export const getFormList = (that: IFormList) => [
         field: 'pid',
         label: '上级成员',
         fieldDecorator: {
-          rules: [{ required: true, message: '请选择上级成员' }]
+          rules: [{ required: !!that.props.pidTree.length, message: '请选择上级成员' }]
         },
         attribute: {
           style: { width: 200 },
-          treeData: [...that.state.pidTree],
+          treeData: [...that.props.pidTree],
           placeholder: '请选择上级成员'
         }
       }
@@ -51,7 +54,6 @@ export const getFormList = (that: IFormList) => [
         field: 'genderFlag',
         label: '性别',
         fieldDecorator: {
-          initialValue: true,
           rules: [{ required: true, message: '请选择性别' }]
         },
         attribute: {
@@ -73,7 +75,7 @@ export const getFormList = (that: IFormList) => [
         field: 'dateBirth',
         label: '出生日期',
         fieldDecorator: {
-          rules: [{ required: true, message: '请选择出生日期' }]
+          // rules: [{ required: true, message: '请选择出生日期' }]
         },
         attribute: {
           style: { width: 200 },
@@ -114,7 +116,7 @@ export const getFormList = (that: IFormList) => [
         field: 'dateDeath',
         label: '去世时间',
         fieldDecorator: {
-          rules: [{ required: true, message: '请选择去世时间' }]
+          // rules: [{ required: true, message: '请选择去世时间' }]
         },
         attribute: {
           style: { width: 200 },
@@ -156,11 +158,13 @@ export const getFormList = (that: IFormList) => [
         field: 'birthplace',
         label: '籍贯',
         fieldDecorator: {
-          initialValue: ['hebei', 'zhangjiakou', 'huailai'],
+          // initialValue: ['hebei', 'zhangjiakou', 'huailai'],
           // rules: [{ required: true, message: '籍贯' }],
           // onChange: that.onChange
         },
         attribute: {
+          onChange: that.handleChangeBirthplace,
+          changeOnSelect: true,
           options: [
             {
               value: 'sichuan',
@@ -220,7 +224,7 @@ export const getFormList = (that: IFormList) => [
         field: 'marryFlag',
         label: '是否结婚',
         fieldDecorator: {
-          rules: [{ required: true, message: '请选择是否结婚' }],
+          // rules: [{ required: true, message: '请选择是否结婚' }],
           onChange: that.handleChangeMarry
         },
         attribute: {
@@ -242,7 +246,7 @@ export const getFormList = (that: IFormList) => [
         field: 'spouseName',
         label: '配偶姓名',
         fieldDecorator: {
-          rules: [{ required: true, message: '请输入配偶姓名' }]
+          // rules: [{ required: true, message: '请输入配偶姓名' }]
         },
         attribute: {
           style: { width: 200 },

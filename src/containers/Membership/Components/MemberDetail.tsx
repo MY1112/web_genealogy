@@ -2,9 +2,19 @@ import React, { PureComponent } from 'react'
 import { Button } from 'antd'
 import moment from 'moment'
 const initialState = {}
+
+export interface IListItem {
+  pid: string
+  username: string
+  identity: string
+  password: string
+  parents: string
+  _id: string
+}
 interface IProps {
   handleEdit: () => void
   detailItem: any
+  userInfo: IListItem
 }
 interface IState {}
 class MemberDetail extends PureComponent<IProps, IState> {
@@ -23,13 +33,13 @@ class MemberDetail extends PureComponent<IProps, IState> {
     const {detailItem} = this.props
     const detailVal = [
       { title: '成员姓名', value: detailItem.title },
-      { title: '上级成员', value: detailItem.pTitle },
-      { title: '子孙人数', value: detailItem.userSum },
-      { title: '性别', value: detailItem.genderFlag ? '男' : '女' },
-      { title: '出生日期', value: detailItem.dateBirth ? moment(detailItem.dateBirth).format('YYYY-MM-DD') : '-' },
+      // { title: '上级成员', value: detailItem.pTitle },
+      { title: '子孙人数', value: detailItem.memberNum || 0 },
+      { title: '性别', value: detailItem.genderFlag === 1 ? '男' : '女' },
+      { title: '出生日期', value: detailItem.dateBirth || '-' },
       { title: '是否在世', value: detailItem.livingFlag ? '是':'否'},
-      { title: '去世时间', value: detailItem.dateDeath ? detailItem.dateDeath : '-' },
-      { title: '籍贯', value: detailItem.birthplace ? detailItem.birthplace : '-' },
+      { title: '去世时间', value: detailItem.dateDeath || '-' },
+      { title: '籍贯', value: detailItem.birthplaceText ? detailItem.birthplaceText : '-' },
       { title: '现居地', value: detailItem.address ? detailItem.address : '-' },
       { title: '是否结婚', value: detailItem.marryFlag ? '是' : '否' },
       { title: '配偶姓名', value: detailItem.spouseName ? detailItem.spouseName : '-' },
@@ -46,8 +56,8 @@ class MemberDetail extends PureComponent<IProps, IState> {
   }
 
   render() {
-    const {detailItem} = this.props
-    const addButton = (
+    const { detailItem, userInfo } = this.props
+    const editButton = (
       <Button className="primary_btn" onClick={this.handleEdit}>
         编辑
       </Button>
@@ -59,7 +69,10 @@ class MemberDetail extends PureComponent<IProps, IState> {
         <ul className="memberDetail_content pl-50 pr-50 pb-20">
           {this.getDetailItem()}
         </ul>
-        <div className="flex_c memberBtn">{addButton}</div>
+        {
+          ['god','admin'].includes(userInfo.identity) &&
+          <div className="flex_c memberBtn">{editButton}</div>
+        }
       </React.Fragment>
     )
   }

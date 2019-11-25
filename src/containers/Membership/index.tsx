@@ -1,40 +1,31 @@
 import React, { Component } from 'react'
 import './index.less'
-import { Icon, Tooltip, Input } from 'antd'
+import { Icon, Tooltip, Input, Modal, message } from 'antd'
 import NGTree from 'components/NGTree'
 import NGHeader from 'components/NGHeader'
 import NGNoData from 'components/NGNoData'
-import MemberAdd from './Components/MemberAdd'
+import MemberAdd, { IDateItem } from './Components/MemberAdd'
 import MemberEdit from './Components/MemberEdit'
-import MemberDetail from './Components/MemberDetail'
+import MemberDetail, { IListItem } from './Components/MemberDetail'
+import Api from './Api'
+import { IMODApiData } from 'containers/login/Api'
+
+const { confirm } = Modal
 
 const initialState = {
   sertchVal: '',
   visible: false,
   status: false,
   isChecked: false,
-  addItme: {},
-  listData: [{
-    ext: "",
-    id: "",
-    key: "0-0",
-    num: 1,
-    pid: "0",
-    pids: "[0],",
-    title: "王一",
-    value: "4296ff558285482ea70045d8aabce81a",
-    children: [{
-      children: [],
-      ext: "",
-      id: "",
-      key: "0-0-0",
-      num: 0,
-      pid: "4296ff558285482ea70045d8aabce81a",
-      pids: "[0],[4296ff558285482ea70045d8aabce81a],",
-      title: "王二",
-      value: "4cc2366ba1d7d288a23d900ee47f2ca0"
-    }]
-  }],
+  addItem: {
+    value: '',
+    title: '',
+    children: [],
+    key: '',
+    pid: '',
+    pids: []
+  },
+  listData: [],
   detailItem: { value: '' },
   loading: false,
   selectedKeys: []
@@ -45,10 +36,10 @@ export interface IdetailItem {
   value: string
   title?: string
   medicalFlag?: boolean
-  userSum?: number
+  memberNum?: number
   tips?: string
   pTitle?: string
-  id?: string
+  uid: string
   name?: string
   titps?: string
   genderFlag?: boolean
@@ -57,7 +48,8 @@ export interface IdetailItem {
   dateDeath?: number
   deeds?: string
   remark?: string
-  birthplace?: string
+  birthplace?: string[]
+  birthplaceText?: string
   address?: string
   marryFlag?: true
   spouseName?: string
@@ -67,8 +59,8 @@ interface IState {
   visible: boolean
   status: boolean
   isChecked: boolean
-  addItme: object
-  listData: object[]
+  addItem: IDateItem
+  listData: IDateItem[]
   detailItem: any
   loading: boolean
   selectedKeys: string[]
@@ -90,18 +82,24 @@ class Membership extends Component<IProps, IState> {
     this.getSearch = this.getSearch.bind(this)
     this.MembershipPage = this.MembershipPage.bind(this)
   }
+  private userInfo: IListItem
   readonly state: IState = initialState
+  componentDidMount() {
+    this.userInfo = JSON.parse(localStorage.getItem('userInfo')||'')
+    this.getList()
+  }
 
   private onChangeContent(e: any) {
+    console.log(e.target.value)
     this.setState({
       sertchVal: e.target.value
     })
   }
 
-  private handleAdd(item: object) {
+  private handleAdd(item: IDateItem) {
     this.setState({
       visible: true,
-      addItme: item
+      addItem: item
     })
   }
 
@@ -111,22 +109,46 @@ class Membership extends Component<IProps, IState> {
     })
   }
 
+  private handleDel = (item: IDateItem) => {
+    confirm({
+      title: '是否确定删除此条数据',
+      onOk: () => {
+        this.deleteMember(item.value)
+      },
+      okText: '确认',
+      cancelText: '取消'
+    })
+  }
+
+  private deleteMember = (id: string) => {
+    Api.memberDel(id).then(() => {
+      message.success('删除成功')
+      this.getList()
+    }).catch(() => {})
+  }
+
   private getOptions() {
-    const render = {
-      value: (text: { key: string }) => (
+    const render = ['god','admin'].includes(this.userInfo && this.userInfo.identity) ? {
+      value: (text: IDateItem) => (
         <React.Fragment>
           <Tooltip title="新增">
-            <span onClick={this.handleAdd.bind(this, text)} >
+            <span className="mr-8" onClick={this.handleAdd.bind(this, text)} >
               <Icon type="plus-circle" />
             </span>
           </Tooltip>
-          <Tooltip title="删除">
-            <span onClick={this.handleAdd.bind(this, text)} >
-              <Icon type="usergroup-delete" style={{marginLeft: '10px'}} />
-            </span>
-          </Tooltip>
+          {
+            !text.children.length ?
+            <Tooltip title="删除">
+              <span className="mr-8" onClick={this.handleDel.bind(this, text)} >
+                <Icon type="usergroup-delete" />
+              </span>
+            </Tooltip>
+            : null
+          }
         </React.Fragment>
       )
+    } : {
+      value: (text: { key: string }) => null
     }
     return render
   }
@@ -141,43 +163,18 @@ class Membership extends Component<IProps, IState> {
     })
   }
   private handleChecked(item: any) {
-    this.setState({
-      detailItem: {
-        value: '',
-        createBy: "1",
-        createDate: 1548402772000,
-        delFlag: 0,
-        id: "4cc2366ba1d7d288a23d900ee47f2ca0",
-        medicalFlag: true,
-        medicalFlagStr: "",
-        num: 1,
-        pTitle: "王一",
-        pid: "4296ff558285482ea70045d8aabce81a",
-        pids: "[0],[4296ff558285482ea70045d8aabce81a],",
-        title: "王二",
-        titps: null,
-        updateBy: "1",
-        updateDate: 1548402772000,
-        userSum: 8,
-        version: null,
-        genderFlag: true, //性别
-        dateBirth: 1548402772000,
-        livingFlag: true,
-        dateDeath: null,
-        deeds: "一岁能言，三岁习武，七岁擅骑射，九岁能伏虎，十岁已降龙",
-        remark: "天赋异禀，项羽再世",
-        birthplace: "河北省张家口市怀来县",
-        address: "紫禁之巅",
-        marryFlag: true,
-        spouseName: "虞小姬"
-      },
-      selectedKeys: [item.key]
-    },() => {
+    Api.memberDetail(item.value).then((res: IMODApiData) => {
+      console.log(res.data)
       this.setState({
-        isChecked: true,
-        status: false
+        detailItem: res.data,
+        selectedKeys: [item.key]
+      },() => {
+        this.setState({
+          isChecked: true,
+          status: false
+        })
       })
-    })
+    }).catch(() => {})
   }
 
   private editSuccess(val: { value: string; key: string }) {
@@ -186,29 +183,21 @@ class Membership extends Component<IProps, IState> {
   }
 
   private getList = () => {
-    this.setState({
-      listData: [{
-        ext: "",
-        id: "",
-        key: "0-0",
-        num: 1,
-        pid: "0",
-        pids: "[0],",
-        title: "王一",
-        value: "4296ff558285482ea70045d8aabce81a",
-        children: [{
-          children: [],
-          ext: "",
-          id: "",
-          key: "0-0-0",
-          num: 0,
-          pid: "4296ff558285482ea70045d8aabce81a",
-          pids: "[0],[4296ff558285482ea70045d8aabce81a],",
-          title: "王二",
-          value: "4cc2366ba1d7d288a23d900ee47f2ca0"
-        }]
-      }]
-    })
+    let userId = this.userInfo._id
+      if (this.userInfo.identity === 'user') {
+        userId = this.userInfo.pid
+      }
+    Api.memberTreeList(userId).then((res: IMODApiData) => {
+      if (res.code === 10000 || res.code === 10001) {
+        this.setState({
+          listData: res.data
+        })
+      } else {
+        this.setState({
+          listData: []
+        })
+      }
+    }).catch(() => {})
   }
 
   private cancelEdit() {
@@ -233,6 +222,7 @@ class Membership extends Component<IProps, IState> {
           <MemberDetail
             handleEdit={this.handleEdit}
             detailItem={detailItem}
+            userInfo={this.userInfo}
           />
         )}
       </div>
@@ -249,7 +239,7 @@ class Membership extends Component<IProps, IState> {
         className="search_icon mr-20"
         placeholder="请输入成员名称"
         suffix={
-          <i className="fs-18 iconfont icon-sousuo fs-20 ngLayout_headerTop_searchIcon csp" />
+          <Icon className="fs-20 ngLayout_headerTop_searchIcon csp" type="search" />
         }
         onBlur={this.onChangeContent}
         onPressEnter={this.onChangeContent}
@@ -265,7 +255,7 @@ class Membership extends Component<IProps, IState> {
       loading,
       selectedKeys,
       visible,
-      addItme
+      addItem
     } = this.state
     return (
       <div className="Membership">
@@ -276,6 +266,7 @@ class Membership extends Component<IProps, IState> {
               size="big"
               className="Membership_left_header"
               extra={
+                ['god','admin'].includes(this.userInfo && this.userInfo.identity) &&
                 <span
                   className="Membership_options"
                   onClick={this.handleAdd.bind(this,{})}
@@ -298,7 +289,6 @@ class Membership extends Component<IProps, IState> {
                 autoExpandedKeys={['0-0']}
                 selectedKeys={selectedKeys}
                 titleClass="pr-60"
-                rowKey={'id'}
               />
             </div>
           </div>
@@ -310,10 +300,12 @@ class Membership extends Component<IProps, IState> {
         </div>
         {visible && (
           <MemberAdd
+            userInfo={this.userInfo}
             onCancel={this.onCancel.bind(this)}
-            addItme={addItme}
+            addItem={addItem}
             addSuccess={this.addSuccess}
             listDataLen={listData.length}
+            pidTree={listData}
           />
         )}
       </div>

@@ -1,0 +1,45 @@
+
+@border:1px solid #e6eaf0;
+.mes_list{
+  border:$border;
+	&_row{
+    &.mes-list-wieght{
+      display:flex;
+    }
+		font-size:14px;
+    font-weight:400;
+    &:not(:last-child) {
+      border-bottom: $border;
+    }
+    &:first-child{
+      margin-top:0;
+    }
+		&_title{
+      font-size:14px;
+      font-weight:400;
+      color:rgba(114,123,141,1);
+			text-align:center;
+			background:rgba(89,143,232,0.08);
+      padding: 9px 0px;
+			&_flex{
+				display:flex;
+				justify-content:center;
+				align-items:center;
+				height:100%;
+			}
+		}
+		&_value{
+      padding: 8px 8px 8px 16px !important;
+      color: #32375a;
+      background: #fff;
+
+			&_flex{
+        word-break: break-all;
+				display:flex;
+        align-items:center;
+				height:100%;
+			}
+		}
+	}
+}
+

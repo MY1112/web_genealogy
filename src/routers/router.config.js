@@ -14,7 +14,7 @@ const routers = [
     children: [
       {
         menuName: '用户列表',
-        component: 'user/list.js', // 主页
+        component: 'user/index.tsx', // 主页
         path: '/admin/user/list' // 主页
       }
     ]
@@ -36,12 +36,20 @@ const routers = [
     ]
   },
   {
+    menuName: '成员地图',
+    menuIco: 'user',
+    component: 'MemberMap/index.tsx',
+    path: '/admin/MemberMap'
+  },
+  {
     menuName: '关于我',
     menuIco: 'smile-o',
     component: 'about/about.js', // 主页
     path: '/admin/about' // 主页
   }
 ]
+
+// const userInfo = JSON.parse(localStorage.getItem('userInfo'))
 
 // 递归路由
 const mapRouters = item => {
@@ -61,10 +69,20 @@ const mapRouters = item => {
       </Bundle>
       )
     }
-    }
-    return item
   }
+  return item
+}
 
+// const routers = routersArr.filter(item => {
+//   if (['admin','god'].includes(userInfo.identity)) {
+//     return true
+//   } else {
+//     if (item.menuName !== '用户') {
+//       return true
+//     }
+//     return false
+//   }
+// })
 const initRouters = routers.map(item => {
   return mapRouters(item)
 })

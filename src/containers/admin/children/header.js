@@ -3,9 +3,22 @@ import './admin.less'
 import { Button, Icon, Menu } from 'antd'
 import { verifyLogin } from '../../../actions/rootActions'
 const SubMenu = Menu.SubMenu
+
+const initialState = {
+  username: ''
+}
 class Header extends Component {
+  constructor(props) {
+    super(props)
+    this.state = initialState
+  }
+  componentDidMount() {
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+    this.setState({ username: userInfo.username})
+  }
   handleClick = e => {
     localStorage.setItem('user',false)
+    localStorage.removeItem('userInfo')
     this.props.dispatch(verifyLogin({
       isLogin: false
     }))
@@ -29,7 +42,7 @@ class Header extends Component {
             <SubMenu
               title={
                 <span>
-                  <Icon type="user" />Circle
+                  <Icon type="user" />{this.state.username || ''}
                 </span>
               }
             >

@@ -3,6 +3,7 @@ import { Form, Icon, Input, Button, Checkbox, message } from 'antd'
 import { verifyLogin, loading } from '../../actions/rootActions'
 import './login.less'
 import { connect } from 'react-redux'
+import Api, { IMODApiData } from './Api'
 const FormItem = Form.Item
 class NormalLoginForm extends Component {
   componentDidMount() {
@@ -58,21 +59,25 @@ class NormalLoginForm extends Component {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        if (values.userName !== 'circle' || values.passWrod !== 'circle') {
-          message.error('用户名或密码不正确');
-          return false
-        }
-        this.props.dispatch(loading(true))
-        this.props.dispatch(
-          verifyLogin({
-            isLogin: true,
-            user: values
-          })
-        )
-        localStorage.setItem('user',true)
-        setTimeout(() => {
-          this.props.history.push('/admin/home')
-        }, 2000)
+        Api.login({...values}).then((res) => {
+          console.log(res)
+          if(res.code === 10000) {
+            this.props.dispatch(loading(true))
+            this.props.dispatch(
+              verifyLogin({
+                isLogin: true,
+                user: values
+              })
+            )
+            localStorage.setItem('user',true)
+            localStorage.setItem('userInfo',JSON.stringify(res.data))
+            setTimeout(() => {
+              this.props.history.push('/admin/home')
+            }, 2000)
+          }
+        }).catch((err) => {
+          console.log(err)
+        })
       }
     })
   }
@@ -86,7 +91,7 @@ class NormalLoginForm extends Component {
             <FormItem 
             hasFeedback
             >
-              {getFieldDecorator('userName', {
+              {getFieldDecorator('username', {
                 rules: [{ required: true, message: '请输入您的账号' }]
               })(
                 <Input
@@ -100,7 +105,7 @@ class NormalLoginForm extends Component {
             <FormItem
             hasFeedback
             >
-              {getFieldDecorator('passWrod', {
+              {getFieldDecorator('password', {
                 rules: [{ required: true, message: '请输入您的密码' }]
               })(
                 <Input
@@ -127,12 +132,12 @@ class NormalLoginForm extends Component {
               >
                 登录
               </Button>
-              <div className="user">
+              {/* <div className="user">
                 Username: circle
                 <span>
-                  Password: circle
+                  Password: 123456
                 </span>
-              </div>
+              </div> */}
             </FormItem>
           </Form>
         </div>

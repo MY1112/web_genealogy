@@ -1,9 +1,13 @@
 import React, { PureComponent } from 'react';
 import NGForm, { IWrappedComponentRef } from 'components/NGForm';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio'
 import { IdetailItem } from '../index';
+import moment from 'moment';
+import { throttle } from 'lodash'
+import Api, { IMODApiData } from '../Api'
 const initialState = {
+  birthplaceText: '',
   loading: false,
   livingVisble: false,
   marryVisble: false
@@ -16,6 +20,7 @@ interface IProps {
   success: (val: { value: string; key: string }) => void;
 }
 interface IState {
+  birthplaceText: string
   loading: boolean;
   livingVisble: boolean
   marryVisble: boolean
@@ -24,7 +29,7 @@ export default class MemberEdit extends PureComponent<IProps, IState> {
   form: IWrappedComponentRef;
   constructor(props: IProps) {
     super(props);
-    // this.handleEdit = throttle(this.handleEdit, 400);
+    this.handleEdit = throttle(this.handleEdit, 400);
   }
   readonly state: IState = initialState;
   private getFormList = () => [
@@ -54,6 +59,7 @@ export default class MemberEdit extends PureComponent<IProps, IState> {
             rules: [{ required: true, message: '请选择上级成员' }]
           },
           attribute: {
+            disabled: true,
             style: { width: 200 },
             treeData: [...this.props.listData],
             placeholder: '请选择上级成员'
@@ -90,9 +96,9 @@ export default class MemberEdit extends PureComponent<IProps, IState> {
           type: 'datePicker',
           field: 'dateBirth',
           label: '出生日期',
-          fieldDecorator: {
-            rules: [{ required: true, message: '请选择出生日期' }]
-          },
+          // fieldDecorator: {
+          //   rules: [{ required: true, message: '请选择出生日期' }]
+          // },
           attribute: {
             style: { width: 200 },
             placeholder: '请选择出生日期'
@@ -130,9 +136,6 @@ export default class MemberEdit extends PureComponent<IProps, IState> {
           type: 'datePicker',
           field: 'dateDeath',
           label: '去世时间',
-          fieldDecorator: {
-            rules: [{ required: true, message: '请选择去世时间' }]
-          },
           attribute: {
             style: { width: 200 },
             placeholder: '请选择去世时间'
@@ -172,12 +175,9 @@ export default class MemberEdit extends PureComponent<IProps, IState> {
           type: 'cascader',
           field: 'birthplace',
           label: '籍贯',
-          fieldDecorator: {
-            initialValue: ['hebei', 'zhangjiakou', 'huailai'],
-            // rules: [{ required: true, message: '籍贯' }],
-            // onChange: that.onChange
-          },
           attribute: {
+            onChange: this.handleChangeBirthplace,
+            changeOnSelect: true,
             options: [
               {
                 value: 'sichuan',
@@ -237,7 +237,6 @@ export default class MemberEdit extends PureComponent<IProps, IState> {
           field: 'marryFlag',
           label: '是否结婚',
           fieldDecorator: {
-            rules: [{ required: true, message: '请选择是否结婚' }],
             onChange: this.handleChangeMarry
           },
           attribute: {
@@ -258,9 +257,6 @@ export default class MemberEdit extends PureComponent<IProps, IState> {
           type: 'input',
           field: 'spouseName',
           label: '配偶姓名',
-          fieldDecorator: {
-            rules: [{ required: true, message: '请输入配偶姓名' }]
-          },
           attribute: {
             style: { width: 200 },
             placeholder: '请输入配偶姓名'
@@ -274,51 +270,67 @@ export default class MemberEdit extends PureComponent<IProps, IState> {
   componentDidMount() {
     const form = this.form.props.form;
     const { detailItem } = this.props;
-    const editValue = {
-      pid: detailItem.pid,
-      title: detailItem.title,
-      userSum: detailItem.userSum,
-      genderFlag: detailItem.genderFlag,
-      // dateBirth: detailItem.dateBirth,
-      livingFlag: detailItem.livingFlag,
-      // dateDeath: detailItem.dateDeath,
-      deeds: detailItem.deeds,
-      remark: detailItem.remark,
-      // birthplace: detailItem.birthplace,
-      address: detailItem.address,
-      marryFlag: detailItem.marryFlag,
-      // spouseName: detailItem.spouseName
-    };
-    console.log(editValue)
-    form.setFieldsValue(editValue);
+    this.setState({
+      birthplaceText: detailItem.birthplaceText || '',
+      marryVisble: detailItem.marryFlag !== undefined && !!detailItem.marryFlag,
+      livingVisble: !detailItem.livingFlag
+    }, () => {
+      const editValue = {
+        pid: detailItem.pid,
+        title: detailItem.title,
+        genderFlag: detailItem.genderFlag,
+        dateBirth: detailItem.dateBirth ? moment(detailItem.dateBirth) : undefined,
+        livingFlag: detailItem.livingFlag,
+        dateDeath: detailItem.dateDeath ? moment(detailItem.dateDeath) : undefined,
+        deeds: detailItem.deeds,
+        remark: detailItem.remark,
+        birthplace: detailItem.birthplace,
+        address: detailItem.address,
+        marryFlag: detailItem.marryFlag,
+        spouseName: detailItem.spouseName
+      };
+      console.log(editValue)
+      form.setFieldsValue(editValue);
+    })
   }
 
   private saveFormRef = (form: IWrappedComponentRef) => {
     this.form = form;
   };
   private handleEdit = () => {
-    // const form = this.form.props.form;
-    // const { detailItem } = this.props;
-    // this.setState({ loading: true });
-    // form.validateFieldsAndScroll((err: object, values: object) => {
-    //   if (err) {
-    //     this.setState({ loading: false });
-    //     return;
-    //   }
-    //   Api.putEditList({ ...values, id: detailItem.id })
-    //     .then((res: IMODApiData) => {
-    //       const { code } = res;
-    //       this.setState({ loading: false });
-    //       if (code === 10000) {
-    //         message.success('编辑成功');
-    //         this.props.success({ ...values, value: detailItem.id });
-    //         this.props.cancel();
-    //       }
-    //     })
-    //     .catch(() => {
-    //       this.setState({ loading: false });
-    //     });
-    // });
+    const form = this.form.props.form;
+    const { detailItem } = this.props;
+    const { birthplaceText } = this.state
+    this.setState({ loading: true });
+    form.validateFieldsAndScroll((err: object, values: any) => {
+      if (err) {
+        this.setState({ loading: false });
+        return;
+      }
+      if (birthplaceText) {
+        values.birthplaceText = birthplaceText
+      }
+      if (values.dateBirth) {
+        values.dateBirth = moment(values.dateBirth).format('YYYY-MM-DD')
+      }
+      if (values.dateDeath) {
+        values.dateDeath = moment(values.dateDeath).format('YYYY-MM-DD')
+      }
+      console.log(values)
+      Api.memberUpdate({ ...values, id: detailItem.uid })
+        .then((res: IMODApiData) => {
+          const { code } = res;
+          this.setState({ loading: false });
+          if (code === 10000) {
+            message.success('编辑成功');
+            this.props.success({ value: detailItem.uid, key: detailItem.uid });
+            this.props.cancel();
+          }
+        })
+        .catch(() => {
+          this.setState({ loading: false });
+        });
+    });
   };
 
   private handleCancel = () => {
@@ -351,6 +363,16 @@ export default class MemberEdit extends PureComponent<IProps, IState> {
   private handleChangeMarry = (e: RadioChangeEvent) => {
     this.setState({
       marryVisble: e.target.value
+    })
+  }
+
+  private handleChangeBirthplace = (value: any, selectedOptions: any) => {
+    let birthplaceText = ''
+    selectedOptions.forEach((item: any, index: number) => {
+      birthplaceText += index === selectedOptions.length - 1 ? item.label : `${item.label}/`
+    })
+    this.setState({
+      birthplaceText
     })
   }
 
