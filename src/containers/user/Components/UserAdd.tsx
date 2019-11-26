@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { Modal, Form, Input, Radio, message } from 'antd'
 import { FormComponentProps } from 'antd/lib/form'
+import { RadioChangeEvent } from 'antd/lib/radio'
 import Api, { IMODApiData } from '../Api'
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
 const initialState = {
-  loading: false
+  loading: false,
+  identity: 'user'
 }
 
 interface IProps extends FormComponentProps {
@@ -26,17 +28,19 @@ interface IListItem {
 
 interface IState {
   loading: boolean
+  identity: string
 }
 
 class UserAdd extends Component<IProps, IState> {
   readonly state: IState = initialState
   private handleOk = () => {
     const { userInfo } = this.props
+    const { identity } = this.state
     this.props.form.validateFields((err,value) => {
       if (!err) {
         this.setState({loading: true},() => {
           const values = {
-            identity: value.identity || 'user',
+            identity,
             username: value.username,
             password: value.password,
             parents: value.parents || userInfo.parents,
@@ -60,10 +64,16 @@ class UserAdd extends Component<IProps, IState> {
     if (nextProps.visibel && !this.props.visibel) {
       this.props.form.resetFields()
     }
-  }  
+  }
+  private handleChangeIdentity = (e: RadioChangeEvent) => {
+    console.log(e.target)
+    this.setState({
+      identity: e.target.value
+    })
+  }
   render() {
     const { userInfo }  = this.props
-    const { loading } = this.state
+    const { loading, identity } = this.state
     const { getFieldDecorator } = this.props.form
     const formItemLayout = {
       labelCol: { span: 4 },
@@ -102,7 +112,7 @@ class UserAdd extends Component<IProps, IState> {
             })(<Input style={{ width: 200 }} placeholder="请输入密码" />)}
           </FormItem>
           {
-            userInfo.identity === 'god' &&
+            userInfo.identity === 'god' && identity !== 'user' &&
             <FormItem {...formItemLayout} label="家谱姓氏">
               {getFieldDecorator('parents', {
                 rules: [
@@ -116,15 +126,17 @@ class UserAdd extends Component<IProps, IState> {
             </FormItem>
           }
           <FormItem {...formItemLayout} label="身份">
-            {getFieldDecorator('identity')(
+            {getFieldDecorator('identity',{
+              initialValue: identity
+            })(
               <RadioGroup>
                 {
-                  userInfo.identity === 'god' ? 
-                  <React.Fragment>
+                  userInfo.identity === 'god' ?
+                  <Radio.Group onChange={this.handleChangeIdentity} value={identity}>
                     <Radio value="admin">管理员</Radio>
                     <Radio value="user">普通</Radio>
                     <Radio value="god">神</Radio>
-                  </React.Fragment>
+                  </Radio.Group>
                   :
                   <React.Fragment>
                     <Radio value="user">普通</Radio>
