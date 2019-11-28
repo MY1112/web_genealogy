@@ -7,8 +7,13 @@ const urlServer = {
   memberDel: '/member/memberDel',
   memberDetail: '/member/memberDetail',
   memberUpdate: '/member/memberUpdate',
-  memberTree: '/member/memberTree'
+  memberTree: '/member/memberTree',
+  memberStatistic: '/member/memberStatistic'
 };
+// 获取成员统计
+const memberStatistic = (userId: string) =>
+  Axios.getInstance().get(urlServer.memberStatistic, { params: { userId }})
+
 // 获取成员树
 const memberTree = (userId: string) =>
   Axios.getInstance().get(urlServer.memberTree, { params: { userId }})
@@ -32,10 +37,11 @@ const memberDel = (id:string) => Axios.getInstance().get(urlServer.memberDel, { 
 const memberDetail = (id: string) => Axios.getInstance().get(urlServer.memberDetail, { params: { id }})
 
 export default {
-    memberAdd,
-    memberTreeList,
-    memberDel,
-    memberDetail,
-    memberUpdate,
-    memberTree
+  memberAdd,
+  memberTreeList,
+  memberDel,
+  memberDetail,
+  memberUpdate,
+  memberTree,
+  memberStatistic
 };

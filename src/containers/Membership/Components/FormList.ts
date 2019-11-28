@@ -10,6 +10,7 @@ interface IFormList {
   handleChangeLiving: () => void
   handleChangeMarry: () => void
   handleChangeBirthplace: () => void
+  handleSelectPid: (value: string, node: any) => void
 }
 export const getFormList = (that: IFormList) => [
   {
@@ -40,7 +41,8 @@ export const getFormList = (that: IFormList) => [
         attribute: {
           style: { width: 200 },
           treeData: [...that.props.pidTree],
-          placeholder: '请选择上级成员'
+          placeholder: '请选择上级成员',
+          onSelect: that.handleSelectPid
         }
       }
     ]
