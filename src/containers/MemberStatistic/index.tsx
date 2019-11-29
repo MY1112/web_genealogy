@@ -3,6 +3,7 @@ import { Spin } from 'antd'
 import NGHeader from 'components/NGHeader'
 import Api, { IMODApiData } from '../Membership/Api'
 import './index.less'
+import { sectionToChinese } from 'util/Tool'
 
 const initialState = {
   membersList: [],
@@ -75,7 +76,14 @@ export default class MemberStatistic extends Component<IProps, IState> {
 		const memberItem = statisticList.map((item: any[], index: number) => {
 			return (
 				<div className="member-statistic-row mb-20" key={`${index}_member-statistic-row`}>
-					<NGHeader title={`第 ${index+1} 代`} />
+					<NGHeader title={`第 ${sectionToChinese(index+1)} 代`} />
+					<div>
+						{
+							item.map((info: any) => {
+								return null
+							})
+						}
+					</div>
 				</div>
 			)
 		})
