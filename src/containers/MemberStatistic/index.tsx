@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { Spin, Avatar, Descriptions, message } from 'antd'
 import NGHeader from 'components/NGHeader'
 import Api, { IMODApiData } from '../Membership/Api'
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 import './index.less'
 import { sectionToChinese } from 'util/Tool'
 
@@ -55,7 +53,6 @@ export default class MemberStatistic extends Component<IProps, IState> {
       }
     )
 	}
-	private refToPDF1: any
 
   // 成员统计
   private getStatisticList = () => {
@@ -149,51 +146,180 @@ export default class MemberStatistic extends Component<IProps, IState> {
 
   // 打印
   private handlePrint = () => {
-		// html2canvas(this.refToPDF1, {
-		// 	onrendered: (canvas) => {
-
-		// 			const contentWidth = canvas.width;
-		// 			const contentHeight = canvas.height;
-
-		// 			//一页pdf显示html页面生成的canvas高度;
-		// 			const pageHeight = contentWidth / 592.28 * 841.89;
-		// 			//未生成pdf的html页面高度
-		// 			let leftHeight = contentHeight;
-		// 			//页面偏移
-		// 			let position = 0;
-		// 			//a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
-		// 			const imgWidth = 595.28;
-		// 			const imgHeight = 592.28/contentWidth * contentHeight;
-
-		// 			const pageData = canvas.toDataURL('image/jpeg', 1.0);
-
-		// 			const pdf = new jsPDF('', 'pt', 'a4');
-
-		// 			//有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
-		// 			//当内容未超过pdf一页显示的范围，无需分页
-		// 			if (leftHeight < pageHeight) {
-		// 		pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
-		// 			} else {
-		// 				while(leftHeight > 0) {
-		// 						pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
-		// 						leftHeight -= pageHeight;
-		// 						position -= 841.89;
-		// 						//避免添加空白页
-		// 						if(leftHeight > 0) {
-		// 						pdf.addPage();
-		// 						}
-		// 				}
-		// 			}
-
-		// 			pdf.save('content.pdf');
-		// 	}
-		// })
+    const tabhtml = `
+      <div class='printShow' style="margin:0 auto;width:596px;
+      page-break-after:always;">
+        ${this.getPrintStatisticDom()}
+      </div>
+    `
+    const iframe = document.createElement('Iframe') as any
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    const doc = iframe.contentWindow.document;
+    doc.write(tabhtml);
+    const style = `<style>
+      .printShow {
+        background: #fff;
+      }
+      .memberStatisticRow {
+        margin-bottom:20px;
+      }
+      .memberStatisticRowHeader {
+        width: 100%;
+        height: 40px;
+        background: rgba(89, 143, 232, 0.04);
+        font-size: 14px;
+        color: #32375a;
+        display: flex;
+        line-height: 40px;
+      }
+      .memberStatisticRowHeader::before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        width: 2px;
+        background: #598fe8;
+      }
+      .memberStatisticRowItem {
+        background: #fff;
+      }
+      .memberItemList {
+        border-top: 1px solid #cccccc;
+      }
+      .memberItemListTitle {
+        margin-bottom: 20px;
+        color: rgba(0, 0, 0, 0.85);
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+      .memberItemListTitlePhoto {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        display: inline-block;
+        overflow: hidden;
+        vertical-align: middle;
+        background: transparent;
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        border-radius: 50%;
+      }
+      .memberItemListTitlePhoto > img {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      .memberItemListTitleName {
+        margin-left: 16px;
+        font-size: 20px;
+        vertical-align: middle;
+      }
+      .memberItemListView {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .memberItemListCell {
+        margin-bottom: 16px;
+      }
+      .memberItemListCellTitle {
+        display: inline-block;
+        color: rgba(0, 0, 0, 0.85);
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 1.5;
+        white-space: nowrap;
+        margin-right: 8px;
+      }
+      .memberItemListCellContent {
+        display: inline-block;
+        color: rgba(0, 0, 0, 0.65);
+        font-size: 14px;
+        line-height: 1.5;
+        margin-right: 20px;
+      }
+    </style>`;
+    doc.getElementsByTagName('head')[0].innerHTML = style;
+    doc.close();
+    iframe.contentWindow.print();
+  }
+  // 获取打印成员统计Dom
+  private getPrintStatisticDom = () => {
+    const { statisticList } = this.state
+    let str = ``;
+    statisticList.forEach((item: any[], index: number) => {
+      str += `
+        <div class='memberStatisticRow' style="margin-bottom:20px;">
+          <div class='memberStatisticRowHeader'>
+            <span style="margin-left:10px;">第 ${sectionToChinese(index + 1)} 代</span>
+          </div>
+          <div class='memberStatisticRowItem' style="padding:0 20px;">
+            ${this.getPrintmemberRowList(item)}
+          </div>
+        </div>
+      `
+    })
+    return str
+  }
+  private getPrintmemberRowList = (data: any[]) => {
+    let str = ``;
+    data.forEach((info: any, cIndex) => {
+      str += `
+        <div class='memberItemList' style="padding:20px 0;border:${
+          !cIndex && 'none'
+        };">
+          <div class='memberItemListTitle'>
+            <span class='memberItemListTitlePhoto'>
+              <img src='${info.genderFlag === 1 ? man_icon : woman_icon}' />
+            </span>
+            <span class="memberItemListTitleName">${info.title}</span>
+          </div>
+          <div class='memberItemListView'>
+            <div class="memberItemListCell">
+              <span class='memberItemListCellTitle'>出生日期:</span>
+              <span class='memberItemListCellContent'>${info.dateBirth || '-'}</span>
+            </div>
+            <div class="memberItemListCell">
+              <span class='memberItemListCellTitle'>是否在世:</span>
+              <span class='memberItemListCellContent'>${info.livingFlag ? '是' : '否'}</span>
+            </div>
+            <div class="memberItemListCell">
+              <span class='memberItemListCellTitle'>去世时间:</span>
+              <span class='memberItemListCellContent'>${info.dateDeath || '-'}</span>
+            </div>
+            <div class="memberItemListCell">
+              <span class='memberItemListCellTitle'>是否结婚:</span>
+              <span class='memberItemListCellContent'>${info.marryFlag ? '是' : '否'}</span>
+            </div>
+            <div class="memberItemListCell">
+              <span class='memberItemListCellTitle'>配偶姓名:</span>
+              <span class='memberItemListCellContent'>${info.spouseName || '-'}</span>
+            </div>
+            <div class="memberItemListCell">
+              <span class='memberItemListCellTitle'>籍贯:</span>
+              <span class='memberItemListCellContent'>${info.birthplaceText || '-'}</span>
+            </div>
+            <div class="memberItemListCell">
+              <span class='memberItemListCellTitle'>生平经历:</span>
+              <span class='memberItemListCellContent'>${info.deeds || '-'}</span>
+            </div>
+            <div class="memberItemListCell">
+              <span class='memberItemListCellTitle'>备注:</span>
+              <span class='memberItemListCellContent'>${info.remark || '-'}</span>
+            </div>
+          </div>
+        </div>
+      `
+    })
+    return str
   }
 
   render() {
     const { loading, statisticList } = this.state
     return (
-      <div className="member-statistic" ref={pdfWrap => this.refToPDF1 = pdfWrap}>
+      <div className="member-statistic" id="member-statistic-list">
         {!!statisticList.length && (
           <div
             className="member-statistic-download csp dsp_ib"
