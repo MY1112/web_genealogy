@@ -146,104 +146,128 @@ export default class MemberStatistic extends Component<IProps, IState> {
 
   // 打印
   private handlePrint = () => {
-    const tabhtml = `
-      <div class='printShow' style="margin:0 auto;width:596px;
-      page-break-after:always;">
-        ${this.getPrintStatisticDom()}
-      </div>
-    `
-    const iframe = document.createElement('Iframe') as any
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
-    const doc = iframe.contentWindow.document;
-    doc.write(tabhtml);
-    const style = `<style>
-      .printShow {
-        background: #fff;
-      }
-      .memberStatisticRow {
-        margin-bottom:20px;
-      }
-      .memberStatisticRowHeader {
-        width: 100%;
-        height: 40px;
-        background: rgba(89, 143, 232, 0.04);
-        font-size: 14px;
-        color: #32375a;
-        display: flex;
-        line-height: 40px;
-      }
-      .memberStatisticRowHeader::before {
-        content: '';
-        display: inline-block;
-        height: 100%;
-        width: 2px;
-        background: #598fe8;
-      }
-      .memberStatisticRowItem {
-        background: #fff;
-      }
-      .memberItemList {
-        border-top: 1px solid #cccccc;
-      }
-      .memberItemListTitle {
-        margin-bottom: 20px;
-        color: rgba(0, 0, 0, 0.85);
-        font-weight: bold;
-        font-size: 16px;
-        line-height: 1.5;
-      }
-      .memberItemListTitlePhoto {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        position: relative;
-        display: inline-block;
-        overflow: hidden;
-        vertical-align: middle;
-        background: transparent;
-        width: 32px;
-        height: 32px;
-        line-height: 32px;
-        border-radius: 50%;
-      }
-      .memberItemListTitlePhoto > img {
-        display: block;
-        width: 100%;
-        height: 100%;
-      }
-      .memberItemListTitleName {
-        margin-left: 16px;
-        font-size: 20px;
-        vertical-align: middle;
-      }
-      .memberItemListView {
-        display: flex;
-        flex-wrap: wrap;
-      }
-      .memberItemListCell {
-        margin-bottom: 16px;
-      }
-      .memberItemListCellTitle {
-        display: inline-block;
-        color: rgba(0, 0, 0, 0.85);
-        font-weight: normal;
-        font-size: 14px;
-        line-height: 1.5;
-        white-space: nowrap;
-        margin-right: 8px;
-      }
-      .memberItemListCellContent {
-        display: inline-block;
-        color: rgba(0, 0, 0, 0.65);
-        font-size: 14px;
-        line-height: 1.5;
-        margin-right: 20px;
-      }
-    </style>`;
-    doc.getElementsByTagName('head')[0].innerHTML = style;
-    doc.close();
-    iframe.contentWindow.print();
+    try {
+      const tabhtml = `
+        <div class='printShow' style="margin:0 auto;width:596px;
+        page-break-after:always;">
+          ${this.getPrintStatisticDom()}
+        </div>
+      `
+      const iframe = document.createElement('Iframe') as any
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+      const doc = iframe.contentWindow.document;
+      doc.write(tabhtml);
+      let style = `<style>
+        .printShow {
+          background: #fff;
+        }
+        .memberStatisticRow {
+          margin-bottom:20px;
+        }
+        .memberStatisticRowHeader {
+          width: 100%;
+          height: 40px;
+          background: rgba(89, 143, 232, 0.04);
+          font-size: 14px;
+          color: #32375a;
+          display: flex;
+          line-height: 40px;
+        }
+        .memberStatisticRowHeader::before {
+          content: '';
+          display: inline-block;
+          height: 100%;
+          width: 2px;
+          background: #598fe8;
+        }
+        .memberStatisticRowItem {
+          background: #fff;
+        }
+        .memberItemList {
+          border-top: 1px solid #cccccc;
+        }
+        .memberItemListTitle {
+          margin-bottom: 20px;
+          color: rgba(0, 0, 0, 0.85);
+          font-weight: bold;
+          font-size: 16px;
+          line-height: 1.5;
+        }
+        .memberItemListTitlePhoto {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+          position: relative;
+          display: inline-block;
+          overflow: hidden;
+          vertical-align: middle;
+          background: transparent;
+          width: 32px;
+          height: 32px;
+          line-height: 32px;
+          border-radius: 50%;
+        }
+        .memberItemListTitlePhoto > img {
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+        .memberItemListTitleName {
+          margin-left: 16px;
+          font-size: 20px;
+          vertical-align: middle;
+        }
+        .memberItemListView {
+          display: flex;
+          flex-wrap: wrap;
+        }
+        .memberItemListCell {
+          margin-bottom: 16px;
+        }
+        .memberItemListCellTitle {
+          display: inline-block;
+          color: rgba(0, 0, 0, 0.85);
+          font-weight: normal;
+          font-size: 14px;
+          line-height: 1.5;
+          white-space: nowrap;
+          margin-right: 8px;
+        }
+        .memberItemListCellContent {
+          display: inline-block;
+          color: rgba(0, 0, 0, 0.65);
+          font-size: 14px;
+          line-height: 1.5;
+          margin-right: 20px;
+        }
+      </style>`;
+      // if (iframe.contentWindow.XMLHttpRequest) {
+      //   style += `<style type='text/css' media='print'> @page{ }</style>`
+      // }
+      doc.getElementsByTagName('head')[0].innerHTML = style;
+      doc.close();
+      // let hkey_root,hkey_path,hkey_key; 
+      // hkey_root="HKEY_CURRENT_USER"; hkey_path="\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";
+      // if(iframe.contentWindow.ActiveXObject) {
+      //   let RegWsh = new ActiveXObject("WScript.Shell");
+      //   //设置页眉/脚的字体样式
+      //   hkey_key="font";
+      //   RegWsh.RegWrite(hkey_root+hkey_path+hkey_key,"font-size: 12px; font-family: 黑体; line-height: 24px");
+
+      //   //设置页眉
+      //   hkey_key="header";
+      //   RegWsh.RegWrite(hkey_root+hkey_path+hkey_key,"打印编号");
+
+      //   //设置页脚
+      //   hkey_key="footer"; 
+      //   RegWsh.RegWrite(hkey_root+hkey_path+hkey_key,"&b第 &p 页/共 &P 页")
+      // }
+
+      iframe.contentWindow.print();
+    } catch(e) {
+      message.warning(`${e.name} ${e.message}`)
+    }
   }
   // 获取打印成员统计Dom
   private getPrintStatisticDom = () => {
