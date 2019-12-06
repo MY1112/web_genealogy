@@ -315,7 +315,7 @@ class Admin extends Component {
         >
           <a className="logo flex_left" href="">
             <img src={logo} alt="" />
-            {this.state.collapsed ? '' : <span>Base Home </span>}
+            {this.state.collapsed ? '' : <span>家家OA </span>}
           </a>
           <Menu
             // 收缩暂时存在bug
