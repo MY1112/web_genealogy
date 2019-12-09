@@ -50,7 +50,7 @@ const routers = [
   {
     menuName: '关于我',
     menuIco: 'smile-o',
-    component: 'about/about.js', // 主页
+    component: 'about/about.tsx', // 主页
     path: '/admin/about' // 主页
   }
 ]
