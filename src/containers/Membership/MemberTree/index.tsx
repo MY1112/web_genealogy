@@ -2,7 +2,7 @@
  * @Author: mengyuan 
  * @Date: 2019-09-19 14:21:01 
  * @Last Modified by: mengyuan
- * @Last Modified time: 2019-11-20 19:14:39
+ * @Last Modified time: 2020-01-09 18:19:16
  */
 import React, { PureComponent } from 'react'
 import { Button } from 'antd'
@@ -48,7 +48,7 @@ class MemberTree extends PureComponent<IProps, IState> {
     private getGraphTree = () => {
       this.graph = new G6.TreeGraph({
         container: 'mountNode',
-        width: window.innerWidth - 250,
+        width: window.innerWidth > 900 ? window.innerWidth - 250 : window.innerWidth - 30,
         height: window.innerHeight - 187,
         pixelRatio: 2,
         modes: {

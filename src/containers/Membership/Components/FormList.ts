@@ -48,7 +48,7 @@ export const getFormList = (that: IFormList) => [
     ]
   },
   {
-    className: 'flex_sb',
+    className: 'flex_sb flex_wrap',
     list: [
       {
         formItemLayout: {},
@@ -87,7 +87,7 @@ export const getFormList = (that: IFormList) => [
     ]
   },
   {
-    className: 'flex_sb',
+    className: 'flex_sb flex_wrap',
     list: [
       {
         formItemLayout: {},
@@ -218,7 +218,7 @@ export const getFormList = (that: IFormList) => [
     ]
   },
   {
-    className: 'flex_sb',
+    className: 'flex_sb flex_wrap',
     list: [
       {
         formItemLayout: {},

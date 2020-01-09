@@ -4,11 +4,18 @@
     margin:auto 15px;
     border-radius: 0 0 5px 5px;
     line-height: 60px;
+    position: relative;
     .exit{
         float: right;
         height: 60px;
         margin-right: 20px;
         padding-top: 7px;
+    }
+    .collapsed {
+        display: inline-block;
+    }
+    .collapsed-min {
+        display: none;
     }
 }
 .content{
@@ -39,3 +46,14 @@
     line-height: 45px;
 
 }
+@media (max-width: 900px) {
+    .header {
+        .collapsed {
+            display: none;
+        }
+        .collapsed-min {
+            display: inline-block;
+            position: absolute;
+        }
+    }
+  }

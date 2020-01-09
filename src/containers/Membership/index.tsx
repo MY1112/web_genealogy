@@ -260,7 +260,7 @@ class Membership extends Component<IProps, IState> {
     return (
       <div className="Membership">
         <div className="flex">
-          <div className="Membership_left mr-16">
+          <div className="Membership_left">
             <NGHeader
               title="人物关系"
               size="big"

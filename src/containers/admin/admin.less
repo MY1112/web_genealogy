@@ -37,6 +37,9 @@
       }
     }
   }
+  .left-menu-all {
+    width: 80px;
+  }
   .right-content {
     height: 100%;
     margin-left: 200px;
@@ -44,6 +47,24 @@
     overflow: auto;
     .exit {
       text-align: right;
+    }
+  }
+  .right-content-all {
+    margin-left: 80px;
+  }
+}
+@media (max-width: 900px) {
+  .admin {
+    .left-menu {
+      z-index: 11;
+      left: -200px;
+      opacity: 0.9;
+    }
+    .left-menu-show {
+      left: 0;
+    }
+    .right-content {
+      margin-left: 0;
     }
   }
 }

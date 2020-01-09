@@ -27,12 +27,26 @@ class Header extends Component {
   render() {
     return (
       <div className="header">
-        <Button
-          onClick={this.props.toggleCollapsed}
-          style={{ border: 0, padding: '5px 10px', marginLeft: '15px' }}
-        >
-          <Icon type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'} />
-        </Button>
+        <div className="collapsed">
+          <Button
+            onClick={this.props.toggleCollapsed}
+            style={{ border: 0, padding: '5px 10px', marginLeft: '15px' }}
+          >
+            <Icon type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'} />
+          </Button>
+        </div>
+        <div className="collapsed-min" style={{
+           left: `${this.props.isShowMenu ?
+            this.props.collapsed ? '80px' : '200px'
+            : '15px'}`
+        }}>
+          <Button
+            onClick={this.props.changeShowMenu}
+            style={{ border: 0, padding: '5px 10px' }}
+          >
+            <Icon type="unordered-list" />
+          </Button>
+        </div>
 
         <div className="exit">
           <Menu
