@@ -40,6 +40,9 @@
   .left-menu-all {
     width: 80px;
   }
+  .menu-mask {
+    display: none;
+  }
   .right-content {
     height: 100%;
     margin-left: 200px;
@@ -62,6 +65,17 @@
     }
     .left-menu-show {
       left: 0;
+    }
+    .menu-mask {
+      position: absolute;
+      width: 100%;
+      background: black;
+      opacity: 0.2;
+      z-index: 10;
+      left: 0;
+      height: 100%;
+      top: 0;
+      display: block;
     }
     .right-content {
       margin-left: 0;

@@ -347,6 +347,7 @@ class Admin extends Component {
             })}
           </Menu>
         </div>
+        {this.state.isShowMenu && <div className="menu-mask" onClick={() => this.changeShowMenu()} />}
         <div
           className={`right-content ${this.state.collapsed ? 'right-content-all' : ''}`}
         >
