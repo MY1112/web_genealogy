@@ -34,6 +34,7 @@ class Admin extends Component {
   initRoutersNew = initRoutersNew
   rootSubmenuKeys = JSON.parse(JSON.stringify(this.initRoutersNew))
   state = {
+    isShowMenu: false,
     collapsed: false,
     openKeys: [], // 打开的菜单
     selectedKeys: [], // 选中的菜单
@@ -101,6 +102,11 @@ class Admin extends Component {
     this.setState({
       collapsed: !this.state.collapsed,
       openKeys: []
+    })
+  }
+  changeShowMenu = () => {
+    this.setState({
+      isShowMenu: !this.state.isShowMenu
     })
   }
   // 如果菜单是收缩状态
@@ -310,12 +316,12 @@ class Admin extends Component {
     return (
       <div className="admin">
         <div
-          className="left-menu"
-          style={{ width: this.state.collapsed ? '80px' : '200px' }}
+          className={`left-menu ${this.state.collapsed ? 'left-menu-all' : ''} 
+           ${this.state.isShowMenu ? 'left-menu-show' : ''}`}
         >
-          <a className="logo flex_left" href="">
+          <a className="logo flex_left">
             <img src={logo} alt="" />
-            {this.state.collapsed ? '' : <span>Base Home </span>}
+            {this.state.collapsed ? '' : <span>家家OA </span>}
           </a>
           <Menu
             // 收缩暂时存在bug
@@ -341,14 +347,16 @@ class Admin extends Component {
             })}
           </Menu>
         </div>
+        {this.state.isShowMenu && <div className="menu-mask" onClick={() => this.changeShowMenu()} />}
         <div
-          className="right-content"
-          style={{ marginLeft: this.state.collapsed ? '80px' : '200px' }}
+          className={`right-content ${this.state.collapsed ? 'right-content-all' : ''}`}
         >
           <Header
           { ...this.props }
             toggleCollapsed={this.toggleCollapsed}
             collapsed={this.state.collapsed}
+            changeShowMenu={this.changeShowMenu}
+            isShowMenu={this.state.isShowMenu}
           />
           {
             <Content { ...this.props } breadcrumb={this.state.breadcrumb}>

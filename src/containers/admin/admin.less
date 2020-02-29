@@ -37,6 +37,12 @@
       }
     }
   }
+  .left-menu-all {
+    width: 80px;
+  }
+  .menu-mask {
+    display: none;
+  }
   .right-content {
     height: 100%;
     margin-left: 200px;
@@ -44,6 +50,35 @@
     overflow: auto;
     .exit {
       text-align: right;
+    }
+  }
+  .right-content-all {
+    margin-left: 80px;
+  }
+}
+@media (max-width: 900px) {
+  .admin {
+    .left-menu {
+      z-index: 11;
+      left: -200px;
+      opacity: 0.9;
+    }
+    .left-menu-show {
+      left: 0;
+    }
+    .menu-mask {
+      position: absolute;
+      width: 100%;
+      background: black;
+      opacity: 0.2;
+      z-index: 10;
+      left: 0;
+      height: 100%;
+      top: 0;
+      display: block;
+    }
+    .right-content {
+      margin-left: 0;
     }
   }
 }

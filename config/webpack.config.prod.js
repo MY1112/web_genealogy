@@ -1,11 +1,10 @@
-const autoprefixer = require('autoprefixer');
+
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
-const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
@@ -30,7 +29,11 @@ module.exports = {
   mode: "production",
   bail: true,
   devtool: shouldUseSourceMap ? 'source-map' : false,
-  entry: [paths.appIndexJs],
+  entry: [
+    require.resolve('@babel/polyfill'),
+    "@babel/polyfill", //兼容ie11
+    paths.appIndexJs
+  ],
   output: {
     path: paths.appBuild,
     filename: 'static/js/[name].[chunkhash:8].js',
@@ -63,6 +66,56 @@ module.exports = {
     rules: [
       {
         oneOf: [
+          // WOFF Font
+          {
+            test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 10000,
+                mimetype: 'application/font-woff'
+              }
+            }
+          },
+          // WOFF2 Font
+          {
+            test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 10000,
+                mimetype: 'application/font-woff'
+              }
+            }
+          },
+          // TTF Font
+          {
+            test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 10000,
+                mimetype: 'application/octet-stream'
+              }
+            }
+          },
+          // EOT Font
+          {
+            test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+            use: 'file-loader'
+          },
+          // SVG Font
+          {
+            test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 10000,
+                mimetype: 'image/svg+xml'
+              }
+            }
+          },
+          // Common Image Formats
           {
             test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
             use: 'url-loader'
@@ -116,6 +169,19 @@ module.exports = {
     minimize: true,
     noEmitOnErrors: true,
     minimizer: [
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          warnings: false,
+          parse: {},
+          compress: {},
+          mangle: true, // Note `mangle.properties` is `false` by default.
+          output: null,
+          toplevel: false,
+          nameCache: null,
+          ie8: false,
+          keep_fnames: false,
+        },
+      }),
       new TerserPlugin({
         parallel: true,
         sourceMap: false,

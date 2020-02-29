@@ -1,0 +1,33 @@
+/*
+ * @Author: mengyuan 
+ * @Date: 2019-11-28 20:56:49 
+ * @Last Modified by: mengyuan
+ * @Last Modified time: 2019-11-29 18:00:34
+ */
+@import '../../style/color.less';
+.member-statistic {
+  position: relative;
+  &-download {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 9px;
+    background: @main-button-color;
+    color: #fff;
+    z-index: 10;
+  }
+  &-row {
+    &-item {
+      background: #fff;
+      .member-item-list {
+        border-top: 1px solid #cccccc;
+        .member-photo {
+          .member-name {
+            font-size: 20px;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+  }
+}

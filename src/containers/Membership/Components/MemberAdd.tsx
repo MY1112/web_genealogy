@@ -13,7 +13,15 @@ const initialState = {
   confirmLoading: false,
   livingVisble: false,
   marryVisble: false,
-  dateDeath: []
+  dateDeath: [],
+  pidItem: {
+    value: '',
+    title: '',
+    children: [],
+    key: '',
+    pid: '',
+    pids: []
+  }
 }
 
 export interface IDateItem {
@@ -39,6 +47,7 @@ interface IState {
   livingVisble: boolean
   marryVisble: boolean
   dateDeath: object[]
+  pidItem: IDateItem;
 }
 
 class MemberAdd extends PureComponent<IProps, IState> {
@@ -62,13 +71,24 @@ class MemberAdd extends PureComponent<IProps, IState> {
     const { addItem } = this.props
     const form = this.form.props.form
     if (addItem.value) {
-      form.setFieldsValue({ pid: addItem.value })
+      this.setState({
+        pidItem: addItem
+      }, () => {
+        form.setFieldsValue({ pid: addItem.value })
+      })
     }
   }
 
+  public handleSelectPid = (value: string, node: any) => {
+    console.log(node.props)
+    this.setState({
+      pidItem: node.props
+    })
+  }
+
   private handleAddOk = () => {
-    const { addItem, pidTree, userInfo } = this.props
-    const { birthplaceText } = this.state
+    const { pidTree, userInfo } = this.props
+    const { birthplaceText, pidItem } = this.state
     const form = this.form.props.form
     this.setState({ confirmLoading: true })
     form.validateFieldsAndScroll((err: Error, values: any) => {
@@ -85,9 +105,10 @@ class MemberAdd extends PureComponent<IProps, IState> {
       values.userId = userInfo._id
       values.birthplaceText = birthplaceText
       if (pidTree.length > 0) {
-        const newPids = [...addItem.pids]
-        newPids.push(addItem.value)
+        const newPids = [...pidItem.pids]
+        newPids.push(pidItem.value)
         values.pids = newPids
+        values.pTitle = pidItem.title
       } else {
         values.pid = "0"
         values.pids = ["0"]

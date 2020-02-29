@@ -36,15 +36,21 @@ const routers = [
     ]
   },
   {
+    menuName: '成员统计',
+    menuIco: 'cloud',
+    component: 'MemberStatistic/index.tsx',
+    path: '/admin/MemberStatistic'
+  },
+  {
     menuName: '成员地图',
-    menuIco: 'user',
+    menuIco: 'environment',
     component: 'MemberMap/index.tsx',
     path: '/admin/MemberMap'
   },
   {
     menuName: '关于我',
     menuIco: 'smile-o',
-    component: 'about/about.js', // 主页
+    component: 'about/about.tsx', // 主页
     path: '/admin/about' // 主页
   }
 ]
