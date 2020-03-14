@@ -170,24 +170,30 @@ module.exports = {
     noEmitOnErrors: true,
     minimizer: [
       new UglifyJsPlugin({
+        parallel: true,  //使用多进程并行运行来提高构建速度
+        sourceMap: false,
         uglifyOptions: {
           warnings: false,
-          parse: {},
-          compress: {},
-          mangle: true, // Note `mangle.properties` is `false` by default.
-          output: null,
-          toplevel: false,
-          nameCache: null,
-          ie8: false,
-          keep_fnames: false,
-        },
+          compress: {
+            unused: true,
+            drop_debugger: true,
+            drop_console: true, 
+          },
+          output: {
+            comments: false // 去掉注释
+          }
+        }
       }),
       new TerserPlugin({
         parallel: true,
         sourceMap: false,
         cache: true
       }),
-      new OptimizeCSSAssetsPlugin({})
+      new OptimizeCSSAssetsPlugin({
+        cssProcessorOptions: { 
+          discardComments: { removeAll: true } // 移除注释
+        }
+      })
     ],
     splitChunks: {
       minSize: 30000,
@@ -197,16 +203,20 @@ module.exports = {
       maxInitialRequests: 3,
       name: true,
       cacheGroups: {
-        vendor: {
-          chunks: 'initial',
-          name: 'vendor',
-          test: 'vendor'
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendor",
+          chunks: "initial"
         },
-        echarts: {
-          chunks: 'all',
-          name: 'echarts',
-          test: /[\\/]echarts[\\/]/,
-        }
+        // antdui: {
+        //   priority: 2,  
+        //   test: /[\\/]node_modules[\\/](antd)[\\/]/,  //(module) => (/antd/.test(module.context)),
+        // },
+        // // 拆分基础插件
+        // basic: {
+        //     priority: 3, 
+        //     test: /[\\/]node_modules[\\/](moment|react|react-dom|react-router|react-router-dom|axios)[\\/]/,
+        // }
       }
     }
   },

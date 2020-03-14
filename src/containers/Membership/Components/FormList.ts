@@ -1,4 +1,5 @@
 
+const addressData = require('util/address.json')
 interface IFormList {
   props: {
     pidTree: object[]
@@ -167,40 +168,7 @@ export const getFormList = (that: IFormList) => [
         attribute: {
           onChange: that.handleChangeBirthplace,
           changeOnSelect: true,
-          options: [
-            {
-              value: 'sichuan',
-              label: '四川',
-              children: [
-                {
-                  value: 'zigong',
-                  label: '自贡',
-                  children: [
-                    {
-                      value: 'fushun',
-                      label: '富顺'
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              value: 'hebei',
-              label: '河北',
-              children: [
-                {
-                  value: 'zhangjiakou',
-                  label: '张家口',
-                  children: [
-                    {
-                      value: 'huailai',
-                      label: '怀来'
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          options: addressData
         }
       },
       {
@@ -259,3 +227,39 @@ export const getFormList = (that: IFormList) => [
     ]
   },
 ]
+
+
+// [
+//   {
+//     value: 'sichuan',
+//     label: '四川',
+//     children: [
+//       {
+//         value: 'zigong',
+//         label: '自贡',
+//         children: [
+//           {
+//             value: 'fushun',
+//             label: '富顺'
+//           }
+//         ]
+//       }
+//     ]
+//   },
+//   {
+//     value: 'hebei',
+//     label: '河北',
+//     children: [
+//       {
+//         value: 'zhangjiakou',
+//         label: '张家口',
+//         children: [
+//           {
+//             value: 'huailai',
+//             label: '怀来'
+//           }
+//         ]
+//       }
+//     ]
+//   }
+// ]
