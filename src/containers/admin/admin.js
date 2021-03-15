@@ -10,7 +10,7 @@ import logo from '../../assets/imgs/base_home.png'
 const SubMenu = Menu.SubMenu
 const userInfo = JSON.parse(localStorage.getItem('userInfo'))
 const newRouters = routers.filter(item => {
-  if (['admin','god'].includes(userInfo.identity)) {
+  if (['admin','god'].includes(userInfo?.identity)) {
     return true
   } else {
     if (item.menuName !== '用户') {
@@ -20,7 +20,7 @@ const newRouters = routers.filter(item => {
   }
 })
 const initRoutersNew = initRouters.filter(item => {
-  if (['admin','god'].includes(userInfo.identity)) {
+  if (['admin','god'].includes(userInfo?.identity)) {
     return true
   } else {
     if (item.menuName !== '用户') {
@@ -260,11 +260,11 @@ class Admin extends Component {
   }
   render() {
     const userInfoNew = JSON.parse(localStorage.getItem('userInfo'))
-    if (userInfoNew.username !== userInfo.username &&
+    if (userInfoNew?.username !== userInfo?.username &&
         !this.state.openKeys.length && !this.state.selectedKeys.length
       ) {
       this.newRouters = routers.filter(item => {
-        if (['admin','god'].includes(userInfoNew.identity)) {
+        if (['admin','god'].includes(userInfoNew?.identity)) {
           return true
         } else {
           if (item.menuName !== '用户') {
@@ -274,7 +274,7 @@ class Admin extends Component {
         }
       })
       this.initRoutersNew = initRouters.filter(item => {
-        if (['admin','god'].includes(userInfo.identity)) {
+        if (['admin','god'].includes(userInfo?.identity)) {
           return true
         } else {
           if (item.menuName !== '用户') {

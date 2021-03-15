@@ -7,9 +7,10 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+// const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 // const theme = require('theme.js');
@@ -42,7 +43,7 @@ module.exports = {
     devtoolModuleFilenameTemplate: info =>
       path
         .relative(paths.appSrc, info.absoluteResourcePath)
-        .replace(/\\/g, '/'),
+        .replace(/\\/g, '/')
   },
   resolve: {
     modules: ['node_modules', paths.appNodeModules].concat(
@@ -56,6 +57,7 @@ module.exports = {
       'components': resolve('src/components'),
       'util': resolve('src/util'),
       'react-native': 'react-native-web',
+      'assets': resolve('src/assets')
     },
     plugins: [
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson])
@@ -144,14 +146,6 @@ module.exports = {
             ],
           },
           {
-            test: /\.(scss|sass)$/,
-            use: [
-              MiniCssExtractPlugin.loader,
-              "css-loader",
-              "sass-loader"
-            ]
-          },
-          {
             loader: require.resolve('file-loader'),
             exclude: [/\.(js|jsx|tsx|ts|mjs)$/,/\.(css|less)$/, /\.html$/, /\.json$/],
             options: {
@@ -169,44 +163,87 @@ module.exports = {
     minimize: true,
     noEmitOnErrors: true,
     minimizer: [
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          warnings: false,
-          parse: {},
-          compress: {},
-          mangle: true, // Note `mangle.properties` is `false` by default.
-          output: null,
-          toplevel: false,
-          nameCache: null,
-          ie8: false,
-          keep_fnames: false,
-        },
-      }),
       new TerserPlugin({
         parallel: true,
         sourceMap: false,
-        cache: true
+        cache: true,
+        terserOptions: {
+          ecma: 6,
+          compress: {
+            drop_console: true
+          }
+        }
       }),
-      new OptimizeCSSAssetsPlugin({})
+      new OptimizeCSSAssetsPlugin()
+      // new UglifyJsPlugin({
+      //   parallel: true,  //使用多进程并行运行来提高构建速度
+      //   sourceMap: false,
+      //   uglifyOptions: {
+      //     warnings: false,
+      //     compress: {
+      //       unused: true,
+      //       drop_debugger: true,
+      //       drop_console: true, 
+      //     },
+      //     output: {
+      //       comments: false // 去掉注释
+      //     }
+      //   }
+      // }),
+      // new TerserPlugin({
+      //   parallel: true,
+      //   sourceMap: false,
+      //   cache: true
+      // }),
+      // new OptimizeCSSAssetsPlugin({
+      //   cssProcessorOptions: { 
+      //     discardComments: { removeAll: true } // 移除注释
+      //   }
+      // })
     ],
     splitChunks: {
-      minSize: 30000,
-      maxSize: 3000000,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
       name: true,
       cacheGroups: {
-        vendor: {
-          chunks: 'initial',
-          name: 'vendor',
-          test: 'vendor'
+        default: false,
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "commons",
+          chunks: "all",
+          priority: 8,
+          minChunks: 1,
+          enforce: true,
+          reuseExistingChunk: true
         },
-        echarts: {
+        BusinessCommon: {
+          name: 'BusinessCommon',
+          test: /[\\/]src[\\/](containers|components)/,
           chunks: 'all',
-          name: 'echarts',
-          test: /[\\/]echarts[\\/]/,
-        }
+          priority: -20,
+          minChunks: 2,
+          enforce: true,
+          reuseExistingChunk: true
+        },
+        antd: {
+          name: 'antd',
+          test: /[\\/]node_modules[\\/](antd|rc-*|@ant-design)/,
+          chunks: 'all',
+          priority: 10,
+          enforce: true,
+          reuseExistingChunk: true
+        },
+        antv: {
+          name: 'antv',
+          test: /[\\/]node_modules[\\/](@antv)/,
+          chunks: 'all',
+          priority: 10,
+          enforce: true,
+          reuseExistingChunk: true
+        },
+        // // 拆分基础插件
+        // basic: {
+        //     priority: 3, 
+        //     test: /[\\/]node_modules[\\/](moment|react|react-dom|react-router|react-router-dom|axios)[\\/]/,
+        // }
       }
     }
   },
@@ -229,7 +266,6 @@ module.exports = {
     }),
     new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
     new webpack.DefinePlugin(env.stringified),
-    new webpack.NamedModulesPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(true),
     new MiniCssExtractPlugin({
       filename: "css/[name].[hash].css",
@@ -256,6 +292,16 @@ module.exports = {
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new CompressionWebpackPlugin({
+      deleteOriginalAssets: true,
+      asset: '[path].gz[query]',// 目标文件名
+      algorithm: 'gzip',// 使用gzip压缩
+      test: new RegExp(
+          '\\.(js|css)$' // 压缩 js 与 css
+      ),
+      threshold: 10240,// 资源文件大于10240B=10kB时会被压缩
+      minRatio: 0.8 // 最小压缩比达到0.8时才会被压缩
+    })
   ],
   node: {
     dgram: 'empty',

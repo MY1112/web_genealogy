@@ -5,7 +5,7 @@ import NGModal from 'components/NGModal'
 import { RadioChangeEvent } from 'antd/lib/radio'
 import { getFormList } from './FormList'
 import moment from 'moment'
-import Api, { IMODApiData } from '../Api'
+import Api, { IResApiData } from '../Api'
 import { IListItem } from './MemberDetail'
 
 const initialState = {
@@ -80,7 +80,6 @@ class MemberAdd extends PureComponent<IProps, IState> {
   }
 
   public handleSelectPid = (value: string, node: any) => {
-    console.log(node.props)
     this.setState({
       pidItem: node.props
     })
@@ -102,7 +101,7 @@ class MemberAdd extends PureComponent<IProps, IState> {
       if (values.dateDeath) {
         values.dateDeath = moment(values.dateDeath).format('YYYY-MM-DD')
       }
-      values.userId = userInfo._id
+      values.userId = userInfo?._id
       values.birthplaceText = birthplaceText
       if (pidTree.length > 0) {
         const newPids = [...pidItem.pids]
@@ -113,7 +112,7 @@ class MemberAdd extends PureComponent<IProps, IState> {
         values.pid = "0"
         values.pids = ["0"]
       }
-      Api.memberAdd(values).then((res: IMODApiData) => {
+      Api.memberAdd(values).then((res: IResApiData) => {
         if (res.code === 10000) {
           message.success('新增成功')
           this.setState({ confirmLoading: false })
@@ -176,27 +175,3 @@ class MemberAdd extends PureComponent<IProps, IState> {
   }
 }
 export default MemberAdd
-
-
-
-// pidTree: [{
-//   ext: "",
-//   id: "",
-//   key: "0-0",
-//   num: 1,
-//   pid: "0",
-//   pids: "[0],",
-//   title: "王一",
-//   value: "4296ff558285482ea70045d8aabce81a",
-//   children: [{
-//     children: [],
-//     ext: "",
-//     id: "",
-//     key: "0-0-0",
-//     num: 0,
-//     pid: "4296ff558285482ea70045d8aabce81a",
-//     pids: "[0],[4296ff558285482ea70045d8aabce81a],",
-//     title: "王二",
-//     value: "4cc2366ba1d7d288a23d900ee47f2ca0"
-//   }]
-// }]

@@ -1,9 +1,4 @@
-/*
- * @Author: qiuying
- * @Date: 2018-08-29 18:05:47
- * @Last Modified by: mengyuan
- * @Last Modified time: 2019-08-14 09:36:18
- */
+
 import React, { PureComponent, MouseEvent } from 'react';
 import { Tree, message, Spin } from 'antd';
 import './index.less';
@@ -47,12 +42,12 @@ export interface IDateItem {
   pid?: string;
 }
 interface IProps {
-  seartchVal?: string
+  searchVal?: string
   needIdArr?:boolean,
   handleChecked?: (item: object,idArr?:string[]) => void
    handleDbClick?: (item: object, nodeArr?: ITreeItem) => void;
   listData: object[]
-  opions?: {value:any,hasRules?:any}
+  options?: {value:any,hasRules?:any}
   loading?: boolean
   autoExpandedKeys?: string[]
   selectedKeys?:string[]
@@ -146,11 +141,11 @@ export default class NGTree extends PureComponent<IProps, IState> {
       };
     }
     if (
-      state.searchValue !== props.seartchVal &&
-      props.seartchVal !== undefined
+      state.searchValue !== props.searchVal &&
+      props.searchVal !== undefined
     ) {
       let expandedKeys = [];
-      const value = props.seartchVal;
+      const value = props.searchVal;
       const matchEvery = dataList.every(
         item => item.title.indexOf(value) <= -1
       );
@@ -166,7 +161,7 @@ export default class NGTree extends PureComponent<IProps, IState> {
           return null;
         })
         .filter((item, i, self) => item && self.indexOf(item) === i);
-      if (!props.seartchVal) {
+      if (!props.searchVal) {
         expandedKeys = props.autoExpandedKeys ? props.autoExpandedKeys : [];
       }
       stateVal = {
@@ -233,7 +228,7 @@ export default class NGTree extends PureComponent<IProps, IState> {
 
   // 树子节点循环
   private getloopTree = (data: object[]) => {
-    const { opions, titleClass, isShowRules } = this.props;
+    const { options, titleClass, isShowRules } = this.props;
     const { searchValue } = this.state;
     const titleNode = (
       title: React.ReactNode,
@@ -254,12 +249,12 @@ export default class NGTree extends PureComponent<IProps, IState> {
           >
             {title}
           </span>
-          {opions && (
+          {options && (
             <span
               className="ngTree_options"
               onClick={this.handleStopPropagation}
             >
-              {opions.value(item)}
+              {options.value(item)}
             </span>
           )}
         </React.Fragment>

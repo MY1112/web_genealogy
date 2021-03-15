@@ -3,7 +3,7 @@ import { Form, Icon, Input, Button, Checkbox, message } from 'antd'
 import { verifyLogin, loading } from '../../actions/rootActions'
 import './login.less'
 import { connect } from 'react-redux'
-import Api, { IMODApiData } from './Api'
+import Api, { IResApiData } from './Api'
 const FormItem = Form.Item
 class NormalLoginForm extends Component {
   componentDidMount() {
@@ -17,7 +17,7 @@ class NormalLoginForm extends Component {
     let w = canvas.width = canvas.offsetWidth;
     let h = canvas.height = canvas.offsetHeight;
     let circles = [];
-    let current_circle = new currentCirle(0, 0)
+    let current_circle = new currentCircle(0, 0)
 
     let draw = function () {
         ctx.clearRect(0, 0, w, h);
@@ -60,7 +60,6 @@ class NormalLoginForm extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         Api.login({...values}).then((res) => {
-          console.log(res)
           if(res.code === 10000) {
             this.props.dispatch(loading(true))
             this.props.dispatch(
@@ -69,14 +68,14 @@ class NormalLoginForm extends Component {
                 user: values
               })
             )
-            localStorage.setItem('user',true)
             localStorage.setItem('userInfo',JSON.stringify(res.data))
+            document.cookie = `genealogyToken=${res.data.token}`
             setTimeout(() => {
               this.props.history.push('/admin/home')
             }, 2000)
           }
         }).catch((err) => {
-          console.log(err)
+          console.error(err)
         })
       }
     })
@@ -184,7 +183,7 @@ class Circle {
       this.y += this._my / 2;
   }
 }
-class currentCirle extends Circle {
+class currentCircle extends Circle {
   constructor(x, y) {
       super(x, y)
   }

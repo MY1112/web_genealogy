@@ -1,8 +1,48 @@
 .memberMap {
     position: relative;
     height: 100%;
+    &_fly {
+        position: absolute;
+        z-index: 1;
+        right: 108px;
+        top: -36px;
+    }
+    &_switch {
+        position: absolute;
+        z-index: 1;
+        right: 36px;
+        top: -36px;
+    }
+    &_earth {
+        position: absolute;
+        right: 0px;
+        top: -35px;
+        font-size: 20px;
+    }
+    &_earth:hover {
+        color: #0085fa;
+    }
+    &_earth_active {
+        color: #0085fa;
+    }
     #memberMap_content {
         height: 100%;
         width: 100%;
+        .BMap_bubble_pop {
+            border: none !important;
+            border-radius: 8px;
+            box-shadow: 0 0 6px 2px rgb(11, 174, 211);
+            .BMap_bubble_top {
+               border-top-left-radius: 8px;
+               border-top-right-radius: 8px;
+               .BMap_bubble_title {
+                    border-top-left-radius: 8px;
+                    border-top-right-radius: 8px;
+               }
+               .BMap_bubble_buttons {
+                   border-top-right-radius: 8px;
+               }
+            }
+        }
     }
 }

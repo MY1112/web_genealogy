@@ -1,0 +1,35 @@
+@import '../../style/color.less';
+.family-center {
+  position: relative;
+  height: 100%;
+  &-content {
+    height: 100%;
+    &-left {
+      width: 400px;
+      box-shadow: 0px 0px 8px 0px rgba(50, 55, 90, 0.08);
+      background: #ffffff;
+      border-radius: 4px;
+      &-header {
+        &-avatar {
+          background: #00a2ae;
+          border-radius: 50%;
+          width: 100px;
+          height: 100px;
+          font-size: 36px;
+          color: #ffffff;
+        }
+      }
+      &-content {
+        padding: 0 30px;
+        .ant-tag {
+          margin-bottom: 8px;
+        }
+      }
+    }
+    &-right {
+      box-shadow: 0px 0px 8px 0px rgba(50, 55, 90, 0.08);
+      background: #ffffff;
+      border-radius: 4px;
+    }
+  }
+}

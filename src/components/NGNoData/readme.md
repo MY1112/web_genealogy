@@ -1,10 +1,4 @@
-/\*
 
-- @Author: huangying
-- @Date: 2018-09-26 16:10:16
-- @Last Modified by: huangying
-- @Last Modified time: 2018-09-26 16:12:32
-  \*/
 
 | 参数          | 类型   | 说明     | 是否必须 |
 | ------------- | ------ | -------- | -------- |

@@ -1,8 +1,8 @@
 /*
  * @Author: mengyuan 
  * @Date: 2019-09-27 11:22:11 
- * @Last Modified by: mengyuan
- * @Last Modified time: 2019-09-27 11:43:26
+ * @Last Modified by: Circlemeng
+ * @Last Modified time: 2020-08-20 20:21:13
  */
 import axios, {
     AxiosResponse,
@@ -36,7 +36,7 @@ import axios, {
     data: IApiData
   }
   const requestInterceptor = (config: AxiosRequestConfig) => {
-    config.headers.Authorization = getCookie('token')
+    config.headers.Authorization = `Bearer ${getCookie('genealogyToken')}`
     return config
   }
   const requestInterceptorError = (err: AxiosError) => err
@@ -46,7 +46,6 @@ import axios, {
       switch (err.response.status) {
         case 400:
           // 401 没有token
-          console.log(err.response)
           message.error(err.response.data.msg || '参数错误')
           break
         case 401:

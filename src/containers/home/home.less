@@ -2,8 +2,7 @@
     position: relative;
     height: 590px;
     padding-right: 60px;
-    background: url('../../assets/imgs/home/bookOld-left.jpeg') 0% 0% no-repeat,
-    url('../../assets/imgs/home/bookOld-center.jpeg') 150px 0px;
+    background: url('../../assets/imgs/home/bookOld-center.jpeg') 150px 0px;
     &_bg {
         position: absolute;
         width: 60px;
@@ -12,13 +11,25 @@
         top: 0;
         background: url('../../assets/imgs/home/bookOld-right.jpeg') no-repeat;
     }
-    &_title {
+    .box1 {
+        background: #e2e5d7;
         position: absolute;
         left: 60px;
         top: 46px;
-        width: 50px;
-        font-size: 50px;
-        word-wrap: break-word;
-        letter-spacing: 20px;
+        padding: 4px;
+        .box2 {
+            padding: 4px;
+            border: 2px solid;
+            .box3 {
+                padding: 8px;
+                border: 1px solid;
+                .home_title {
+                    width: 50px;
+                    font-size: 50px;
+                    word-wrap: break-word;
+                    letter-spacing: 20px;
+                }
+            }
+        }
     }
 }

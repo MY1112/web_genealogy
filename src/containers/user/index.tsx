@@ -4,7 +4,7 @@ import UserAdd from './Components/UserAdd'
 import UserEdit from './Components/UserEdit'
 import { getColumns } from './Columns'
 import './index.less'
-import Api, { IMODApiData } from './Api'
+import Api, { IResApiData } from './Api'
 const Search = Input.Search
 const confirm = Modal.confirm
 
@@ -12,8 +12,8 @@ const initialState = {
   tableLoading: false,
   username: '',
   list: [],
-  addVisibel: false,
-  editVisibel: false,
+  addVisible: false,
+  editVisible: false,
   userInfo: {
     pid: '',
     username: '',
@@ -33,15 +33,16 @@ export interface IListItem {
   _id: string
 }
 
-const userItem = JSON.parse(localStorage.getItem('userInfo')||'')
+const jsonUser = localStorage.getItem('userInfo');
+const userItem = jsonUser ? JSON.parse(jsonUser) : undefined;
 
 interface IProps {}
 
 interface IState {
   tableLoading: boolean
   username: string
-  addVisibel: boolean
-  editVisibel: boolean
+  addVisible: boolean
+  editVisible: boolean
   list: IListItem[]
   userInfo: IListItem
 }
@@ -59,9 +60,9 @@ class UserList extends Component<IProps, IState> {
     this.setState({tableLoading:true},() => {
       Api.getUserList({
         keywords: username,
-        identity: this.userItem.identity,
-        pid: this.userItem._id
-      }).then((res: IMODApiData) => {
+        identity: this.userItem?.identity,
+        pid: this.userItem?._id
+      }).then((res: IResApiData) => {
         if (res.code === 10001) {
           this.setState({
             list: res.data,
@@ -73,7 +74,7 @@ class UserList extends Component<IProps, IState> {
         })
       }).catch((err: Error) => {
         this.setState({tableLoading: false})
-        console.log(err)
+        console.error(err)
       })
     })
   }
@@ -85,27 +86,27 @@ class UserList extends Component<IProps, IState> {
   }
   private handleCancel = () => {
     this.setState({
-      addVisibel: false,
-      editVisibel: false
+      addVisible: false,
+      editVisible: false
     })
   }
   private handleAddOk = () => {
     this.setState({
-      addVisibel: false,
-      editVisibel: false
+      addVisible: false,
+      editVisible: false
     },() => {
       this.getUserList()
     })
   }
   private handleAdd = () => {
     this.setState({
-      addVisibel: true
+      addVisible: true
     })
   }
 
   public handleEditUser = (row: IListItem) => {
     this.setState({
-      editVisibel: true,
+      editVisible: true,
       userInfo: row
     })
   }
@@ -115,18 +116,18 @@ class UserList extends Component<IProps, IState> {
     confirm({
       title: '确认删除该用户吗?',
       onOk() {
-        Api.userDel(id).then((res: IMODApiData) => {
+        Api.userDel(id).then((res: IResApiData) => {
           message.success('删除成功')
           THIS.getUserList()
         }).catch(err => {
-          console.log(err)
+          console.error(err)
         })
       },
       onCancel() {}
     })
   }
   render() {
-    const { addVisibel, editVisibel, userInfo, list, tableLoading } = this.state
+    const { addVisible, editVisible, userInfo, list, tableLoading } = this.state
     const columns = getColumns(this)
     return (
       <div className="userList">
@@ -167,17 +168,17 @@ class UserList extends Component<IProps, IState> {
             rowKey={'_id'}
           />
         </div>
-        {addVisibel && (
+        {addVisible && (
           <UserAdd
             userInfo={this.userItem}
-            visibel={this.state.addVisibel}
+            visible={this.state.addVisible}
             handleCancel={this.handleCancel}
             handleOk={this.handleAddOk}
           />
         )}
-        {editVisibel && (
+        {editVisible && (
           <UserEdit
-            visibel={editVisibel}
+            visible={editVisible}
             userInfo={userInfo}
             handleOk={this.handleAddOk}
             handleCancel={this.handleCancel}

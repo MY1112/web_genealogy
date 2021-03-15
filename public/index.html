@@ -4,41 +4,272 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
-    <!--
-      manifest.json provides metadata used when your web app is added to the
-      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
-    -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
     <title>家家OA</title>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=pfDeQwmAwislusrWwBxzVVXLfXustbd7"></script>
-    <script type="text/javascript">
-      window.BMap = BMap
-    </script>
+    <style>
+      .container {
+        width: 100%;
+        height: 100vh;
+        background-color: #F4F4F4;
+        background-image: linear-gradient(90deg, white 0%, #FAF3DE 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .container h1 {
+        margin-bottom: 40px;
+        letter-spacing: 1px;
+      }
+      .container h1 span {
+        font-style: italic;
+        font-size: 16px;
+      }
+      .container .wave {
+        width: 20px;
+        position: relative;
+        transform-style: preserve-3d;
+        perspective: 1000px;
+        animation: Spin 19s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+      }
+      .container .wave .dot {
+        width: 20px;
+        height: 1px;
+        background-color: #464141;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 16px auto;
+        position: relative;
+        transform: scale(0.6);
+      }
+      .container .wave .dot:before, .container .wave .dot:after {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        position: absolute;
+        top: -10px;
+        left: -1px;
+      }
+      .container .wave .dot:nth-child(1):before {
+        animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        animation-fill-mode: forwards;
+        animation-delay: -1.71s;
+        background-color: #42dbc0;
+        box-shadow: inset 2px 2px 5px #57dfc7 10;
+      }
+      .container .wave .dot:nth-child(1):after {
+        animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        animation-fill-mode: forwards;
+        animation-delay: -1.71s;
+        background-color: #6f58ee;
+        box-shadow: inset 2px 2px 5px #9786f3;
+      }
+      .container .wave .dot:nth-child(2):before {
+        animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        animation-fill-mode: forwards;
+        animation-delay: -3.42s;
+        background-color: #42dbc0;
+        box-shadow: inset 2px 2px 5px #57dfc7 10;
+      }
+      .container .wave .dot:nth-child(2):after {
+        animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        animation-fill-mode: forwards;
+        animation-delay: -3.42s;
+        background-color: #6f58ee;
+        box-shadow: inset 2px 2px 5px #9786f3;
+      }
+      .container .wave .dot:nth-child(3):before {
+        animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        animation-fill-mode: forwards;
+        animation-delay: -5.13s;
+        background-color: #42dbc0;
+        box-shadow: inset 2px 2px 5px #57dfc7 10;
+      }
+      .container .wave .dot:nth-child(3):after {
+        animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        animation-fill-mode: forwards;
+        animation-delay: -5.13s;
+        background-color: #6f58ee;
+        box-shadow: inset 2px 2px 5px #9786f3;
+      }
+      .container .wave .dot:nth-child(4):before {
+        animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        animation-fill-mode: forwards;
+        animation-delay: -6.84s;
+        background-color: #42dbc0;
+        box-shadow: inset 2px 2px 5px #57dfc7 10;
+      }
+      .container .wave .dot:nth-child(4):after {
+        animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        animation-fill-mode: forwards;
+        animation-delay: -6.84s;
+        background-color: #6f58ee;
+        box-shadow: inset 2px 2px 5px #9786f3;
+      }
+      .container .wave .dot:nth-child(5):before {
+        animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        animation-fill-mode: forwards;
+        animation-delay: -8.55s;
+        background-color: #42dbc0;
+        box-shadow: inset 2px 2px 5px #57dfc7 10;
+      }
+      .container .wave .dot:nth-child(5):after {
+        animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        animation-fill-mode: forwards;
+        animation-delay: -8.55s;
+        background-color: #6f58ee;
+        box-shadow: inset 2px 2px 5px #9786f3;
+      }
+      .container .wave .dot:nth-child(6):before {
+        animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        animation-fill-mode: forwards;
+        animation-delay: -10.26s;
+        background-color: #42dbc0;
+        box-shadow: inset 2px 2px 5px #57dfc7 10;
+      }
+      .container .wave .dot:nth-child(6):after {
+        animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        animation-fill-mode: forwards;
+        animation-delay: -10.26s;
+        background-color: #6f58ee;
+        box-shadow: inset 2px 2px 5px #9786f3;
+      }
+      .container .wave .dot:nth-child(7):before {
+        animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        animation-fill-mode: forwards;
+        animation-delay: -11.97s;
+        background-color: #42dbc0;
+        box-shadow: inset 2px 2px 5px #57dfc7 10;
+      }
+      .container .wave .dot:nth-child(7):after {
+        animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        animation-fill-mode: forwards;
+        animation-delay: -11.97s;
+        background-color: #6f58ee;
+        box-shadow: inset 2px 2px 5px #9786f3;
+      }
+      .container .wave .dot:nth-child(8):before {
+        animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        animation-fill-mode: forwards;
+        animation-delay: -13.68s;
+        background-color: #42dbc0;
+        box-shadow: inset 2px 2px 5px #57dfc7 10;
+      }
+      .container .wave .dot:nth-child(8):after {
+        animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        animation-fill-mode: forwards;
+        animation-delay: -13.68s;
+        background-color: #6f58ee;
+        box-shadow: inset 2px 2px 5px #9786f3;
+      }
+      .container .wave .dot:nth-child(9):before {
+        animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        animation-fill-mode: forwards;
+        animation-delay: -15.39s;
+        background-color: #42dbc0;
+        box-shadow: inset 2px 2px 5px #57dfc7 10;
+      }
+      .container .wave .dot:nth-child(9):after {
+        animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        animation-fill-mode: forwards;
+        animation-delay: -15.39s;
+        background-color: #6f58ee;
+        box-shadow: inset 2px 2px 5px #9786f3;
+      }
+      .container .wave .dot:nth-child(10):before {
+        animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        animation-fill-mode: forwards;
+        animation-delay: -17.1s;
+        background-color: #42dbc0;
+        box-shadow: inset 2px 2px 5px #57dfc7 10;
+      }
+      .container .wave .dot:nth-child(10):after {
+        animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        animation-fill-mode: forwards;
+        animation-delay: -17.1s;
+        background-color: #6f58ee;
+        box-shadow: inset 2px 2px 5px #9786f3;
+      }
+
+      @keyframes Before {
+        0% {
+          left: -40px;
+          z-index: 10;
+        }
+        25% {
+          transform: scale(1.4);
+          z-index: 10;
+        }
+        50% {
+          left: 40px;
+          z-index: 1;
+        }
+        75% {
+          background-color: #42c3c0;
+          box-shadow: inset 2px 2px 5px #69cfcd;
+          transform: scale(0.6);
+          z-index: 1;
+        }
+        100% {
+          left: -40px;
+          z-index: 1;
+        }
+      }
+      @keyframes After {
+        0% {
+          left: 40px;
+          z-index: 1;
+        }
+        25% {
+          background-color: #7434f3;
+          box-shadow: inset 2px 2px 5px #9564f6;
+          transform: scale(0.6);
+          z-index: 1;
+        }
+        50% {
+          left: -40px;
+          z-index: 10;
+        }
+        75% {
+          transform: scale(1.4);
+          z-index: 10;
+        }
+        100% {
+          left: 40px;
+          z-index: 10;
+        }
+      }
+      @keyframes Spin {
+        0% {
+          transform: rotateZ(0deg);
+        }
+        100% {
+          transform: rotateZ(360deg);
+        }
+      }
+    </style>
   </head>
   <body>
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <div id="root">
+        <div class="container">
+          <h1>家族成员基因配对中</h1>
+          <div class="wave">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+        </div>
+    </div>
   </body>
 </html>

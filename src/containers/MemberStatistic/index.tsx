@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Spin, Avatar, Descriptions, message } from 'antd'
+import { Spin, Avatar, Descriptions, message, BackTop } from 'antd'
 import NGHeader from 'components/NGHeader'
-import Api, { IMODApiData } from '../Membership/Api'
+import NGNoData from 'components/NGNoData';
+import Api, { IResApiData } from '../Membership/Api'
 import './index.less'
 import { sectionToChinese } from 'util/Tool'
 
@@ -25,10 +26,11 @@ interface IState {
 export default class MemberStatistic extends Component<IProps, IState> {
   readonly state: IState = initialState
   componentDidMount() {
-    const userInfo = JSON.parse(localStorage.getItem('userInfo') || '')
-    let userId = userInfo._id
-    if (userInfo.identity === 'user') {
-      userId = userInfo.pid
+    const jsonUser = localStorage.getItem('userInfo');
+    const userInfo = jsonUser ? JSON.parse(jsonUser) : undefined;
+    let userId = userInfo?._id
+    if (userInfo?.identity === 'user') {
+      userId = userInfo?.pid
     }
     this.setState(
       {
@@ -36,7 +38,7 @@ export default class MemberStatistic extends Component<IProps, IState> {
       },
       () => {
         Api.memberStatistic(userId)
-          .then((res: IMODApiData) => {
+          .then((res: IResApiData) => {
             if (res.code === 10000) {
               this.setState({
                 membersList: res.data,
@@ -75,7 +77,6 @@ export default class MemberStatistic extends Component<IProps, IState> {
       }
     }
     getLevel()
-    console.log(statisticList)
     this.setState({ statisticList })
   }
 
@@ -280,14 +281,14 @@ export default class MemberStatistic extends Component<IProps, IState> {
             <span style="margin-left:10px;">第 ${sectionToChinese(index + 1)} 代</span>
           </div>
           <div class='memberStatisticRowItem' style="padding:0 20px;">
-            ${this.getPrintmemberRowList(item)}
+            ${this.getPrintMemberRowList(item)}
           </div>
         </div>
       `
     })
     return str
   }
-  private getPrintmemberRowList = (data: any[]) => {
+  private getPrintMemberRowList = (data: any[]) => {
     let str = ``;
     data.forEach((info: any, cIndex) => {
       str += `
@@ -356,7 +357,9 @@ export default class MemberStatistic extends Component<IProps, IState> {
           {statisticList.length > 0 ? (
             this.getStatisticDom()
           ) : (
-            <div>还没有创建成员哦，快去创建吧</div>
+            <NGNoData
+              text="还没有创建成员哦，快去创建吧"
+            />
           )}
         </Spin>
       </div>
