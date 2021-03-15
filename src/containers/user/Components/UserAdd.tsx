@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Modal, Form, Input, Radio, message } from 'antd'
 import { FormComponentProps } from 'antd/lib/form'
 import { RadioChangeEvent } from 'antd/lib/radio'
-import Api, { IMODApiData } from '../Api'
+import Api, { IResApiData } from '../Api'
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
 const initialState = {
@@ -12,7 +12,7 @@ const initialState = {
 
 interface IProps extends FormComponentProps {
   userInfo: IListItem // 当前登录人信息
-  visibel: boolean
+  visible: boolean
   handleOk: () => void
   handleCancel: () => void
 }
@@ -43,11 +43,10 @@ class UserAdd extends Component<IProps, IState> {
             identity,
             username: value.username,
             password: value.password,
-            parents: value.parents || userInfo.parents,
-            pid: userInfo._id
+            parents: value.parents || userInfo?.parents,
+            pid: userInfo?._id
           }
-          console.log(values)
-          Api.signup(values).then((res: IMODApiData) => {
+          Api.signup(values).then((res: IResApiData) => {
             if(res.code === 10000) {
               message.success('注册成功')
               this.setState({loading: false})
@@ -61,12 +60,11 @@ class UserAdd extends Component<IProps, IState> {
     })
   }
   componentWillReceiveProps = (nextProps: IProps) => {
-    if (nextProps.visibel && !this.props.visibel) {
+    if (nextProps.visible && !this.props.visible) {
       this.props.form.resetFields()
     }
   }
   private handleChangeIdentity = (e: RadioChangeEvent) => {
-    console.log(e.target)
     this.setState({
       identity: e.target.value
     })
@@ -85,7 +83,7 @@ class UserAdd extends Component<IProps, IState> {
           okText="确认"
           cancelText="取消"
           title="新增用户"
-          visible={this.props.visibel}
+          visible={this.props.visible}
           onCancel={this.props.handleCancel}
           onOk={this.handleOk}
           confirmLoading={loading}
@@ -112,7 +110,7 @@ class UserAdd extends Component<IProps, IState> {
             })(<Input style={{ width: 200 }} placeholder="请输入密码" />)}
           </FormItem>
           {
-            userInfo.identity === 'god' && identity !== 'user' &&
+            userInfo?.identity === 'god' && identity !== 'user' &&
             <FormItem {...formItemLayout} label="家谱姓氏">
               {getFieldDecorator('parents', {
                 rules: [
@@ -131,7 +129,7 @@ class UserAdd extends Component<IProps, IState> {
             })(
               <RadioGroup>
                 {
-                  userInfo.identity === 'god' ?
+                  userInfo?.identity === 'god' ?
                   <Radio.Group onChange={this.handleChangeIdentity} value={identity}>
                     <Radio value="admin">管理员</Radio>
                     <Radio value="user">普通</Radio>

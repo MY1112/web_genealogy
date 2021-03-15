@@ -13,6 +13,7 @@ import Bundle from './bundle'
 import NotFound from '../containers/notFound/notFound'
 // 加载中
 import { Spin } from 'antd'
+import { getCookie } from 'util/Tool'
 
 // 后台主页
 const Admin = props => (
@@ -96,14 +97,13 @@ let beforeRouterName = ''
 const Authverify = withRouter(props => {
   const { location } = props
   const { pathname } = location
-  const userToken = JSON.parse(localStorage.getItem('user'))
+  const userToken = getCookie('genealogyToken')
+  const jsonUser = localStorage.getItem('userInfo');
+  const userInfo = jsonUser ? JSON.parse(jsonUser) : undefined;
   if (beforeRouterName === pathname ) {
     return null 
   }
-  // console.log(userToken)
-  // console.log(props.isLogin)
-  // console.log(pathname)
-  if (!userToken) {
+  if (!userToken || !userInfo?.username) {
     if (location.pathname === '/login' ) {
       return null
     }

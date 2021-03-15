@@ -1,9 +1,3 @@
-/*
- * @Author: huangying
- * @Date: 2018-08-28 21:31:02
- * @Last Modified by: huangying
- * @Last Modified time: 2018-11-26 17:17:02
- */
 
 import React, { ReactNode } from 'react';
 import { Form } from 'antd';

@@ -1,10 +1,17 @@
 .about{
-    margin: auto auto;
-    width: 200px;
-    text-align: center;
-    .img{
-        width: 100px;
-        height: 100px;
-        margin-bottom: 15px;
+    position: relative;
+    #world {
+        background: #e0dacd;
+        width:100%;
+        height:calc(~'100vh - 200px');
+        overflow:hidden;
+    }
+    .authInfo {
+        position: absolute;
+        top: 30px;
+        left: 100px;
+        &_row {
+            color: #000000;
+        }
     }
 }

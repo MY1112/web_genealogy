@@ -139,7 +139,7 @@ export const getFormList = (that: IFormList) => [
         attribute: {
           style: {width: '100%'},
           placeholder: '请输入生平经历',
-          autosize: { minRows: 2, maxRows: 6 },
+          autoSize: { minRows: 2, maxRows: 6 },
           maxLength: 200
         }
       },
@@ -151,7 +151,7 @@ export const getFormList = (that: IFormList) => [
         attribute: {
           style: {width: '100%'},
           placeholder: '请输入备注',
-          autosize: { minRows: 2, maxRows: 6 },
+          autosSize: { minRows: 2, maxRows: 6 },
           maxLength: 200
         }
       },
@@ -179,7 +179,7 @@ export const getFormList = (that: IFormList) => [
         attribute: {
           style: {width: '100%'},
           placeholder: '请输入地址',
-          autosize: { minRows: 1, maxRows: 2 },
+          autosSize: { minRows: 1, maxRows: 2 },
           maxLength: 100
         }
       },
@@ -227,39 +227,3 @@ export const getFormList = (that: IFormList) => [
     ]
   },
 ]
-
-
-// [
-//   {
-//     value: 'sichuan',
-//     label: '四川',
-//     children: [
-//       {
-//         value: 'zigong',
-//         label: '自贡',
-//         children: [
-//           {
-//             value: 'fushun',
-//             label: '富顺'
-//           }
-//         ]
-//       }
-//     ]
-//   },
-//   {
-//     value: 'hebei',
-//     label: '河北',
-//     children: [
-//       {
-//         value: 'zhangjiakou',
-//         label: '张家口',
-//         children: [
-//           {
-//             value: 'huailai',
-//             label: '怀来'
-//           }
-//         ]
-//       }
-//     ]
-//   }
-// ]

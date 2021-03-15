@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Modal, Form, Input, Radio, message } from 'antd'
 import { FormComponentProps } from 'antd/lib/form'
 import { IListItem } from '../index'
-import Api, { IMODApiData } from '../Api'
+import Api, { IResApiData } from '../Api'
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
 const initialState = {
@@ -11,7 +11,7 @@ const initialState = {
 
 interface IProps extends FormComponentProps {
   userInfo: IListItem // 修改的用户信息
-  visibel: boolean
+  visible: boolean
   handleOk: () => void
   handleCancel: () => void
 }
@@ -32,15 +32,14 @@ class UserEdit extends Component<IProps, IState> {
             parents: value.parents,
             id: this.props.userInfo._id
           }
-          console.log(values)
-          Api.userUpdate(values).then((res: IMODApiData) => {
+          Api.userUpdate(values).then((res: IResApiData) => {
             if(res.code === 10000) {
               message.success('修改成功')
               this.setState({loading: false})
               this.props.handleOk()
             }
           }).catch((err: Error) => {
-            console.log(err)
+            console.error(err)
             this.setState({loading: false})
           })
         })
@@ -48,7 +47,7 @@ class UserEdit extends Component<IProps, IState> {
     })
   }
   componentWillReceiveProps = (nextProps: IProps) => {
-    if (nextProps.visibel && !this.props.visibel) {
+    if (nextProps.visible && !this.props.visible) {
       this.props.form.resetFields()
     }
   }
@@ -66,7 +65,7 @@ class UserEdit extends Component<IProps, IState> {
           okText="确认"
           cancelText="取消"
           title="编辑用户"
-          visible={this.props.visibel}
+          visible={this.props.visible}
           onCancel={this.props.handleCancel}
           onOk={this.handleOk}
           confirmLoading={loading}

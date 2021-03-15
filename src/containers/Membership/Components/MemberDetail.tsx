@@ -70,7 +70,7 @@ class MemberDetail extends PureComponent<IProps, IState> {
           {this.getDetailItem()}
         </ul>
         {
-          ['god','admin'].includes(userInfo.identity) &&
+          ['god','admin'].includes(userInfo?.identity) &&
           <div className="flex_c memberBtn">{editButton}</div>
         }
       </React.Fragment>

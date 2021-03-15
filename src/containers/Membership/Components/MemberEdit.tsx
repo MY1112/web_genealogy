@@ -5,7 +5,10 @@ import { RadioChangeEvent } from 'antd/lib/radio'
 import { IdetailItem } from '../index';
 import moment from 'moment';
 import { throttle } from 'lodash'
-import Api, { IMODApiData } from '../Api'
+import Api, { IResApiData } from '../Api'
+
+const addressData = require('util/address.json')
+
 const initialState = {
   birthplaceText: '',
   loading: false,
@@ -178,40 +181,7 @@ export default class MemberEdit extends PureComponent<IProps, IState> {
           attribute: {
             onChange: this.handleChangeBirthplace,
             changeOnSelect: true,
-            options: [
-              {
-                value: 'sichuan',
-                label: '四川',
-                children: [
-                  {
-                    value: 'zigong',
-                    label: '自贡',
-                    children: [
-                      {
-                        value: 'fushun',
-                        label: '富顺'
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                value: 'hebei',
-                label: '河北',
-                children: [
-                  {
-                    value: 'zhangjiakou',
-                    label: '张家口',
-                    children: [
-                      {
-                        value: 'huailai',
-                        label: '怀来'
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
+            options: addressData
           }
         },
         {
@@ -289,7 +259,6 @@ export default class MemberEdit extends PureComponent<IProps, IState> {
         marryFlag: detailItem.marryFlag,
         spouseName: detailItem.spouseName
       };
-      console.log(editValue)
       form.setFieldsValue(editValue);
     })
   }
@@ -316,9 +285,8 @@ export default class MemberEdit extends PureComponent<IProps, IState> {
       if (values.dateDeath) {
         values.dateDeath = moment(values.dateDeath).format('YYYY-MM-DD')
       }
-      console.log(values)
       Api.memberUpdate({ ...values, id: detailItem.uid })
-        .then((res: IMODApiData) => {
+        .then((res: IResApiData) => {
           const { code } = res;
           this.setState({ loading: false });
           if (code === 10000) {

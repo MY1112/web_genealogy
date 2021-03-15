@@ -1,9 +1,3 @@
-/*
- * @Author: huangying
- * @Date: 2018-08-29 18:27:42
- * @Last Modified by: mengyuan
- * @Last Modified time: 2019-09-18 17:47:49
- */
 
 import React, { PureComponent } from 'react'
 import NGForm, { IWrappedComponentRef, IList, WrappedForm } from 'components/NGForm'
@@ -58,7 +52,6 @@ class Home extends PureComponent<IProps, IState> {
     this.form.setFieldsValue({ radio: '25545' })
   }
   private onSearchPerson(e: string) {
-    console.log(5455421, e)
     this.setState({ searchValue: e })
   }
   private onBlurPerson() {
@@ -110,10 +103,9 @@ class Home extends PureComponent<IProps, IState> {
   private validateFieldsAndScroll(): void {
     this.form.validateFieldsAndScroll((err: object, values: object) => {
       if (err) {
-        console.log(err)
+        console.error(err)
         return
       }
-      console.log(values)
     })
   }
   /**

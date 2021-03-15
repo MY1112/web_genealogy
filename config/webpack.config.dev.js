@@ -6,6 +6,7 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 function resolve (dir) {
@@ -31,7 +32,7 @@ module.exports = {
     chunkFilename: 'static/js/[name].chunk.js',
     publicPath: publicPath,
     devtoolModuleFilenameTemplate: info =>
-      path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
+      path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
   },
   resolve: {
     modules: ['node_modules', paths.appNodeModules].concat(
@@ -42,7 +43,8 @@ module.exports = {
       '@': resolve('src'),
       'style': resolve('src/style'),
       'components': resolve('src/components'),
-      'util': resolve('src/util')
+      'util': resolve('src/util'),
+      'assets': resolve('src/assets')
     },
     plugins: [
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
@@ -154,39 +156,6 @@ module.exports = {
             ],
           },
           {
-            test: /\.(css|scss)$/,
-            use: [
-              require.resolve('style-loader'),
-              {
-                loader: require.resolve('css-loader'),
-                options: {
-                  importLoaders: 1,
-                },
-              },
-              {
-                loader: require.resolve('postcss-loader'),
-                options: {
-                  ident: 'postcss',
-                  plugins: () => [
-                    require('postcss-flexbugs-fixes'),
-                    autoprefixer({
-                      browsers: [
-                        '>1%',
-                        'last 4 versions',
-                        'Firefox ESR',
-                        'not ie < 9', // React doesn't support IE8 anyway
-                      ],
-                      flexbox: 'no-2009',
-                    }),
-                  ],
-                },
-              },
-              {
-                loader: require.resolve('sass-loader') // compiles Less to CSS
-              },
-            ],
-          },
-          {
             exclude: [/\.(js|jsx|tsx|ts|mjs)$/,/\.(css|less)$/, /\.html$/, /\.json$/],
             loader: require.resolve('file-loader'),
             options: {
@@ -215,6 +184,16 @@ module.exports = {
     new WatchMissingNodeModulesPlugin(paths.appNodeModules),
 
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+
+    new CompressionWebpackPlugin({
+      asset: '[path].gz[query]',// 目标文件名
+      algorithm: 'gzip',// 使用gzip压缩
+      test: new RegExp(
+          '\\.(js|css)$' // 压缩 js 与 css
+      ),
+      threshold: 10240,// 资源文件大于10240B=10kB时会被压缩
+      minRatio: 0.8 // 最小压缩比达到0.8时才会被压缩
+    }),
   ],
 
   devServer: {

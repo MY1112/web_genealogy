@@ -36,11 +36,17 @@ const routers = [
     ]
   },
   {
-    menuName: '成员统计',
-    menuIco: 'cloud',
+    menuName: '家族手册',
+    menuIco: 'book',
     component: 'MemberStatistic/index.tsx',
     path: '/admin/MemberStatistic'
   },
+  // {
+  //   menuName: '家族中心',
+  //   menuIco: 'solution',
+  //   component: 'FamilyCenter/index.tsx',
+  //   path: '/admin/FamilyCenter'
+  // },
   {
     menuName: '成员地图',
     menuIco: 'environment',
@@ -50,8 +56,8 @@ const routers = [
   {
     menuName: '关于我',
     menuIco: 'smile-o',
-    component: 'about/about.tsx', // 主页
-    path: '/admin/about' // 主页
+    component: 'about/about.js',
+    path: '/admin/about'
   }
 ]
 

@@ -8,12 +8,12 @@ import MemberAdd, { IDateItem } from './Components/MemberAdd'
 import MemberEdit from './Components/MemberEdit'
 import MemberDetail, { IListItem } from './Components/MemberDetail'
 import Api from './Api'
-import { IMODApiData } from 'containers/login/Api'
+import { IResApiData } from 'containers/login/Api'
 
 const { confirm } = Modal
 
 const initialState = {
-  sertchVal: '',
+  searchVal: '',
   visible: false,
   status: false,
   isChecked: false,
@@ -55,7 +55,7 @@ export interface IdetailItem {
   spouseName?: string
 }
 interface IState {
-  sertchVal: string
+  searchVal: string
   visible: boolean
   status: boolean
   isChecked: boolean
@@ -85,14 +85,14 @@ class Membership extends Component<IProps, IState> {
   private userInfo: IListItem
   readonly state: IState = initialState
   componentDidMount() {
-    this.userInfo = JSON.parse(localStorage.getItem('userInfo')||'')
+    const jsonUser = localStorage.getItem('userInfo');
+    this.userInfo = jsonUser ? JSON.parse(jsonUser) : undefined;
     this.getList()
   }
 
   private onChangeContent(e: any) {
-    console.log(e.target.value)
     this.setState({
-      sertchVal: e.target.value
+      searchVal: e.target.value
     })
   }
 
@@ -128,7 +128,7 @@ class Membership extends Component<IProps, IState> {
   }
 
   private getOptions() {
-    const render = ['god','admin'].includes(this.userInfo && this.userInfo.identity) ? {
+    const render = ['god','admin'].includes(this.userInfo?.identity) ? {
       value: (text: IDateItem) => (
         <React.Fragment>
           <Tooltip title="新增">
@@ -155,7 +155,6 @@ class Membership extends Component<IProps, IState> {
 
   private addSuccess() {
     this.getList()
-    console.log('成功')
   }
   private handleEdit() {
     this.setState({
@@ -163,8 +162,7 @@ class Membership extends Component<IProps, IState> {
     })
   }
   private handleChecked(item: any) {
-    Api.memberDetail(item.value).then((res: IMODApiData) => {
-      console.log(res.data)
+    Api.memberDetail(item.value).then((res: IResApiData) => {
       this.setState({
         detailItem: res.data,
         selectedKeys: [item.key]
@@ -183,11 +181,11 @@ class Membership extends Component<IProps, IState> {
   }
 
   private getList = () => {
-    let userId = this.userInfo._id
-      if (this.userInfo.identity === 'user') {
-        userId = this.userInfo.pid
+    let userId = this.userInfo?._id
+      if (this.userInfo?.identity === 'user') {
+        userId = this.userInfo?.pid
       }
-    Api.memberTreeList(userId).then((res: IMODApiData) => {
+    Api.memberTreeList(userId).then((res: IResApiData) => {
       if (res.code === 10000 || res.code === 10001) {
         this.setState({
           listData: res.data
@@ -251,7 +249,7 @@ class Membership extends Component<IProps, IState> {
   render() {
     const {
       listData,
-      sertchVal,
+      searchVal,
       loading,
       selectedKeys,
       visible,
@@ -266,7 +264,7 @@ class Membership extends Component<IProps, IState> {
               size="big"
               className="Membership_left_header"
               extra={
-                ['god','admin'].includes(this.userInfo && this.userInfo.identity) &&
+                ['god','admin'].includes(this.userInfo?.identity) &&
                 <span
                   className="Membership_options"
                   onClick={this.handleAdd.bind(this,{})}
@@ -281,10 +279,10 @@ class Membership extends Component<IProps, IState> {
             <div className="Membership_left_tree pl-24 pr-24">
               <NGTree
                 className="ng_select_tree"
-                seartchVal={sertchVal}
+                searchVal={searchVal}
                 handleChecked={this.handleChecked}
                 listData={listData}
-                opions={this.getOptions()}
+                options={this.getOptions()}
                 loading={loading}
                 autoExpandedKeys={['0-0']}
                 selectedKeys={selectedKeys}

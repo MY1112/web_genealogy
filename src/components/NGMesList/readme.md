@@ -1,9 +1,4 @@
-/*
- * @Author: 谢海龙 / Jamesxiehailong 
- * @Date: 2018-10-08 17:47:14 
- * @Last Modified by:   谢海龙 / Jamesxiehailong 
- * @Last Modified time: 2018-10-08 17:47:14 
- */
+
 ## NgMesLis 
 
 | 参数     | 类型      | 说明           | 是否必须 |

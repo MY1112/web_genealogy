@@ -1,5 +1,5 @@
-# react-reactapp-antd
-create-react-app antd组件 ts 管理系统demo
+# base-home
+react redux antd组件 ts 管理系统demo
 
 ```
 |-src  			   //开发

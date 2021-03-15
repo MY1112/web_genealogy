@@ -1,6 +1,6 @@
 
 import Axios, { IApiData } from 'util/Axios';
-export interface IMODApiData extends IApiData {}
+export interface IResApiData extends IApiData {}
 const urlServer = {
   memberAdd: `/member/addMember`,
   memberTreeList: '/member/memberTreeList',

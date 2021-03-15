@@ -1,13 +1,14 @@
 /*
  * @Author: mengyuan 
  * @Date: 2019-09-19 14:21:01 
- * @Last Modified by: mengyuan
- * @Last Modified time: 2020-01-09 18:19:16
+ * @Last Modified by: Circlemeng
+ * @Last Modified time: 2021-01-06 16:11:21
  */
 import React, { PureComponent } from 'react'
 import { Button } from 'antd'
 import './index.less'
-import Api, { IMODApiData } from '../Api'
+import Api, { IResApiData } from '../Api'
+import NGNoData from 'components/NGNoData';
 
 const G6 = require('@antv/g6')
 
@@ -28,12 +29,13 @@ class MemberTree extends PureComponent<IProps, IState> {
     private treeData: any
 
     componentDidMount() {
-      const userInfo = JSON.parse(localStorage.getItem('userInfo')||'')
-      let userId = userInfo._id
-      if (userInfo.identity === 'user') {
-        userId = userInfo.pid
+      const jsonUser = localStorage.getItem('userInfo');
+      const userInfo = jsonUser ? JSON.parse(jsonUser) : undefined;
+      let userId = userInfo?._id
+      if (userInfo?.identity === 'user') {
+        userId = userInfo?.pid
       }
-      Api.memberTree(userId).then((res: IMODApiData) => {
+      Api.memberTree(userId).then((res: IResApiData) => {
         if (res.code === 10000) {
           this.treeData = res.data[0]
           this.setState({
@@ -52,21 +54,14 @@ class MemberTree extends PureComponent<IProps, IState> {
         height: window.innerHeight - 187,
         pixelRatio: 2,
         modes: {
-          default: [{
-            type: 'collapse-expand',
-            onChange: function onChange(item: any, collapsed: any) {
-              var data = item.get('model').data;
-              data.collapsed = collapsed;
-              return true;
-            }
-        }, 'drag-canvas', 'zoom-canvas']
+          default: ['collapse-expand', 'drag-canvas', 'zoom-canvas']
         },
         defaultNode: {
           size: 16,
           anchorPoints: [[0, 0.5], [1, 0.5]]
         },
         defaultEdge: {
-          shape: 'cubic-horizontal'
+          type: 'cubic-horizontal'
         },
         nodeStyle: {
           default: {
@@ -128,18 +123,24 @@ class MemberTree extends PureComponent<IProps, IState> {
     render() {
         return (
           <div className="memberTree">
-            <div className="memberTree_download">
-              {
-                this.state.CDNLoading ?
+            {
+              this.state.CDNLoading &&
+              <div className="memberTree_download">
                 <Button
                   className="default_btn csp"
                   icon="download"
                   onClick={() => this.handleDownloadTree()}
                 >
                   导出
-                </Button> : <span>家族空空如也～～请先创建家族成员吧～</span>
-              }
-            </div>
+                </Button>
+              </div>
+            }
+            {
+              !this.state.CDNLoading &&
+              <NGNoData
+                text="家族空空如也～～请先创建家族成员吧～"
+              />
+            }
             <div id="mountNode" className="memberTree_content"/>
           </div>
         )
