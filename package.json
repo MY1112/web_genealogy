@@ -119,8 +119,6 @@
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-webpack-plugin": "^4.0.0-beta.8",
-    "less": "^2.7.3",
-    "less-loader": "^4.0.5",
     "react-hot-loader": "^4.1.1",
     "terser-webpack-plugin": "^2.1.0",
     "ts-loader": "^6.0.4",

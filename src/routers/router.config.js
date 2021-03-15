@@ -5,7 +5,7 @@ const routers = [
   {
     menuName: '主页',
     menuIco: 'home',
-    component: 'home/home.tsx', // 主页
+    component: import('../containers/home/home.tsx'), // 主页
     path: '/admin/home' // 主页
   },
   {
@@ -14,7 +14,7 @@ const routers = [
     children: [
       {
         menuName: '用户列表',
-        component: 'user/index.tsx', // 主页
+        component: import('../containers/user/index.tsx'), // 主页
         path: '/admin/user/list' // 主页
       }
     ]
@@ -25,12 +25,12 @@ const routers = [
     children: [
       {
         menuName: '成员录入',
-        component: 'Membership/index.tsx',
+        component: import('../containers/Membership/index.tsx'),
         path: '/admin/Membership'
       },
       {
         menuName: '成员树',
-        component: 'Membership/MemberTree/index.tsx',
+        component: import('../containers/Membership/MemberTree/index.tsx'),
         path: '/admin/MemberTree'
       }
     ]
@@ -38,7 +38,7 @@ const routers = [
   {
     menuName: '家族手册',
     menuIco: 'book',
-    component: 'MemberStatistic/index.tsx',
+    component: import('../containers/MemberStatistic/index.tsx'),
     path: '/admin/MemberStatistic'
   },
   // {
@@ -50,13 +50,13 @@ const routers = [
   {
     menuName: '成员地图',
     menuIco: 'environment',
-    component: 'MemberMap/index.tsx',
+    component: import('../containers/MemberMap/index.tsx'),
     path: '/admin/MemberMap'
   },
   {
     menuName: '关于我',
     menuIco: 'smile-o',
-    component: 'about/about.js',
+    component: import('../containers/about/about.js'),
     path: '/admin/about'
   }
 ]
@@ -74,7 +74,7 @@ const mapRouters = item => {
     item.props = {}
     item.component = function(props){
       return (
-      <Bundle { ...props } load={() => import(`../containers/${component}`)}>
+      <Bundle { ...props } load={() => component}>
         {Comp => {
           return Comp ? <Comp {...props} { ...item.props } /> : <div>加载中...</div>
         }}
